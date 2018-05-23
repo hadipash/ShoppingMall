@@ -2,9 +2,10 @@
 -- Drop any existing data and create empty tables.
 
 DROP TABLE IF EXISTS client;
-DROP TABLE IF EXISTS my_list;
 DROP TABLE IF EXISTS delivery;
 DROP TABLE IF EXISTS product;
+DROP TABLE IF EXISTS my_list;
+
 
 CREATE TABLE client (
   id                  UNSIGNED INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -14,12 +15,6 @@ CREATE TABLE client (
   phone               UNSIGNED INTEGER UNIQUE NOT NULL,
   address             VARCHAR(100),
   mileage             UNSIGNED INTEGER
-);
-
-CREATE TABLE my_list(
-  user_id             UNSIGNED INTEGER REFERENCE client(id),
-  product_id          UNSIGNED INTEGER REFERENCE product(product_id)
-  PRIMARY KEY(user_id, product_id)
 );
 
 CREATE TABLE delivery (
@@ -41,6 +36,30 @@ CREATE TABLE product (
   sales_num           INTEGER DEFAULT '0' NOT NULL
 );
 
+
+-- Relational tables
+CREATE TABLE my_list(
+  user_id             UNSIGNED INTEGER REFERENCES client(id),
+  product_id          UNSIGNED INTEGER REFERENCES product(product_id),
+  PRIMARY KEY(user_id, product_id)
+);
+
+CREATE TABLE cart_list(
+  user_id             UNSIGNED INTEGER REFERENCES client(id),
+  product_id          UNSIGNED INTEGER REFERENCES product(product_id),
+  quantity            UNSIGNED INTEGER NOT NULL,
+  PRIMARY KEY(user_id, product_id)
+);
+
+CREATE TABLE coupon_list(
+  user_id             UNSIGNED INTEGER REFERENCES client(id),
+  coupon_id           UNSIGNED INTEGER REFERENCES coupon(coupon_id),
+  quantity            UNSIGNED INTEGER NOT NULL,
+  PRIMARY KEY(user_id, coupon_id)
+);
+
+
+-- Insert entities into the tables
 INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (1,   "LOGEN",   "Busan", 1)
 INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (2, "HYUNDAI",   "Seoul", 0)
 INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (3,   "LOGEN", "Gwangju", 1)
