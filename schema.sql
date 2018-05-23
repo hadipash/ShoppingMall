@@ -5,6 +5,8 @@ DROP TABLE IF EXISTS client;
 DROP TABLE IF EXISTS my_list;
 DROP TABLE IF EXISTS delivery;
 DROP TABLE IF EXISTS product;
+DROP TABLE IF EXISTS my_list;
+
 DROP TABLE IF EXISTS coupon;
 DROP TABLE IF EXISTS productNum;
 
@@ -43,6 +45,30 @@ CREATE TABLE product (
   sales_num           INTEGER DEFAULT '0' NOT NULL
 );
 
+
+-- Relational tables
+CREATE TABLE my_list(
+  user_id             UNSIGNED INTEGER REFERENCES client(id),
+  product_id          UNSIGNED INTEGER REFERENCES product(product_id),
+  PRIMARY KEY(user_id, product_id)
+);
+
+CREATE TABLE cart_list(
+  user_id             UNSIGNED INTEGER REFERENCES client(id),
+  product_id          UNSIGNED INTEGER REFERENCES product(product_id),
+  quantity            UNSIGNED INTEGER NOT NULL,
+  PRIMARY KEY(user_id, product_id)
+);
+
+CREATE TABLE coupon_list(
+  user_id             UNSIGNED INTEGER REFERENCES client(id),
+  coupon_id           UNSIGNED INTEGER REFERENCES coupon(coupon_id),
+  quantity            UNSIGNED INTEGER NOT NULL,
+  PRIMARY KEY(user_id, coupon_id)
+);
+
+
+-- Insert entities into the tables
 
 create table coupon (
   coupon_id           UNSIGNED integer primary key autoincrement,
