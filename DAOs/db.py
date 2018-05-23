@@ -50,5 +50,7 @@ def init_app(app):
     """Register database functions with the Flask app. This is called by
     the application factory.
     """
+    # tell Flask to call that function when cleaning up after returning the response.
     app.teardown_appcontext(close_db)
+    # add a new command that can be called with the flask command.
     app.cli.add_command(init_db_command)

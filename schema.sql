@@ -1,21 +1,15 @@
 -- Initialize the database.
 -- Drop any existing data and create empty tables.
 
-DROP TABLE IF EXISTS user;
-DROP TABLE IF EXISTS post;
+DROP TABLE IF EXISTS client;
 DROP TABLE IF EXISTS delivery;
 
-CREATE TABLE user (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  username TEXT UNIQUE NOT NULL,
-  password TEXT NOT NULL
-);
-
-CREATE TABLE post (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  author_id INTEGER NOT NULL,
-  created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  title TEXT NOT NULL,
-  body TEXT NOT NULL,
-  FOREIGN KEY (author_id) REFERENCES user (id)
+CREATE TABLE client (
+  id        UNSIGNED INTEGER PRIMARY KEY AUTOINCREMENT,
+  email     VARCHAR(50) UNIQUE NOT NULL,
+  name      VARCHAR(50) NOT NULL,
+  password  VARCHAR(100) NOT NULL,
+  phone     UNSIGNED INTEGER UNIQUE NOT NULL,
+  address   VARCHAR(100),
+  mileage   UNSIGNED INTEGER
 );
