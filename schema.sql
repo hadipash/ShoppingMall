@@ -3,6 +3,7 @@
 
 DROP TABLE IF EXISTS client;
 DROP TABLE IF EXISTS delivery;
+DROP TABLE IF EXISTS product;
 
 CREATE TABLE client (
   id        UNSIGNED INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -21,6 +22,16 @@ CREATE TABLE delivery (
     location            VARCHAR(100) NOT NULL,
     status              INTEGER NOT NULL,
     date_arrived        TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE product (
+  id          INTEGER PRIMARY KEY AUTOINCREMENT,
+  name        VARCHAR(50) UNIQUE NOT NULL,
+  category    VARCHAR(10) NOT NULL,
+  price       FLOAT NOT NULL,
+  stock       INTEGER NOT NULL ,
+  dc_rate     INTEGER DEFAULT '0' NOT NULL,
+  sales_num   INTEGER DEFAULT '0' NOT NULL
 );
 
 INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (1,   "LOGEN",   "Busan", 1)
