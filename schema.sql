@@ -2,10 +2,12 @@
 -- Drop any existing data and create empty tables.
 
 DROP TABLE IF EXISTS client;
+DROP TABLE IF EXISTS my_list;
 DROP TABLE IF EXISTS delivery;
 DROP TABLE IF EXISTS product;
 DROP TABLE IF EXISTS my_list;
-
+DROP TABLE IF EXISTS coupon;
+DROP TABLE IF EXISTS productNum;
 
 CREATE TABLE client (
   id                  UNSIGNED INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -37,6 +39,14 @@ CREATE TABLE product (
 );
 
 
+create table coupon (
+  coupon_id           UNSIGNED INTEGER PRIMARY KEY AUTOINCREMENT,
+  name                VARCHAR(50) NOT NULL,
+  rate_of_discount    DOUBLE NOT NULL
+);
+
+
+
 -- Relational tables
 CREATE TABLE my_list(
   user_id             UNSIGNED INTEGER REFERENCES client(id),
@@ -58,8 +68,15 @@ CREATE TABLE coupon_list(
   PRIMARY KEY(user_id, coupon_id)
 );
 
+create table coupon_applied_product_list (
+  coupon_id           UNSIGNED INTEGER REFERENCE coupon(coupon_id),
+  product_id          UNSIGNED INTEGER REFERENCE product(product_id)
+  PRIMARY KEY(user_id, product_id)
+);
 
 -- Insert entities into the tables
+
+
 INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Maegan.Keith@gmail.com",     "Maegan Keith",     "12345", 01011111111, "Gwangju",  0)
 INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Reynold.Delroy@gmail.com",   "Reynold Delroy",   "54321", 01022222222, "Busan",    325)
 INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Agnes.Maurice@gmail.com",    "Agnes Maurice",    "11111", 01033333333, "Seoul",    547)
@@ -75,4 +92,9 @@ INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (1,  
 INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (2, "HYUNDAI",   "Seoul", 0)
 INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (3,   "LOGEN", "Gwangju", 1)
 INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (4,  "HANJIN",   "Seoul", 0)
-INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (5,  "HANJIN",   "Busan", 1)
+INSERT INTO Delivery (order_id, delivery_company, location, status) VALUES (5,  "HANJIN",   "BUSAN", 1)
+
+INSERT INTO coupon (coupon_id, name, rate_of_discount) VALUES (1,   "10%할인",   "10.0")
+INSERT INTO coupon (coupon_id, name, rate_of_discount) VALUES (2,   "20%할인",   "20.0")
+INSERT INTO coupon (coupon_id, name, rate_of_discount) VALUES (3,   "5%할인",   "5.0")
+
