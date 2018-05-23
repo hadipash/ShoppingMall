@@ -25,7 +25,7 @@ CREATE TABLE delivery (
 );
 
 CREATE TABLE product (
-  id          INTEGER PRIMARY KEY AUTOINCREMENT,
+  product_id  INTEGER PRIMARY KEY AUTOINCREMENT,
   name        VARCHAR(50) UNIQUE NOT NULL,
   category    VARCHAR(10) NOT NULL,
   price       FLOAT NOT NULL,
