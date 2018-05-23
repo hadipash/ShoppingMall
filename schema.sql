@@ -16,11 +16,11 @@ CREATE TABLE client (
 
 CREATE TABLE delivery (
     track_number        UNSIGNED INTEGER PRIMARY KEY AUTOINCREMENT,
-	order_id            UNSIGNED INTEGER UNIQUE NOT NULL,
-	delivery_company    VARCHAR(50) NOT NULL,
+    order_id            UNSIGNED INTEGER UNIQUE NOT NULL,
+    delivery_company    VARCHAR(50) NOT NULL,
 	location            VARCHAR(100) NOT NULL,
-	status              INTEGER NOT NULL,
-	date_arrived        TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    status              INTEGER NOT NULL,
+    date_arrived        TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (1,   "LOGEN",   "Busan", 1)
