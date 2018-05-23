@@ -18,7 +18,7 @@ CREATE TABLE delivery (
     track_number        UNSIGNED INTEGER PRIMARY KEY AUTOINCREMENT,
     order_id            UNSIGNED INTEGER UNIQUE NOT NULL,
     delivery_company    VARCHAR(50) NOT NULL,
-	location            VARCHAR(100) NOT NULL,
+    location            VARCHAR(100) NOT NULL,
     status              INTEGER NOT NULL,
     date_arrived        TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
