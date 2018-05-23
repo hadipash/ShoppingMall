@@ -94,7 +94,7 @@ INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (3,  
 INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (4,  "HANJIN",   "Seoul", 0)
 INSERT INTO Delivery (order_id, delivery_company, location, status) VALUES (5,  "HANJIN",   "BUSAN", 1)
 
-INSERT INTO coupon (coupon_id, name, rate_of_discount) VALUES (1,   "10%할인",   "10.0")
-INSERT INTO coupon (coupon_id, name, rate_of_discount) VALUES (2,   "20%할인",   "20.0")
-INSERT INTO coupon (coupon_id, name, rate_of_discount) VALUES (3,    "5%할인",    "5.0")
+INSERT INTO coupon (coupon_id, name, rate_of_discount) VALUES (1,   "10%",   "10.0")
+INSERT INTO coupon (coupon_id, name, rate_of_discount) VALUES (2,   "20%",   "20.0")
+INSERT INTO coupon (coupon_id, name, rate_of_discount) VALUES (3,    "5%",    "5.0")
 
