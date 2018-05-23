@@ -2,19 +2,26 @@
 -- Drop any existing data and create empty tables.
 
 DROP TABLE IF EXISTS client;
+DROP TABLE IF EXISTS my_list;
 DROP TABLE IF EXISTS delivery;
 DROP TABLE IF EXISTS product;
 DROP TABLE IF EXISTS coupon;
 DROP TABLE IF EXISTS productNum;
 
 CREATE TABLE client (
-  id        UNSIGNED INTEGER PRIMARY KEY AUTOINCREMENT,
-  email     VARCHAR(50) UNIQUE NOT NULL,
-  name      VARCHAR(50) NOT NULL,
-  password  VARCHAR(100) NOT NULL,
-  phone     UNSIGNED INTEGER UNIQUE NOT NULL,
-  address   VARCHAR(100),
-  mileage   UNSIGNED INTEGER
+  id                  UNSIGNED INTEGER PRIMARY KEY AUTOINCREMENT,
+  email               VARCHAR(50) UNIQUE NOT NULL,
+  name                VARCHAR(50) NOT NULL,
+  password            VARCHAR(100) NOT NULL,
+  phone               UNSIGNED INTEGER UNIQUE NOT NULL,
+  address             VARCHAR(100),
+  mileage             UNSIGNED INTEGER
+);
+
+CREATE TABLE my_list(
+  user_id             UNSIGNED INTEGER REFERENCE client(id),
+  product_id          UNSIGNED INTEGER REFERENCE product(product_id)
+  PRIMARY KEY(user_id, product_id)
 );
 
 CREATE TABLE delivery (
@@ -27,13 +34,13 @@ CREATE TABLE delivery (
 );
 
 CREATE TABLE product (
-  product_id  INTEGER PRIMARY KEY AUTOINCREMENT,
-  name        VARCHAR(50) UNIQUE NOT NULL,
-  category    VARCHAR(10) NOT NULL,
-  price       FLOAT NOT NULL,
-  stock       INTEGER NOT NULL ,
-  dc_rate     INTEGER DEFAULT '0' NOT NULL,
-  sales_num   INTEGER DEFAULT '0' NOT NULL
+  product_id          UNSIGNED INTEGER PRIMARY KEY AUTOINCREMENT,
+  name                VARCHAR(50) UNIQUE NOT NULL,
+  category            VARCHAR(10) NOT NULL,
+  price               FLOAT NOT NULL,
+  stock               INTEGER NOT NULL ,
+  dc_rate             INTEGER DEFAULT '0' NOT NULL,
+  sales_num           INTEGER DEFAULT '0' NOT NULL
 );
 
 
