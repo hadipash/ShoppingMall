@@ -23,8 +23,8 @@ CREATE TABLE delivery (
 	date_arrived        TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO delivery (order_id, delivery_company, location, status, date_arrived) VALUES (1,   "LOGEN",   "Busan", 1)
-INSERT INTO delivery (order_id, delivery_company, location, status, date_arrived) VALUES (2, "HYUNDAI",   "Seoul", 0)
-INSERT INTO delivery (order_id, delivery_company, location, status, date_arrived) VALUES (3,   "LOGEN", "Gwangju", 1)
-INSERT INTO delivery (order_id, delivery_company, location, status, date_arrived) VALUES (4,  "HANJIN",   "Seoul", 0)
-INSERT INTO Delivery (order_id, delivery_company, location, status, date_arrived) VALUES (5,  "HANJIN",   "BUSAN", 1)
+INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (1,   "LOGEN",   "Busan", 1)
+INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (2, "HYUNDAI",   "Seoul", 0)
+INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (3,   "LOGEN", "Gwangju", 1)
+INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (4,  "HANJIN",   "Seoul", 0)
+INSERT INTO Delivery (order_id, delivery_company, location, status) VALUES (5,  "HANJIN",   "BUSAN", 1)
