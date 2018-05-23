@@ -2,12 +2,14 @@
 -- Drop any existing data and create empty tables.
 
 DROP TABLE IF EXISTS client;
-DROP TABLE IF EXISTS my_list;
 DROP TABLE IF EXISTS delivery;
 DROP TABLE IF EXISTS product;
-DROP TABLE IF EXISTS my_list;
 DROP TABLE IF EXISTS coupon;
-DROP TABLE IF EXISTS productNum;
+DROP TABLE IF EXISTS my_list;
+DROP TABLE IF EXISTS cart_list;
+DROP TABLE IF EXISTS coupon_list;
+DROP TABLE IF EXISTS coupon_applied_product_list;
+
 
 CREATE TABLE client (
   id                  UNSIGNED INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -38,13 +40,11 @@ CREATE TABLE product (
   sales_num           INTEGER DEFAULT '0' NOT NULL
 );
 
-
-create table coupon (
+CREATE TABLE coupon (
   coupon_id           UNSIGNED INTEGER PRIMARY KEY AUTOINCREMENT,
   name                VARCHAR(50) NOT NULL,
   rate_of_discount    DOUBLE NOT NULL
 );
-
 
 
 -- Relational tables
@@ -68,7 +68,7 @@ CREATE TABLE coupon_list(
   PRIMARY KEY(user_id, coupon_id)
 );
 
-create table coupon_applied_product_list (
+CREATE TABLE coupon_applied_product_list (
   coupon_id           UNSIGNED INTEGER REFERENCE coupon(coupon_id),
   product_id          UNSIGNED INTEGER REFERENCE product(product_id)
   PRIMARY KEY(user_id, product_id)
@@ -96,5 +96,5 @@ INSERT INTO Delivery (order_id, delivery_company, location, status) VALUES (5,  
 
 INSERT INTO coupon (coupon_id, name, rate_of_discount) VALUES (1,   "10%할인",   "10.0")
 INSERT INTO coupon (coupon_id, name, rate_of_discount) VALUES (2,   "20%할인",   "20.0")
-INSERT INTO coupon (coupon_id, name, rate_of_discount) VALUES (3,   "5%할인",   "5.0")
+INSERT INTO coupon (coupon_id, name, rate_of_discount) VALUES (3,    "5%할인",    "5.0")
 
