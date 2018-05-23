@@ -4,6 +4,8 @@
 DROP TABLE IF EXISTS client;
 DROP TABLE IF EXISTS delivery;
 DROP TABLE IF EXISTS product;
+DROP TABLE IF EXISTS coupon;
+DROP TABLE IF EXISTS productNum;
 
 CREATE TABLE client (
   id        UNSIGNED INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -16,12 +18,12 @@ CREATE TABLE client (
 );
 
 CREATE TABLE delivery (
-    track_number        UNSIGNED INTEGER PRIMARY KEY AUTOINCREMENT,
-    order_id            UNSIGNED INTEGER UNIQUE NOT NULL,
-    delivery_company    VARCHAR(50) NOT NULL,
-    location            VARCHAR(100) NOT NULL,
-    status              INTEGER NOT NULL,
-    date_arrived        TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  track_number        UNSIGNED INTEGER PRIMARY KEY AUTOINCREMENT,
+  order_id            UNSIGNED INTEGER UNIQUE NOT NULL,
+  delivery_company    VARCHAR(50) NOT NULL,
+  location            VARCHAR(100) NOT NULL,
+  status              INTEGER NOT NULL,
+  date_arrived        TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE product (
@@ -32,6 +34,19 @@ CREATE TABLE product (
   stock       INTEGER NOT NULL ,
   dc_rate     INTEGER DEFAULT '0' NOT NULL,
   sales_num   INTEGER DEFAULT '0' NOT NULL
+);
+
+
+create table coupon (
+  coupon_id              UNSIGNED integer primary key autoincrement,
+  name            string not null,
+  rate_of_discount  double not null,
+
+);
+
+create table productNum (
+  coupon_id UNSIGNED integer primary key autoincrement,
+  FOREIGN KEY product_id REFERENCES  product
 );
 
 INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (1,   "LOGEN",   "Busan", 1)
