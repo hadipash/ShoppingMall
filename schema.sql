@@ -1,8 +1,9 @@
 -- Initialize the database.
 -- Drop any existing data and create empty tables.
--- Test
+
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS post;
+DROP TABLE IF EXISTS delivery;
 
 CREATE TABLE user (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
