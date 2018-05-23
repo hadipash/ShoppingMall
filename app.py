@@ -31,7 +31,7 @@ def create_app(test_config=None):
         return 'Hello, World!'
 
     # register the database commands
-    import db
+    from DAOs import db
     db.init_app(app)
 
     # apply the blueprints to the app
