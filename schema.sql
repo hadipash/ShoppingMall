@@ -93,3 +93,15 @@ INSERT INTO coupon (coupon_id, name, discount) VALUES (1,   "10%",   "10.0");
 INSERT INTO coupon (coupon_id, name, discount) VALUES (2,   "20%",   "20.0");
 INSERT INTO coupon (coupon_id, name, discount) VALUES (3,    "5%",    "5.0");
 
+INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("flower dress", "clothes", 44.95, 15, 15, 8)
+INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("blue stripe shirt", "clothes", 5.95, 20, 10, 13)
+INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("brown coat", "clothes", 5.66, 17, 5, 5)
+INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("avocado", "food", 10.1, 15, 30, 24)
+INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("apple", "food", 4.95, 13, 13, 33)
+INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("crap", "food", 11.1, 24, 0, 11)
+INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("paradox lost", "book", 6.95, 5, 35, 26)
+INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("visual studio guide", "book", 49.95, 2, 7, 0)
+INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("microsoft: the programming bible", "book", 36.95, 5, 7, 19)
+
+
+
