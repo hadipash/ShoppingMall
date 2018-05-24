@@ -9,6 +9,8 @@ DROP TABLE IF EXISTS my_list;
 DROP TABLE IF EXISTS cart_list;
 DROP TABLE IF EXISTS coupon_list;
 DROP TABLE IF EXISTS coupon_applied_product_list;
+DROP TABLE IF EXISTS refund;
+DROP TABLE IF EXISTS payment;
 
 
 CREATE TABLE client (
@@ -66,6 +68,24 @@ CREATE TABLE coupon_list(
   coupon_id           UNSIGNED INTEGER REFERENCES coupon(coupon_id),
   quantity            UNSIGNED INTEGER NOT NULL,
   PRIMARY KEY(user_id, coupon_id)
+);
+
+create table refund (
+    refundNum         INTEGER AUTOINCREMENT,
+    paymentNum        INTEGER REFERENCES payment(paymentNum),
+    refundAdr         STRING NOT NULL,
+    PRIMARY KEY(refundNum, paymentNum)
+);
+
+create table payment (
+    paymentNum        INTEGER autoincrement,
+    price             INTEGER NOT NULL,
+    shippingFee       INTEGER,
+    name              STRING NOT NULL,
+    phone             INTEGER NOT NULL,
+    address           STRING NOT NULL,
+    discount          INTEGER
+    PRIMARY KEY(paymentNum)
 );
 
 
