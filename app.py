@@ -30,6 +30,9 @@ def create_app(test_config=None):
     def hello():
         return 'Hello, World!'
 
+    @app.route('/coupon')
+    def coupon():
+        return 'coupon'
     # register the database commands
     from DAOs import db
     db.init_app(app)
