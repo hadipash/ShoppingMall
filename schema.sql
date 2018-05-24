@@ -105,6 +105,3 @@ INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("
 
 
 
-
-
-
