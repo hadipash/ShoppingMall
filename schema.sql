@@ -103,8 +103,3 @@ INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("
 INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("visual studio guide", "book", 49.95, 2, 7, 0);
 INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("microsoft: the programming bible", "book", 36.95, 5, 7, 19);
 
-
-
-
-
-
