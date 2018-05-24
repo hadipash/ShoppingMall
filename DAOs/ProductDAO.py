@@ -2,9 +2,8 @@ from DAOs import db
 
 
 class ProductDAO:
-    def __init__(self, product_id):
+    def __init__(self):
         self.db = db.get_db()
-        self.product_id = product_id
 
     def __enter__(self):
         return self
