@@ -38,12 +38,17 @@ class ClientDAO:
         self.db.execute('INSERT INTO cart_list (user_id, product_id, quantity) VALUES (?, ?, ?)',
                         (client_id, product_id, quantity))
 
+    def delCartItem(self, client_id, product_id):
+        self.db.execute('DELETE FROM cart_list WHERE user_id=? AND product_id=?', (client_id, product_id))
+
     def getCouponList(self, client_id):
         return self.db.execute('SELECT * FROM coupon_list WHERE user_id=?', (client_id,))
 
-    def addCoupon(self, client_id, coupon_id, quantity):
-        self.db.execute('INSERT INTO coupon_list (user_id, coupon_id, quantity) VALUES (?, ?, ?)',
-                        (client_id, coupon_id, quantity))
+    def addCoupon(self, client_id, coupon_id):
+        self.db.execute('INSERT INTO coupon_list (user_id, coupon_id) VALUES (?, ?)', (client_id, coupon_id))
+
+    def delCoupon(self, client_id, coupon_id):
+        self.db.execute('DELETE FROM coupon_list WHERE user_id=? AND coupon_id=?', (client_id, coupon_id))
 
     def getMyList(self, client_id):
         return self.db.execute('SELECT * FROM my_list WHERE user_id=?', (client_id,))
@@ -51,3 +56,6 @@ class ClientDAO:
     def addMyListItem(self, client_id, product_id):
         self.db.execute('INSERT INTO my_list (user_id, product_id) VALUES (?, ?)',
                         (client_id, product_id))
+
+    def delMyListItem(self, client_id, product_id):
+        self.db.execute('DELETE FROM my_list WHERE user_id=? AND product_id=?', (client_id, product_id))
