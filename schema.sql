@@ -49,14 +49,13 @@ CREATE TABLE coupon (
 );
 
 create table payment (
-    paymentNum        INTEGER autoincrement,
+    paymentNum        INTEGER PRIMARY KEY AUTOINCREMENT,
     price             INTEGER NOT NULL,
     shippingFee       INTEGER,
     name              STRING NOT NULL,
     phone             INTEGER NOT NULL,
     address           STRING NOT NULL,
     discount          INTEGER
-    PRIMARY KEY(paymentNum)
 );
 
 
@@ -81,13 +80,12 @@ CREATE TABLE coupon_list(
 );
 
 create table refund (
-    refundNum         INTEGER AUTOINCREMENT,
+    refundNum         INTEGER PRIMARY KEY AUTOINCREMENT,
     paymentNum        INTEGER REFERENCES payment(paymentNum),
-    refundAdr         STRING NOT NULL,
-    PRIMARY KEY(refundNum, paymentNum)
+    refundAdr         STRING NOT NULL
 );
 
-CREATE TABLE order(
+CREATE TABLE product_order (
   user_id             INTEGER REFERENCES client(id),
   track_number        INTEGER REFERENCES delivery(track_number),
   PRIMARY KEY(user_id, track_number)
