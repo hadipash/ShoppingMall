@@ -48,6 +48,17 @@ CREATE TABLE coupon (
   discount            DOUBLE NOT NULL
 );
 
+create table payment (
+    paymentNum        INTEGER autoincrement,
+    price             INTEGER NOT NULL,
+    shippingFee       INTEGER,
+    name              STRING NOT NULL,
+    phone             INTEGER NOT NULL,
+    address           STRING NOT NULL,
+    discount          INTEGER
+    PRIMARY KEY(paymentNum)
+);
+
 
 -- Relational tables
 CREATE TABLE my_list(
@@ -74,17 +85,6 @@ create table refund (
     paymentNum        INTEGER REFERENCES payment(paymentNum),
     refundAdr         STRING NOT NULL,
     PRIMARY KEY(refundNum, paymentNum)
-);
-
-create table payment (
-    paymentNum        INTEGER autoincrement,
-    price             INTEGER NOT NULL,
-    shippingFee       INTEGER,
-    name              STRING NOT NULL,
-    phone             INTEGER NOT NULL,
-    address           STRING NOT NULL,
-    discount          INTEGER
-    PRIMARY KEY(paymentNum)
 );
 
 CREATE TABLE order(
