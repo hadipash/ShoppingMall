@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Search Product Name{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+        <!-- <label for="product_name">product_name</label>
+        <input name="product_name" id="product_name" required> -->
+        <!-- <input type="search" name="product_name" size="10"> -->
+        <input type="search" id="search_bar" name="product_name" size="10">
+        <input type="submit" value="Search">
+    </form>
+    {% if products %}
+        {% for product in products %}
+            <article class="product_into">
+                <header>
+                    <div>
+                    <h1>{{ product['pname'] }}</h1>
+                    <div class="about">name: {{ product['name'] }}, price: {{ product['price'] }}, stock: {{ product['stock'] }}, category: {{ product['category'] }},  <a href="">Buying</a></div>
+                    </div>
+                </header>
+                <p class="description">dc_rate: {{ product['dc_rate'] }}, sales_num: {{ product['sales_num'] }},</p>
+
+            </article>
+            {% if not loop.last %}
+            <hr>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock %}
