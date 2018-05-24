@@ -64,14 +64,11 @@ CREATE TABLE cart_list(
 CREATE TABLE coupon_list(
   user_id             UNSIGNED INTEGER REFERENCES client(id),
   coupon_id           UNSIGNED INTEGER REFERENCES coupon(coupon_id),
-  quantity            UNSIGNED INTEGER NOT NULL,
   PRIMARY KEY(user_id, coupon_id)
 );
 
 
 -- Insert entities into the tables
-
-
 INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Maegan.Keith@gmail.com",     "Maegan Keith",     "12345", 01011111111, "Gwangju",  0);
 INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Reynold.Delroy@gmail.com",   "Reynold Delroy",   "54321", 01022222222, "Busan",    325);
 INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Agnes.Maurice@gmail.com",    "Agnes Maurice",    "11111", 01033333333, "Seoul",    547);
@@ -102,4 +99,3 @@ INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("
 INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("paradox lost", "book", 6.95, 5, 35, 26);
 INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("visual studio guide", "book", 49.95, 2, 7, 0);
 INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("microsoft: the programming bible", "book", 36.95, 5, 7, 19);
-
