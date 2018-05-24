@@ -43,7 +43,7 @@ CREATE TABLE product (
 CREATE TABLE coupon (
   coupon_id           UNSIGNED INTEGER PRIMARY KEY AUTOINCREMENT,
   name                VARCHAR(50) NOT NULL,
-  rate_of_discount    DOUBLE NOT NULL
+  discount            DOUBLE NOT NULL
 );
 
 
@@ -68,11 +68,6 @@ CREATE TABLE coupon_list(
   PRIMARY KEY(user_id, coupon_id)
 );
 
-CREATE TABLE coupon_applied_product_list (
-  coupon_id           UNSIGNED INTEGER REFERENCE coupon(coupon_id),
-  product_id          UNSIGNED INTEGER REFERENCE product(product_id)
-  PRIMARY KEY(user_id, product_id)
-);
 
 -- Insert entities into the tables
 
@@ -94,7 +89,7 @@ INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (3,  
 INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (4,  "HANJIN",   "Seoul", 0)
 INSERT INTO Delivery (order_id, delivery_company, location, status) VALUES (5,  "HANJIN",   "BUSAN", 1)
 
-INSERT INTO coupon (coupon_id, name, rate_of_discount) VALUES (1,   "10%",   "10.0")
-INSERT INTO coupon (coupon_id, name, rate_of_discount) VALUES (2,   "20%",   "20.0")
-INSERT INTO coupon (coupon_id, name, rate_of_discount) VALUES (3,    "5%",    "5.0")
+INSERT INTO coupon (coupon_id, name, discount) VALUES (1,   "10%",   "10.0")
+INSERT INTO coupon (coupon_id, name, discount) VALUES (2,   "20%",   "20.0")
+INSERT INTO coupon (coupon_id, name, discount) VALUES (3,    "5%",    "5.0")
 
