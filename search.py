@@ -17,11 +17,17 @@ def product_name():
 
         if not product_name:
             error = 'Product name is required'
+
         if error is None:
             products = db.execute(
                 'SELECT * FROM product WHERE name = ?', (product_name,)
             ).fetchall()
-            print(type(products))
-            print(len(products))
+
             return render_template('search/product_name.html', products=products)
     return render_template('search/product_name.html', products=None)
+
+
+@bp.route('/category', methods=('GET', 'POST'))
+def category():
+    return render_template('search/category.html', products=None)
+

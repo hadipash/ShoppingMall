@@ -6,9 +6,6 @@
 
 {% block content %}
     <form method="post">
-        <!-- <label for="product_name">product_name</label>
-        <input name="product_name" id="product_name" required> -->
-        <!-- <input type="search" name="product_name" size="10"> -->
         <input type="search" id="search_bar" name="product_name" size="10">
         <input type="submit" value="Search">
     </form>
@@ -17,8 +14,8 @@
             <article class="product_into">
                 <header>
                     <div>
-                    <h1>{{ product['pname'] }}</h1>
-                    <div class="about">name: {{ product['name'] }}, price: {{ product['price'] }}, stock: {{ product['stock'] }}, category: {{ product['category'] }},  <a href="">Buying</a></div>
+                    <h1>{{ product['name'] }}</h1>
+                    <div class="about">price: {{ product['price'] }}, stock: {{ product['stock'] }}, category: {{ product['category'] }},  <a href="">Buying</a></div>
                     </div>
                 </header>
                 <p class="description">dc_rate: {{ product['dc_rate'] }}, sales_num: {{ product['sales_num'] }},</p>
