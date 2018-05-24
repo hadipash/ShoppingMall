@@ -49,13 +49,13 @@ CREATE TABLE coupon (
 );
 
 create table payment (
-    paymentNum        INTEGER PRIMARY KEY AUTOINCREMENT,
-    price             INTEGER NOT NULL,
-    shippingFee       INTEGER,
-    name              STRING NOT NULL,
-    phone             INTEGER NOT NULL,
-    address           STRING NOT NULL,
-    discount          INTEGER
+  paymentNum        INTEGER PRIMARY KEY AUTOINCREMENT,
+  price             INTEGER NOT NULL,
+  shippingFee       INTEGER,
+  name              STRING NOT NULL,
+  phone             INTEGER NOT NULL,
+  address           STRING NOT NULL,
+  discount          INTEGER
 );
 
 
@@ -80,9 +80,9 @@ CREATE TABLE coupon_list(
 );
 
 create table refund (
-    refundNum         INTEGER PRIMARY KEY AUTOINCREMENT,
-    paymentNum        INTEGER REFERENCES payment(paymentNum),
-    refundAdr         STRING NOT NULL
+  refundNum         INTEGER PRIMARY KEY AUTOINCREMENT,
+  paymentNum        INTEGER REFERENCES payment(paymentNum),
+  refundAdr         STRING NOT NULL
 );
 
 CREATE TABLE product_order (
@@ -108,7 +108,7 @@ INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (1,  
 INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (2, "HYUNDAI",   "Seoul", 0);
 INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (3,   "LOGEN", "Gwangju", 1);
 INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (4,  "HANJIN",   "Seoul", 0);
-INSERT INTO Delivery (order_id, delivery_company, location, status) VALUES (5,  "HANJIN",   "BUSAN", 1);
+INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (5,  "HANJIN",   "Busan", 1);
 
 INSERT INTO coupon (coupon_id, name, discount) VALUES (1,   "10%",   "10.0");
 INSERT INTO coupon (coupon_id, name, discount) VALUES (2,   "20%",   "20.0");

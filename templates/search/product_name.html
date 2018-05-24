@@ -6,7 +6,7 @@
 
 {% block content %}
     <form method="post">
-        <input type="search" id="search_bar" name="product_name" size="10">
+        <input type="search" id="search_bar" name="product_name" size="20">
         <input type="submit" value="Search">
     </form>
     {% if products %}
@@ -15,10 +15,10 @@
                 <header>
                     <div>
                     <h1>{{ product['name'] }}</h1>
-                    <div class="about">price: {{ product['price'] }}, stock: {{ product['stock'] }}, category: {{ product['category'] }},  <a href="">Buying</a></div>
+                    <div class="about">Price: {{ product['price'] }}, Stock: {{ product['stock'] }}, Category: {{ product['category'] }},  <a href="">Buying</a></div>
                     </div>
                 </header>
-                <p class="description">dc_rate: {{ product['dc_rate'] }}, sales_num: {{ product['sales_num'] }},</p>
+                <p class="description">DC rate: {{ product['dc_rate'] }}, Sales num: {{ product['sales_num'] }},</p>
 
             </article>
             {% if not loop.last %}
