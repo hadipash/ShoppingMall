@@ -54,8 +54,7 @@ class ClientDAO:
         return self.db.execute('SELECT * FROM my_list WHERE user_id=?', (client_id,))
 
     def addMyListItem(self, client_id, product_id):
-        self.db.execute('INSERT INTO my_list (user_id, product_id) VALUES (?, ?)',
-                        (client_id, product_id))
+        self.db.execute('INSERT INTO my_list (user_id, product_id) VALUES (?, ?)', (client_id, product_id))
 
     def delMyListItem(self, client_id, product_id):
         self.db.execute('DELETE FROM my_list WHERE user_id=? AND product_id=?', (client_id, product_id))

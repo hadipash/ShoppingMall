@@ -51,21 +51,21 @@ CREATE TABLE coupon (
 
 -- Relational tables
 CREATE TABLE my_list(
-  user_id             UNSIGNED INTEGER REFERENCES client(id),
-  product_id          UNSIGNED INTEGER REFERENCES product(product_id),
+  user_id             INTEGER REFERENCES client(id),
+  product_id          INTEGER REFERENCES product(product_id),
   PRIMARY KEY(user_id, product_id)
 );
 
 CREATE TABLE cart_list(
-  user_id             UNSIGNED INTEGER REFERENCES client(id),
-  product_id          UNSIGNED INTEGER REFERENCES product(product_id),
+  user_id             INTEGER REFERENCES client(id),
+  product_id          INTEGER REFERENCES product(product_id),
   quantity            UNSIGNED INTEGER NOT NULL,
   PRIMARY KEY(user_id, product_id)
 );
 
 CREATE TABLE coupon_list(
-  user_id             UNSIGNED INTEGER REFERENCES client(id),
-  coupon_id           UNSIGNED INTEGER REFERENCES coupon(coupon_id),
+  user_id             INTEGER REFERENCES client(id),
+  coupon_id           INTEGER REFERENCES coupon(coupon_id),
   PRIMARY KEY(user_id, coupon_id)
 );
 
@@ -85,6 +85,12 @@ create table payment (
     address           STRING NOT NULL,
     discount          INTEGER
     PRIMARY KEY(paymentNum)
+);
+
+CREATE TABLE order(
+  user_id             INTEGER REFERENCES client(id),
+  track_number        INTEGER REFERENCES delivery(track_number),
+  PRIMARY KEY(user_id, track_number)
 );
 
 
