@@ -12,7 +12,7 @@ DROP TABLE IF EXISTS coupon_applied_product_list;
 
 
 CREATE TABLE client (
-  id                  UNSIGNED INTEGER PRIMARY KEY AUTOINCREMENT,
+  id                  INTEGER PRIMARY KEY AUTOINCREMENT,
   email               VARCHAR(50) UNIQUE NOT NULL,
   name                VARCHAR(50) NOT NULL,
   password            VARCHAR(100) NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE client (
 );
 
 CREATE TABLE delivery (
-  track_number        UNSIGNED INTEGER PRIMARY KEY AUTOINCREMENT,
+  track_number        INTEGER PRIMARY KEY AUTOINCREMENT,
   order_id            UNSIGNED INTEGER UNIQUE NOT NULL,
   delivery_company    VARCHAR(50) NOT NULL,
   location            VARCHAR(100) NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE delivery (
 );
 
 CREATE TABLE product (
-  product_id          UNSIGNED INTEGER PRIMARY KEY AUTOINCREMENT,
+  product_id          INTEGER PRIMARY KEY AUTOINCREMENT,
   name                VARCHAR(50) UNIQUE NOT NULL,
   category            VARCHAR(10) NOT NULL,
   price               FLOAT NOT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE product (
 );
 
 CREATE TABLE coupon (
-  coupon_id           UNSIGNED INTEGER PRIMARY KEY AUTOINCREMENT,
+  coupon_id           INTEGER PRIMARY KEY AUTOINCREMENT,
   name                VARCHAR(50) NOT NULL,
   discount            DOUBLE NOT NULL
 );
@@ -61,47 +61,39 @@ CREATE TABLE cart_list(
   PRIMARY KEY(user_id, product_id)
 );
 
-CREATE TABLE coupon_list(
-  user_id             UNSIGNED INTEGER REFERENCES client(id),
-  coupon_id           UNSIGNED INTEGER REFERENCES coupon(coupon_id),
-  quantity            UNSIGNED INTEGER NOT NULL,
-  PRIMARY KEY(user_id, coupon_id)
-);
-
-
 -- Insert entities into the tables
 
 
-INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Maegan.Keith@gmail.com",     "Maegan Keith",     "12345", 01011111111, "Gwangju",  0)
-INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Reynold.Delroy@gmail.com",   "Reynold Delroy",   "54321", 01022222222, "Busan",    325)
-INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Agnes.Maurice@gmail.com",    "Agnes Maurice",    "11111", 01033333333, "Seoul",    547)
-INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Josh.Asher@gmail.com",       "Josh Asher",       "22222", 01044444444, "Gwangju",  0)
-INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Kallie.Ainsley@gmail.com",   "Kallie Ainsley",   "33333", 01055555555, "Seoul",    324)
-INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Alphonso.Konnor@gmail.com",  "Alphonso Konnor",  "44444", 01066666666, "Busan",    2345)
-INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Cheri.Arianna@gmail.com",    "Cheri Arianna",    "55555", 01077777777, "Seoul",    0)
-INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Saxon.Barret@gmail.com",     "Saxon Barret",     "66666", 01088888888, "Gwangju",  4574)
-INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Flossie.Jeannine@gmail.com", "Flossie Jeannine", "77777", 01000000000, "Seoul",    0)
-INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Austin.Dustin@gmail.com",    "Austin Dustin",    "99999", 01099999999, "Busan",    734)
+INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Maegan.Keith@gmail.com",     "Maegan Keith",     "12345", 01011111111, "Gwangju",  0);
+INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Reynold.Delroy@gmail.com",   "Reynold Delroy",   "54321", 01022222222, "Busan",    325);
+INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Agnes.Maurice@gmail.com",    "Agnes Maurice",    "11111", 01033333333, "Seoul",    547);
+INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Josh.Asher@gmail.com",       "Josh Asher",       "22222", 01044444444, "Gwangju",  0);
+INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Kallie.Ainsley@gmail.com",   "Kallie Ainsley",   "33333", 01055555555, "Seoul",    324);
+INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Alphonso.Konnor@gmail.com",  "Alphonso Konnor",  "44444", 01066666666, "Busan",    2345);
+INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Cheri.Arianna@gmail.com",    "Cheri Arianna",    "55555", 01077777777, "Seoul",    0);
+INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Saxon.Barret@gmail.com",     "Saxon Barret",     "66666", 01088888888, "Gwangju",  4574);
+INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Flossie.Jeannine@gmail.com", "Flossie Jeannine", "77777", 01000000000, "Seoul",    0);
+INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Austin.Dustin@gmail.com",    "Austin Dustin",    "99999", 01099999999, "Busan",    734);
 
-INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (1,   "LOGEN",   "Busan", 1)
-INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (2, "HYUNDAI",   "Seoul", 0)
-INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (3,   "LOGEN", "Gwangju", 1)
-INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (4,  "HANJIN",   "Seoul", 0)
-INSERT INTO Delivery (order_id, delivery_company, location, status) VALUES (5,  "HANJIN",   "BUSAN", 1)
+INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (1,   "LOGEN",   "Busan", 1);
+INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (2, "HYUNDAI",   "Seoul", 0);
+INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (3,   "LOGEN", "Gwangju", 1);
+INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (4,  "HANJIN",   "Seoul", 0);
+INSERT INTO Delivery (order_id, delivery_company, location, status) VALUES (5,  "HANJIN",   "BUSAN", 1);
 
-INSERT INTO coupon (coupon_id, name, discount) VALUES (1,   "10%",   "10.0")
-INSERT INTO coupon (coupon_id, name, discount) VALUES (2,   "20%",   "20.0")
-INSERT INTO coupon (coupon_id, name, discount) VALUES (3,    "5%",    "5.0")
+INSERT INTO coupon (coupon_id, name, discount) VALUES (1,   "10%",   "10.0");
+INSERT INTO coupon (coupon_id, name, discount) VALUES (2,   "20%",   "20.0");
+INSERT INTO coupon (coupon_id, name, discount) VALUES (3,    "5%",    "5.0");
 
-INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("flower dress", "clothes", 44.95, 15, 15, 8)
-INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("blue stripe shirt", "clothes", 5.95, 20, 10, 13)
-INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("brown coat", "clothes", 5.66, 17, 5, 5)
-INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("avocado", "food", 10.1, 15, 30, 24)
-INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("apple", "food", 4.95, 13, 13, 33)
-INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("crap", "food", 11.1, 24, 0, 11)
-INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("paradox lost", "book", 6.95, 5, 35, 26)
-INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("visual studio guide", "book", 49.95, 2, 7, 0)
-INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("microsoft: the programming bible", "book", 36.95, 5, 7, 19)
+INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("flower dress", "clothes", 44.95, 15, 15, 8);
+INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("blue stripe shirt", "clothes", 5.95, 20, 10, 13);
+INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("brown coat", "clothes", 5.66, 17, 5, 5);
+INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("avocado", "food", 10.1, 15, 30, 24);
+INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("apple", "food", 4.95, 13, 13, 33);
+INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("crap", "food", 11.1, 24, 0, 11);
+INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("paradox lost", "book", 6.95, 5, 35, 26);
+INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("visual studio guide", "book", 49.95, 2, 7, 0);
+INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("microsoft: the programming bible", "book", 36.95, 5, 7, 19);
 
 
 
