@@ -4,11 +4,10 @@
 <nav>
   <h1>ShoppingMall</h1>
   <ul>
-    {% if g.user %}
-      <li><span>{{ g.user['username'] }}</span>
+    {% if session.logged_in %}
       <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
+      <li><a href="{{ url_for('cart.cart_list') }}">Cart</a>
     {% else %}
-      <li><a href="{{ url_for('auth.register') }}">Register</a>
       <li><a href="{{ url_for('auth.login') }}">Log In</a>
     {% endif %}
   </ul>

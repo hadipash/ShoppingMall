@@ -123,3 +123,7 @@ INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("
 INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("paradox lost", "book", 6.95, 5, 35, 26);
 INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("visual studio guide", "book", 49.95, 2, 7, 0);
 INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("microsoft: the programming bible", "book", 36.95, 5, 7, 19);
+
+INSERT INTO cart_list (user_id, product_id, quantity) VALUES (1, 1, 1);
+INSERT INTO cart_list (user_id, product_id, quantity) VALUES (1, 2, 1);
+INSERT INTO cart_list (user_id, product_id, quantity) VALUES (1, 3, 1);
