@@ -48,47 +48,43 @@ CREATE TABLE coupon (
   discount            DOUBLE NOT NULL
 );
 
-create table payment (
-  paymentNum        INTEGER PRIMARY KEY AUTOINCREMENT,
-  price             INTEGER NOT NULL,
-  shippingFee       INTEGER,
-  name              STRING NOT NULL,
-  phone             INTEGER NOT NULL,
-  address           STRING NOT NULL,
-  discount          INTEGER
-);
-
 
 -- Relational tables
 CREATE TABLE my_list(
-  user_id             INTEGER REFERENCES client(id),
-  product_id          INTEGER REFERENCES product(product_id),
+  user_id             UNSIGNED INTEGER REFERENCES client(id),
+  product_id          UNSIGNED INTEGER REFERENCES product(product_id),
   PRIMARY KEY(user_id, product_id)
 );
 
 CREATE TABLE cart_list(
-  user_id             INTEGER REFERENCES client(id),
-  product_id          INTEGER REFERENCES product(product_id),
+  user_id             UNSIGNED INTEGER REFERENCES client(id),
+  product_id          UNSIGNED INTEGER REFERENCES product(product_id),
   quantity            UNSIGNED INTEGER NOT NULL,
   PRIMARY KEY(user_id, product_id)
 );
 
 CREATE TABLE coupon_list(
-  user_id             INTEGER REFERENCES client(id),
-  coupon_id           INTEGER REFERENCES coupon(coupon_id),
+  user_id             UNSIGNED INTEGER REFERENCES client(id),
+  coupon_id           UNSIGNED INTEGER REFERENCES coupon(coupon_id),
   PRIMARY KEY(user_id, coupon_id)
 );
 
 create table refund (
-  refundNum         INTEGER PRIMARY KEY AUTOINCREMENT,
-  paymentNum        INTEGER REFERENCES payment(paymentNum),
-  refundAdr         STRING NOT NULL
+    refundNum         INTEGER AUTOINCREMENT,
+    paymentNum        INTEGER REFERENCES payment(paymentNum),
+    refundAdr         STRING NOT NULL,
+    PRIMARY KEY(refundNum, paymentNum)
 );
 
-CREATE TABLE product_order (
-  user_id             INTEGER REFERENCES client(id),
-  track_number        INTEGER REFERENCES delivery(track_number),
-  PRIMARY KEY(user_id, track_number)
+create table payment (
+    paymentNum        INTEGER autoincrement,
+    price             INTEGER NOT NULL,
+    shippingFee       INTEGER,
+    name              STRING NOT NULL,
+    phone             INTEGER NOT NULL,
+    address           STRING NOT NULL,
+    discount          INTEGER
+    PRIMARY KEY(paymentNum)
 );
 
 
@@ -108,7 +104,11 @@ INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (1,  
 INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (2, "HYUNDAI",   "Seoul", 0);
 INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (3,   "LOGEN", "Gwangju", 1);
 INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (4,  "HANJIN",   "Seoul", 0);
-INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (5,  "HANJIN",   "Busan", 1);
+INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (5,  "HANJIN",   "BUSAN", 1);
+
+INSERT INTO cart_list (user_id, product_id, quantity) VALUES (1,   1,   1);
+INSERT INTO cart_list (user_id, product_id, quantity) VALUES (1,   2,   1);
+INSERT INTO cart_list (user_id, product_id, quantity) VALUES (1,   3,   1);
 
 INSERT INTO coupon (coupon_id, name, discount) VALUES (1,   "10%",   "10.0");
 INSERT INTO coupon (coupon_id, name, discount) VALUES (2,   "20%",   "20.0");

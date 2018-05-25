@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Product_list{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <ul class=lists>
+  {% for item in lists %}
+    <li><h2>{{ item.name}}</h2>{{ item.price|safe }}
+  {% else %}
+    <li><em>No item exist.</em>
+  {% endfor %}
+  </ul>
+{% endblock %}

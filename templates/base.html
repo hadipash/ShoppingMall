@@ -3,15 +3,14 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <nav>
   <h1>ShoppingMall</h1>
-  <ul>
-    {% if g.user %}
-      <li><span>{{ g.user['username'] }}</span>
-      <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
-    {% else %}
-      <li><a href="{{ url_for('auth.register') }}">Register</a>
+  <div class=metanav>
+    {% if not session.logged_in %}
       <li><a href="{{ url_for('auth.login') }}">Log In</a>
+    {% else %}
+      <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
+      <li><a href="{{ url_for('cart.cart_list') }}">Cart</a>
     {% endif %}
-  </ul>
+  <div class=metanav>
 </nav>
 <section class="content">
   <header>
