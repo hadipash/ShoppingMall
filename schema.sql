@@ -5,12 +5,12 @@ DROP TABLE IF EXISTS client;
 DROP TABLE IF EXISTS delivery;
 DROP TABLE IF EXISTS product;
 DROP TABLE IF EXISTS coupon;
+DROP TABLE IF EXISTS payment;
 DROP TABLE IF EXISTS my_list;
 DROP TABLE IF EXISTS cart_list;
 DROP TABLE IF EXISTS coupon_list;
-DROP TABLE IF EXISTS coupon_applied_product_list;
 DROP TABLE IF EXISTS refund;
-DROP TABLE IF EXISTS payment;
+DROP TABLE IF EXISTS order;
 
 
 CREATE TABLE client (
@@ -85,7 +85,7 @@ create table refund (
   refundAdr         STRING NOT NULL
 );
 
-CREATE TABLE product_order (
+CREATE TABLE order (
   user_id             INTEGER REFERENCES client(id),
   track_number        INTEGER REFERENCES delivery(track_number),
   PRIMARY KEY(user_id, track_number)
