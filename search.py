@@ -23,11 +23,21 @@ def product_name():
                 'SELECT * FROM product WHERE name = ?', (product_name,)
             ).fetchall()
 
-            return render_template('search/product_name.html', products=products)
-    return render_template('search/product_name.html', products=None)
+            return render_template('search/product_name.html', product_name=product_name, products=products)
+    return render_template('search/product_name.html', product_name=None, products=None)
 
 
-@bp.route('/category', methods=('GET', 'POST'))
-def category():
-    return render_template('search/category.html', products=None)
+@bp.route('/category/')
+@bp.route('/category/<category>')
+def category(category=None):
+    if category is not None:
+        db = get_db()
+
+        products = db.execute(
+            'SELECT * FROM product WHERE category = ?', (category,)
+        ).fetchall()
+        print(len(products))
+
+        return render_template('search/category.html', category=category, products=products)
+    return render_template('search/category.html', category=category, products=None)
 

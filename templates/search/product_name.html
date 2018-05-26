@@ -5,25 +5,31 @@
 {% endblock %}
 
 {% block content %}
-    <form method="post">
-        <input type="search" id="search_bar" name="product_name" size="20">
-        <input type="submit" value="Search">
-    </form>
-    {% if products %}
-        {% for product in products %}
-            <article class="product_into">
-                <header>
-                    <div>
-                    <h1>{{ product['name'] }}</h1>
-                    <div class="about">Price: {{ product['price'] }}, Stock: {{ product['stock'] }}, Category: {{ product['category'] }},  <a href="">Buying</a></div>
-                    </div>
-                </header>
-                <p class="description">DC rate: {{ product['dc_rate'] }}, Sales num: {{ product['sales_num'] }},</p>
+    <div class="search_bar">
+        <form method="post">
+            <input type="search" id="search_bar" name="product_name" size="20">
+            <input type="submit" value="Search">
+        </form>
+    </div>
 
-            </article>
-            {% if not loop.last %}
-            <hr>
-            {% endif %}
-        {% endfor %}
-    {% endif %}
+    <div class="products_list">
+        {% if products %}
+            <h1><i>Search Result for [{{ product_name }}]</i></h1>
+            {% for product in products %}
+                <article class="product_into">
+                    <header>
+                        <div>
+                        <h2>{{ product['name'] }}</h2>
+                        <div class="about">Price: {{ product['price'] }}, Stock: {{ product['stock'] }}, Category: {{ product['category'] }},  <a href="">Buying</a></div>
+                        </div>
+                    </header>
+                    <p class="description">DC rate: {{ product['dc_rate'] }}, Sales num: {{ product['sales_num'] }},</p>
+
+                </article>
+                {% if not loop.last %}
+                <hr>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
 {% endblock %}

@@ -5,5 +5,32 @@
 {% endblock %}
 
 {% block content %}
-    <p>TODO</p>
+    <h2>Categories</h2>
+    <ul class="categories">
+        <li><a href="{{ url_for('search.category')}}clothes">Clothes</a></li>
+        <li><a href="{{ url_for('search.category')}}food">Food</a></li>
+        <li><a href="{{ url_for('search.category')}}book">Book</a></li>
+    </ul>
+
+    <div class="products_list">
+        {% if category %}
+            <h1><i>Search Result for [{{ category }}]</i></h1>
+            {% for product in products %}
+                <article class="product_into">
+                    <header>
+                        <div>
+                        <h2>{{ product['name'] }}</h2>
+                        <div class="about">Price: {{ product['price'] }}, Stock: {{ product['stock'] }}, Category: {{ product['category'] }},  <a href="">Buying</a></div>
+                        </div>
+                    </header>
+                    <p class="description">DC rate: {{ product['dc_rate'] }}, Sales num: {{ product['sales_num'] }},</p>
+
+                </article>
+                {% if not loop.last %}
+                <hr>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
+
 {% endblock %}
