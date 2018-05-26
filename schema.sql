@@ -48,7 +48,7 @@ CREATE TABLE coupon (
   discount            DOUBLE NOT NULL
 );
 
-create table payment (
+CREATE TABLE payment (
   paymentNum        INTEGER PRIMARY KEY AUTOINCREMENT,
   price             INTEGER NOT NULL,
   shippingFee       INTEGER,
@@ -56,6 +56,12 @@ create table payment (
   phone             INTEGER NOT NULL,
   address           STRING NOT NULL,
   discount          INTEGER
+);
+
+CREATE TABLE refund (
+  refundNum         INTEGER PRIMARY KEY AUTOINCREMENT,
+  paymentNum        INTEGER REFERENCES payment(paymentNum),
+  refundAdr         STRING NOT NULL
 );
 
 
@@ -77,12 +83,6 @@ CREATE TABLE coupon_list(
   user_id             INTEGER REFERENCES client(id),
   coupon_id           INTEGER REFERENCES coupon(coupon_id),
   PRIMARY KEY(user_id, coupon_id)
-);
-
-create table refund (
-  refundNum         INTEGER PRIMARY KEY AUTOINCREMENT,
-  paymentNum        INTEGER REFERENCES payment(paymentNum),
-  refundAdr         STRING NOT NULL
 );
 
 CREATE TABLE product_order (
