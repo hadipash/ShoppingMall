@@ -18,11 +18,28 @@ a {
 
 h1 {
     font-size: 38px;
-    font-weight: bold;
     line-height: 44px;
     margin-top: 20px;
-    margin-bottom: 10px;
     display: block;
+}
+
+h2 {
+    display: block;
+    font-size: 32px;
+    line-height: 36px;
+    margin-top: 20px;
+}
+
+h1, h2, h5 {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+h5 {
+    display: block;
+    font-size: 14px;
+    line-height: 20px;
+    margin-top: 10px;
 }
 
 body {
@@ -67,6 +84,11 @@ input {
 
 .heading {
     font-family: Montserrat, sans-serif;
+    text-align: center;
+}
+
+.heading-2 {
+    font-family: Inconsolata, monospace;
     text-align: center;
 }
 
@@ -156,4 +178,36 @@ input {
 .form-result {
     display: none;
     text-align: center;
+}
+
+.div-block-order {
+    margin-right: 400px;
+    margin-left: 400px;
+}
+
+.delivery-text {
+    float: left;
+}
+
+.confirm-button {
+    float: right;
+    border-radius: 20px;
+}
+
+.tack-button {
+    margin-right: 20px;
+    float: right;
+    border-radius: 20px;
+}
+
+.div-separator {
+    position: static;
+    max-height: 1px;
+    min-height: 1px;
+    margin-top: 70px;
+    clear: both;
+    background-color: transparent;
+    background-image: -webkit-radial-gradient(circle farthest-side at 50% 50%, #000, #595959 0%, #fff);
+    background-image: radial-gradient(circle farthest-side at 50% 50%, #000, #595959 0%, #fff);
+    opacity: 0.7;
 }
