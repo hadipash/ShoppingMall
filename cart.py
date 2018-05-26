@@ -16,7 +16,6 @@ def cart_list():
        'SELECT name, price FROM product WHERE product_id = '
        '(SELECT product_id FROM cart_list WHERE user_id = ?)', (username,)
     )
-    # lists = [dict(name=row[0], price=row[1]) for row in cur.fetchall()]
+    lists = [dict(name=row[0], price=row[1]) for row in cur.fetchall()]
 
-    # return render_template('cart/cart_list.html', lists=lists)
-    return 'hello'
+    return render_template('cart/cart_list.html', lists=lists)
