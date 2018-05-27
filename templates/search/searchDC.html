@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Search Hotdeal{% endblock %}</h1>
+  <h1>{% block title %}Search DC{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
     <div class="products_list">
         {% if products %}
-            <h1><i>Search Result for [{{ searchHOTDEAL }}]</i></h1>
+            <h1><i>Search Result for [{{ searchDC }}]</i></h1>
             {% for product in products %}
                 <article class="product_into">
                     <header>
