@@ -1,23 +1,27 @@
 <!doctype html>
 <title>{% block title %}{% endblock %} - Simple ShoppingMall</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<nav>
-  <h1>ShoppingMall</h1>
-  <ul>
-    {% if session.logged_in %}
-      <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
-      <li><a href="{{ url_for('cart.cart_list') }}">Cart</a>
-    {% else %}
-      <li><a href="{{ url_for('auth.login') }}">Log In</a>
-    {% endif %}
-  </ul>
-</nav>
+<h1 class="heading">ShoppingMall</h1>
+<div class="nav">
+    <div class="container">
+        <nav role="navigation" class="nav-menu">
+            {% if session.logged_in %}
+                <a href="{{ url_for('auth.logout') }}">Log Out</a>
+                <a href="{{ url_for('cart.cart_list') }}">Cart</a>
+                <a href="{{ url_for('coupon.coupon_list') }}">Coupon</a>
+            {% else %}
+                <a href="{{ url_for('auth.login') }}">Log In</a>
+            {% endif %}
+        </nav>
+    </div>
+</div>
+
 <section class="content">
   <header>
     {% block header %}{% endblock %}
   </header>
   {% for message in get_flashed_messages() %}
-    <div class="flash">{{ message }}</div>
+    <div class=flash>{{ message }}</div>
   {% endfor %}
   {% block content %}{% endblock %}
 </section>

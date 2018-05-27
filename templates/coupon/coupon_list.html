@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Coupon_list{% endblock %}</h1>
+{% endblock %}
+{% block content %}
+    <div class="coupon-block">
+
+        <ul class=lists>
+          {% for item in lists %}
+              <li>
+                <h4>{{item.name}}</h4><br><h4>할인율 : {{ item.discount }}</h4>
+                <a class="coupon-add-button button">Add</a>
+              </li>
+          {% else %}
+            <li><em>No item exist.</em>
+          {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
+
