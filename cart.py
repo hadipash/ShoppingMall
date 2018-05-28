@@ -2,7 +2,7 @@ from flask import (
     Blueprint, g, redirect, render_template, request, session, url_for, flash
 )
 
-from DAOs.db import init_db
+from DAOs.db import init_db, close_db
 
 bp = Blueprint('cart', __name__, url_prefix='/cart')
 
@@ -10,6 +10,7 @@ bp = Blueprint('cart', __name__, url_prefix='/cart')
 @bp.route('/cart_list', methods=('GET', 'POST'))
 def cart_list():
     username = session['user_id']
+    close_db()
     init_db()
 
     cur = g.db.execute(
@@ -25,3 +26,6 @@ def delete_item():
 #    db = get_db()
 
     return redirect('cart/cart_list.html')
+
+#def purchase_item():
+    #return render_template('purchase/purchase.html', productInfo=productInfo)
