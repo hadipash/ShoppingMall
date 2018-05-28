@@ -35,10 +35,8 @@ def create_app(test_config=None):
     def coupon():
         return 'coupon'
     # register the database commands
-    @app.route('/initDB')
-    def db_init():
-        db.init_db();
-        return "DB setting complete"
+    db.init_app(app)
+
     # apply the blueprints to the app
     import auth, blog, search, cart, coupon, mylist
     app.register_blueprint(auth.bp)
