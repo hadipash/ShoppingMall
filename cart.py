@@ -19,3 +19,9 @@ def cart_list():
     lists = [dict(name=row[0], price=row[1]) for row in cur.fetchall()]
 
     return render_template('cart/cart_list.html', lists=lists)
+
+
+def delete_item():
+    db = get_db()
+
+    return redirect('cart/cart_list.html')

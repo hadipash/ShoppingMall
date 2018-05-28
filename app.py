@@ -1,6 +1,7 @@
 import os
 
 from flask import Flask
+from DAOs import db
 
 
 def create_app(test_config=None):
@@ -12,6 +13,7 @@ def create_app(test_config=None):
         # store the database in the instance folder
         DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
     )
+    db.init_app(app)
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
@@ -34,15 +36,14 @@ def create_app(test_config=None):
     def coupon():
         return 'coupon'
     # register the database commands
-    from DAOs import db
-    db.init_app(app)
 
     # apply the blueprints to the app
-    import auth, blog, search, cart
+    import auth, blog, search, cart, coupon
     app.register_blueprint(auth.bp)
     app.register_blueprint(blog.bp)
     app.register_blueprint(search.bp)
     app.register_blueprint(cart.bp)
+    app.register_blueprint(coupon.bp)
 
     # make url_for('index') == url_for('blog.index')
     # in another app, you might define a separate main index here with
