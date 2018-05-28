@@ -8,11 +8,7 @@
     <script>
         function delete_item(id) {
             $.ajax({
-                url: '/cart/delete_item',
-                data: id,
-                type: 'POST',
-                contentType: false,
-                processData: false,
+                url: '/cart/delete_item', data: id, type: 'POST', contentType: false, processData: false,
                 success: function(data) {
                     if(data.result) {
                         location.reload();
@@ -25,7 +21,8 @@
   {% for item in lists %}
       <br>
         <li>
-          <h3>product : {{ item.name}}  <br> price : {{ item.price|safe }}</h3>  <a class="button button" onclick="delete_item({{ item.id }})">delete</a> <br>
+          <h3>product : {{ item.name}}  <br> price : {{ item.price|safe }}</h3>
+          <a class="button button" onclick="delete_item({{ item.id }})">delete</a> <br>
         </li>
   {% else %}
       <li><em>No item exist.</em></li>

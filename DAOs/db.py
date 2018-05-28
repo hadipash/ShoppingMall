@@ -54,3 +54,4 @@ def init_app(app):
     app.teardown_appcontext(close_db)
     # add a new command that can be called with the flask command.
     app.cli.add_command(init_db_command)
+

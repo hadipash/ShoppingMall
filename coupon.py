@@ -9,12 +9,10 @@ bp = Blueprint('coupon', __name__, url_prefix='/coupon')
 
 @bp.route('/add_coupon', methods=['POST'])
 def add_coupon():
-    # 사용자아이디 가져오기
     userid = 1
 
     db = get_db()
 
-    # 일단 다지우기
     db.execute('DELETE FROM coupon_list')
 
     db.execute('INSERT into coupon_list(user_id,coupon_id) values(?,?)',
