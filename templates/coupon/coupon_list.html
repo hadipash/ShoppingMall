@@ -10,7 +10,12 @@
           {% for item in lists %}
               <li>
                 <h4>{{item.name}}</h4><br><h4>할인율 : {{ item.discount }}</h4>
-                <a class="coupon-add-button button">Add</a>
+                  <form action="http://localhost:5000/coupon/add_coupon" method=post class=add-coupon>
+                        <input type="hidden" name=coupon_id value={{item.coupon_id   }}>
+                        <p><input type=submit value=add></p>
+
+                  </form>
+
               </li>
           {% else %}
             <li><em>No item exist.</em>
@@ -18,4 +23,3 @@
         </ul>
     </div>
 {% endblock %}
-
