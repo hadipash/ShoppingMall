@@ -3,8 +3,6 @@ import functools
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
 )
-from werkzeug.security import check_password_hash, generate_password_hash
-
 from DAOs.db import get_db
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
@@ -37,24 +35,29 @@ def load_logged_in_user():
 @bp.route('/login', methods=('GET', 'POST'))
 def login():
     """Log in a registered user by adding the user id to the session."""
-    error = None
     if request.method == 'POST':
         email = request.form['username']
         password = request.form['password']
-
         db = get_db()
+        error = None
+
         user = db.execute('SELECT * FROM client WHERE email=?', (email,)).fetchone()
 
         if user is None:
             error = 'Invalid email'
         elif password != user['password']:
             error = 'Invalid password'
-        else:
+
+        if error is None:
+            # store the user id in a new session and return to the index
             session.clear()
             session['user_id'] = user['id']
             flash('Welcome, ' + user['name'])
-            return render_template('base.html')
-    return render_template('auth/login.html', error=error)
+            return redirect(url_for('index'))
+
+        flash(error)
+
+    return render_template('auth/login.html')
 
 
 @bp.route('/logout')

@@ -11,6 +11,7 @@ DROP TABLE IF EXISTS coupon_list;
 DROP TABLE IF EXISTS coupon_applied_product_list;
 DROP TABLE IF EXISTS refund;
 DROP TABLE IF EXISTS payment;
+DROP TABLE IF EXISTS product_order;
 
 
 CREATE TABLE client (
