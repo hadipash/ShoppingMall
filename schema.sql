@@ -127,7 +127,13 @@ INSERT INTO product (name, category, price, stock, dc_rate, sales_num) VALUES ("
 INSERT INTO cart_list (user_id, product_id, quantity) VALUES (1, 1, 1);
 INSERT INTO cart_list (user_id, product_id, quantity) VALUES (1, 2, 1);
 INSERT INTO cart_list (user_id, product_id, quantity) VALUES (1, 3, 1);
+INSERT INTO cart_list (user_id, product_id, quantity) VALUES (1, 4, 1);
+INSERT INTO cart_list (user_id, product_id, quantity) VALUES (1, 5, 1);
+INSERT INTO cart_list (user_id, product_id, quantity) VALUES (1, 6, 1);
 
 INSERT INTO my_list (user_id, product_id) VALUES (1, 4);
 INSERT INTO my_list (user_id, product_id) VALUES (1, 5);
 INSERT INTO my_list (user_id, product_id) VALUES (1, 6);
+INSERT INTO my_list (user_id, product_id) VALUES (1, 7);
+INSERT INTO my_list (user_id, product_id) VALUES (1, 8);
+INSERT INTO my_list (user_id, product_id) VALUES (1, 9);

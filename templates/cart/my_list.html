@@ -5,12 +5,28 @@
 {% endblock %}
 
 {% block content %}
+    <script>
+        function delete_item(id) {
+            $.ajax({
+                url: '/mylist/delete_item',
+                data: id,
+                type: 'POST',
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    if(data.result) {
+                        location.reload();
+                    }
+                }
+            });
+        }
+    </script>
   <ul class=lists>
   {% for item in lists %}
       <br>
       <li>
           <h2><a href="{{ url_for('mylist.my_list') }}">product : {{ item.name }}</a></h2>
-          <a class="button button">delete</a> <br>
+          <a class="button button" onclick="delete_item({{ item.id }})">delete</a> <br>
       </li>
   {% else %}
       <li><em>No item exist.</em></li>

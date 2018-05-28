@@ -3,6 +3,7 @@ import os
 from flask import Flask
 from DAOs import db
 
+
 def create_app(test_config=None):
     """Create and configure an instance of the Flask application."""
     app = Flask(__name__, instance_relative_config=True)
@@ -12,7 +13,6 @@ def create_app(test_config=None):
         # store the database in the instance folder
         DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
     )
-    db.init_app(app)
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
@@ -35,7 +35,10 @@ def create_app(test_config=None):
     def coupon():
         return 'coupon'
     # register the database commands
-
+    @app.route('/initDB')
+    def db_init():
+        db.init_db();
+        return "DB setting complete"
     # apply the blueprints to the app
     import auth, blog, search, cart, coupon, mylist
     app.register_blueprint(auth.bp)
