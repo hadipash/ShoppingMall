@@ -2,7 +2,7 @@ from flask import (
     Blueprint, g, redirect, render_template, request, session, url_for, flash
 )
 
-from DAOs.db import init_db, close_db
+from DAOs.db import init_db, get_db, close_db
 
 bp = Blueprint('mylist', __name__, url_prefix='/mylist')
 
@@ -22,10 +22,11 @@ def my_list():
     return render_template('cart/my_list.html', lists=lists)
 
 
-def delete_item():
-#    db = get_db()
-
-    return redirect('cart/my_list.html')
+def delete_item(id):
+    db = get_db()
+    db.execute('DELETE FROM my_list WHERE id = ?', (id,))
+    db.commit()
+    return redirect('cart/cart_list.html')
 
 #def access_item():
     #return render_template('purchase/purchase.html')

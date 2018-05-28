@@ -6,17 +6,17 @@
 
 {% block content %}
   <ul class=lists>
-  {% set totalprice = 0 %}
   {% for item in lists %}
       <br>
-      <li>
+
+        <li>
           <h3>product : {{ item.name}}  <br> price : {{ item.price|safe }}</h3>  <a class="button button">delete</a> <br>
-      </li>
-      {% set totalprice = totalprice + item.price  %}
+        </li>
+
   {% else %}
       <li><em>No item exist.</em></li>
   {% endfor %}
   </ul>
-    <br><h2>Total Price : {{totalprice}} </h2><br>
+    <ul class=totalprice><br><h2>Total Price : {{ totalprice }} </h2><br></ul>
     <br><input type = submit value = Purchase>
 {% endblock %}
