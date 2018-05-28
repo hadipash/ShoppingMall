@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Search Product Name{% endblock %}</h1>
+  {% block title %}Search by Product Name{% endblock %}
 {% endblock %}
 
 {% block content %}
     <div class="search_bar">
         <form method="post">
             <input type="search" id="search_bar" name="product_name" size="20">
-            <input type="submit" value="Search">
+            <input class="button" type="submit" value="Search">
         </form>
     </div>
 

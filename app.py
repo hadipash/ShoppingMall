@@ -34,17 +34,20 @@ def create_app(test_config=None):
     @app.route('/coupon')
     def coupon():
         return 'coupon'
+
     # register the database commands
     db.init_app(app)
 
     # apply the blueprints to the app
-    import auth, blog, search, cart, coupon, mylist
+    import auth, account, blog, search, cart, coupon, mylist, orders
     app.register_blueprint(auth.bp)
+    app.register_blueprint(account.bp)
     app.register_blueprint(blog.bp)
     app.register_blueprint(search.bp)
     app.register_blueprint(cart.bp)
     app.register_blueprint(mylist.bp)
     app.register_blueprint(coupon.bp)
+    app.register_blueprint(orders.bp)
 
     # make url_for('index') == url_for('blog.index')
     # in another app, you might define a separate main index here with

@@ -1,29 +1,46 @@
-<!doctype html>
-<title>{% block title %}{% endblock %} - Simple ShoppingMall</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<h1 class="heading">ShoppingMall</h1>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>{% block title %}{% endblock %} - Awesome Shopping Mall</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css"/>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        WebFont.load({
+            google: {
+                families: ["Montserrat:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic," +
+                "600,600italic,700,700italic,800,800italic,900,900italic", "Inconsolata:400,700"]
+            }
+        });
+    </script>
+</head>
+
+
+<body>
+<div>
+    <h1 class="heading">Awesome Shopping Mall</h1>
+</div>
+
 <div class="nav">
     <div class="container">
         <nav role="navigation" class="nav-menu">
-            {% if session.logged_in %}
-                <a href="{{ url_for('auth.logout') }}">Log Out</a>
-                <a href="{{ url_for('cart.cart_list') }}">Cart</a>
-                <a href="{{ url_for('mylist.my_list') }}">MyList</a>
-                <a href="{{ url_for('coupon.coupon_list') }}">Coupon</a>
-            {% else %}
-                <a href="{{ url_for('auth.login') }}">Log In</a>
-            {% endif %}
+            <a href="#" class="nav-link">Home</a>
+            <a href="#" class="nav-link">My Account</a>
+            <a href="#" class="nav-link">Contact</a>
         </nav>
     </div>
 </div>
 
-<section class="content">
-  <header>
-    {% block header %}{% endblock %}
-  </header>
-  {% for message in get_flashed_messages() %}
-    <div class=flash>{{ message }}</div>
-  {% endfor %}
-  {% block content %}{% endblock %}
-</section>
+<div>
+    <h2 class="heading-2">{% block header %}{% endblock %}</h2>
+</div>
+
+{% for message in get_flashed_messages() %}
+<div class=flash>{{ message }}</div>
+{% endfor %}
+
+<div class="div-block">{% block content %}{% endblock %}</div>
+</body>
+</html>
