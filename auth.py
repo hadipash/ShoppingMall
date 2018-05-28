@@ -36,6 +36,7 @@ def login():
             error = 'Invalid password'
         else:
             session['logged_in'] = True
+            session['user_id'] = USERNAME
             flash('You were logged in')
             return render_template('base.html')
     return render_template('auth/login.html', error=error)

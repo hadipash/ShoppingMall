@@ -3,7 +3,6 @@ import os
 from flask import Flask
 from DAOs import db
 
-
 def create_app(test_config=None):
     """Create and configure an instance of the Flask application."""
     app = Flask(__name__, instance_relative_config=True)
@@ -38,11 +37,12 @@ def create_app(test_config=None):
     # register the database commands
 
     # apply the blueprints to the app
-    import auth, blog, search, cart, coupon
+    import auth, blog, search, cart, coupon, mylist
     app.register_blueprint(auth.bp)
     app.register_blueprint(blog.bp)
     app.register_blueprint(search.bp)
     app.register_blueprint(cart.bp)
+    app.register_blueprint(mylist.bp)
     app.register_blueprint(coupon.bp)
 
     # make url_for('index') == url_for('blog.index')

@@ -8,6 +8,7 @@
             {% if session.logged_in %}
                 <a href="{{ url_for('auth.logout') }}">Log Out</a>
                 <a href="{{ url_for('cart.cart_list') }}">Cart</a>
+                <a href="{{ url_for('mylist.my_list') }}">MyList</a>
                 <a href="{{ url_for('coupon.coupon_list') }}">Coupon</a>
             {% else %}
                 <a href="{{ url_for('auth.login') }}">Log In</a>
