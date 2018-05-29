@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  {% block title %}Search Result for {{ product_name }}{% endblock %}
+    {% block title %}Search Result for '{{ product_name }}'{% endblock %}
 {% endblock %}
 
 {% block content %}
+    <hr>
     <div class="products_list">
         {% if products %}
             {% for product in products %}
-                <article class="product_into">
+                <div class="product_into">
                     <header>
                         <div>
                         <h2>{{ product['name'] }}</h2>
@@ -17,7 +18,7 @@
                     </header>
                     <p class="description">DC rate: {{ product['dc_rate'] }}, Sales num: {{ product['sales_num'] }},</p>
 
-                </article>
+                </div>
                 {% if not loop.last %}
                 <hr>
                 {% endif %}

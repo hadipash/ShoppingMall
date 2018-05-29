@@ -23,7 +23,7 @@
     width: 20%;
     display: block;
     padding: 10px;
-    background: #BBBBBB;
+    background: #3898EC;
     color: white;
     font-size: 17px;
     border: 1px solid grey;
@@ -34,4 +34,33 @@
 
 .search-bar form button:hover {
     background: #888888;
+}
+
+.products_list {
+    margin: 0 300px 15px;
+    text-align: center;
+}
+
+.product_into {
+    text-size: 50px;
+}
+
+.nav-category {
+    text-align: center;
+}
+
+.nav-category-link {
+    font-weight: bold;
+    background: #3898EC;
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    text-decoration: none;
+    max-width: 940px;
+    color: #FFFFFF;
+    padding: 20px;
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+    height: 50px;
 }
