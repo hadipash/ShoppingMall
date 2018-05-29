@@ -1,20 +1,12 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  {% block title %}Search by Product Name{% endblock %}
+  {% block title %}Search Result for {{ product_name }}{% endblock %}
 {% endblock %}
 
 {% block content %}
-    <div class="search_bar">
-        <form method="post">
-            <input type="search" id="search_bar" name="product_name" size="20">
-            <input class="button" type="submit" value="Search">
-        </form>
-    </div>
-
     <div class="products_list">
         {% if products %}
-            <h1><i>Search Result for [{{ product_name }}]</i></h1>
             {% for product in products %}
                 <article class="product_into">
                     <header>

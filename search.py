@@ -24,7 +24,7 @@ def product_name():
             ).fetchall()
 
             return render_template('search/product_name.html', product_name=product_name, products=products)
-    return render_template('search/product_name.html', product_name=None, products=None)
+    return render_template('search/product_name.html')
 
 
 @bp.route('/category/')
@@ -36,7 +36,6 @@ def category(category=None):
         products = db.execute(
             'SELECT * FROM product WHERE category = ?', (category,)
         ).fetchall()
-        print(len(products))
 
         return render_template('search/category.html', category=category, products=products)
     return render_template('search/category.html', category=category, products=None)

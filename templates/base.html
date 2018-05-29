@@ -4,6 +4,9 @@
 <head>
     <title>{% block title %}{% endblock %} - Awesome Shopping Mall</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='search.css') }}" type="text/css"/>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js" type="text/javascript"></script>
@@ -14,6 +17,16 @@
                 "600,600italic,700,700italic,800,800italic,900,900italic", "Inconsolata:400,700"]
             }
         });
+
+        function checkSearchBar() {
+          var search_form = document.search_form;
+          var product_name = search_form.product_name;
+          if (!product_name.value) {
+            alert("Please enter the product name.");
+            return false;
+          }
+          search_form.submit();
+        }
     </script>
 </head>
 
@@ -41,9 +54,13 @@
     </div>
 </div>
 
-{% for message in get_flashed_messages() %}
-<div class=flash>{{ message }}</div>
-{% endfor %}
+<div class="search-bar">
+  <form name="search_form" method="post" action="{{ url_for('search.product_name') }}" style="padding:5px;margin:auto;max-width:500px; height: 50px;" onsubmit="checkSearchBar(); return false;">
+    <input type="text" placeholder="Search Product.." name="product_name" >
+    <button type="submit"><i class="fa fa-search"></i></button>
+  </form>
+</div>
+<br>
 
 <div>
     <h2 class="heading-2">{% block header %}{% endblock %}</h2>

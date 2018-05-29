@@ -1,0 +1,37 @@
+.search-bar {
+    display: block;
+}
+
+.search-bar form {
+    padding: 5px;
+    margin: auto;
+    max-width: 100px;
+}
+
+.search-bar form input {
+    padding: 10px;
+    display: inline;
+    float: left;
+    font-size: 17px;
+    border: 1px solid grey;
+    width:80%;
+    height: 50px;
+}
+
+.search-bar form button {
+    float: left;
+    width: 20%;
+    display: block;
+    padding: 10px;
+    background: #BBBBBB;
+    color: white;
+    font-size: 17px;
+    border: 1px solid grey;
+    border-left: none;
+    cursor: pointer;
+    height: 50px
+}
+
+.search-bar form button:hover {
+    background: #888888;
+}
