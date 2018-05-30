@@ -35,6 +35,14 @@
     <h1 class="heading">Awesome Shopping Mall</h1>
 </div>
 
+<div class="search-bar">
+  <form name="search_form" method="post" action="{{ url_for('search.product_name') }}" style="padding:5px;margin:auto;max-width:500px; height: 50px;" onsubmit="checkSearchBar(); return false;">
+    <input type="text" placeholder="Search Product.." name="product_name" >
+    <button type="submit"><i class="fa fa-search"></i></button>
+  </form>
+</div>
+<br>
+
 <div class="nav">
     <div class="container">
         <nav role="navigation" class="nav-menu">
@@ -53,14 +61,6 @@
         </nav>
     </div>
 </div>
-
-<div class="search-bar">
-  <form name="search_form" method="post" action="{{ url_for('search.product_name') }}" style="padding:5px;margin:auto;max-width:500px; height: 50px;" onsubmit="checkSearchBar(); return false;">
-    <input type="text" placeholder="Search Product.." name="product_name" >
-    <button type="submit"><i class="fa fa-search"></i></button>
-  </form>
-</div>
-<br>
 
 <div>
     <h2 class="heading-2">{% block header %}{% endblock %}</h2>

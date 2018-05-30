@@ -36,15 +36,6 @@
     background: #888888;
 }
 
-.products_list {
-    margin: 0 300px 15px;
-    text-align: center;
-}
-
-.product_into {
-    text-size: 50px;
-}
-
 .nav-category {
     text-align: center;
 }
@@ -63,4 +54,29 @@
     margin-left: auto;
     margin-right: auto;
     height: 50px;
+}
+
+.div-block-simple-product-info {
+    margin-right: 400px;
+    margin-left: 400px;
+}
+
+.simple-product-description1 {
+    float: left;
+    width: 600px;
+    height: 100px;
+}
+
+.simple-product-description3 {
+    float: right;
+    width: 200px;
+    padding: 0px 20px;
+    height: 100px;
+}
+
+.simple-product-description2 {
+    float: right;
+    width: 200px;
+    padding: 0px 20px;
+    height: 100px;
 }

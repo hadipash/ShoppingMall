@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block header %}
-    {% block title %}Categories{% endblock %}
+    {% block title %}{% endblock %}
 {% endblock %}
 
 {% block content %}
@@ -10,25 +10,36 @@
         <a href="{{ url_for('search.category')}}food" class="nav-category-link">Food</a>
         <a href="{{ url_for('search.category')}}book" class="nav-category-link">Book</a>
     </div>
-    <hr>
 
-    <div class="products_list">
-        {% if category %}
-            {% for product in products %}
-                <div class="product_into">
-                    <header>
-                        <div>
-                            <h2>{{ product['name'] }}</h2>
-                            <div class="about">Price: {{ product['price'] }}, Stock: {{ product['stock'] }}, Category: {{ product['category'] }},  <a href="">Buying</a></div>
-                        </div>
-                    </header>
-                    <p class="description">DC rate: {{ product['dc_rate'] }}, Sales num: {{ product['sales_num'] }},</p>
-                </div>
-                {% if not loop.last %}
-                <hr>
+    {% if products %}
+    <div class="div-block">
+        <div class="div-separator"></div>
+        {% for product in products %}
+        <div class="div-block-simple-product-info">
+            <h5 class="heading-3"><a href="#" style="text-decoration:none; color:black;">{{ product['name'] }}</a><br></h5>
+            <div class="simple-product-description1">
+                <span>description</span><br>
+                <span>[{{ product['category'] }}]</span>
+            </div>
+            <div class="simple-product-description2">
+                {% if product['dc_rate'] > 0 %}
+                    <span>{{ "%.2f" | format(product['price'] * (100.0 - product['dc_rate']) / 100.0) }}$</span><br>
+                    <span><del>{{ product['price'] }}$</del></span><br>
+                    <span>DC: {{ product['dc_rate'] }}%</span>
+                {% else %}
+                    <span>{{ product['price'] }}$</span><br>
+                    <span></span><br>
+                    <span></span>
                 {% endif %}
-            {% endfor %}
-        {% endif %}
+            </div>
+            <div class="simple-product-description3">
+                <span>Sales &nbsp;&nbsp; {{ product['sales_num'] }}</span><br>
+                <span>Rating &nbsp; {{ product['product_rating'] }}</span>
+            </div>
+        </div>
+        <div class="div-separator"></div>
+        {% endfor %}
     </div>
+    {% endif %}
 
 {% endblock %}
