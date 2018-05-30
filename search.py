@@ -20,7 +20,7 @@ def product_name():
 
         if error is None:
             products = db.execute(
-                'SELECT * FROM product WHERE name = ?', (product_name,)
+                'SELECT * FROM product WHERE name like ? ORDER BY sales_num DESC', ('%' + product_name + '%',)
             ).fetchall()
 
             return render_template('search/product_name.html', product_name=product_name, products=products)
@@ -34,7 +34,7 @@ def category(category=None):
         db = get_db()
 
         products = db.execute(
-            'SELECT * FROM product WHERE category = ?', (category,)
+            'SELECT * FROM product WHERE category = ? ORDER BY sales_num DESC', (category,)
         ).fetchall()
 
         return render_template('search/category.html', category=category, products=products)
