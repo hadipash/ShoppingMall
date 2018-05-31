@@ -40,3 +40,37 @@ def category(category=None):
         return render_template('search/category.html', category=category, products=products)
     return render_template('search/category.html', category=category, products=None)
 
+
+@bp.route('/searchHOTDEAL/')
+@bp.route('/searchHOTDEAL/<category>')
+def searchHOTDEAL(category=None):
+    db = get_db()
+
+    if category is not None:
+
+        products = db.execute(
+            'SELECT * FROM product WHERE category = ? ORDER BY sales_num DESC', (category,)
+        ).fetchmany(3)
+
+        return render_template('search/searchHOTDEAL.html',  category=category, products=products)
+
+    products = db.execute(
+        'SELECT * FROM product WHERE sales_num >10 ORDER BY sales_num DESC  '
+    ).fetchall()
+    return render_template('search/searchHOTDEAL.html', category=category, products=products)
+
+@bp.route('/searchDC/')
+@bp.route('/searchDC/<category>')
+def searchDC(category=None):
+    db = get_db()
+    if category is not None:
+
+        products = db.execute(
+            'SELECT * FROM product WHERE category = ? ORDER BY dc_rate DESC', (category,)
+        ).fetchmany(3)
+
+        return render_template('search/searchDC.html',  category=category, products=products)
+    products = db.execute(
+        'SELECT * FROM product WHERE dc_rate >10 ORDER BY dc_rate DESC  '
+    ).fetchall()
+    return render_template('search/searchDC.html', category=category, products=products)
