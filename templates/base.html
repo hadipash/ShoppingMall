@@ -48,6 +48,9 @@
         <nav role="navigation" class="nav-menu">
             <a href="{{ url_for('index') }}" class="nav-link">Home</a>
             <a href="{{ url_for('search.category') }}" class="nav-link">Categories</a>
+            <a href="{{ url_for('search.searchHOTDEAL')}}" class="nav-link">Hotdeal</a>
+            <a href="{{ url_for('search.searchDC')}}" class="nav-link">Discount</a>
+
             {% if g.user %}
                 <a href="{{ url_for('account.display_info') }}" class="nav-link">My Account</a>
                 <a href="{{ url_for('mylist.my_list') }}" class="nav-link">My List</a>
