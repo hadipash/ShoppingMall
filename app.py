@@ -39,7 +39,7 @@ def create_app(test_config=None):
     db.init_app(app)
 
     # apply the blueprints to the app
-    import auth, account, blog, search, cart, coupon, mylist, orders
+    import auth, account, blog, search, cart, coupon, mylist, orders, payment
     app.register_blueprint(auth.bp)
     app.register_blueprint(account.bp)
     app.register_blueprint(blog.bp)
@@ -48,6 +48,7 @@ def create_app(test_config=None):
     app.register_blueprint(mylist.bp)
     app.register_blueprint(coupon.bp)
     app.register_blueprint(orders.bp)
+    app.register_blueprint(payment.bp)
 
     # make url_for('index') == url_for('blog.index')
     # in another app, you might define a separate main index here with

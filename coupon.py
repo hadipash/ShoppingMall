@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 from flask import (
     Blueprint, g, redirect, render_template, request, session, url_for, flash
 )
@@ -21,8 +22,6 @@ def add_coupon():
 
     print('coupon ', request.form['coupon_id'], ' added!')
     return redirect('coupon/coupon_list')
-
-
 @bp.route('/coupon_list')
 def coupon_list():
     db = get_db()
