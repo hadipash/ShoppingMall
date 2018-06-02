@@ -1,14 +1,18 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Product_list{% endblock %}</h1>
+  <h1>{% block title %}Cart{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
     <script>
         function delete_item(id) {
             $.ajax({
-                url: '/cart/delete_item', data: id, type: 'POST', contentType: false, processData: false,
+                url: '/cart/delete_item',
+                data: id,
+                type: 'POST',
+                contentType: false,
+                processData: false,
                 success: function(data) {
                     if(data.result) {
                         location.reload();
@@ -16,24 +20,36 @@
                 }
             });
         }
+        function send_info(totalprice){
+            $.ajax({
+                url: '/payment/cart',
+                data: totalprice,
+                type: 'POST',
+                contentType: false,
+                processData: false,
+            });
+        }
     </script>
   <ul class=lists>
-
-      {% for item in lists %}
-          <br>
-            <li>
-              <h3>product : {{ item.name}}  <br> price : {{ item.price|safe }}</h3>
-              <a class="button button" onclick="delete_item({{ item.id }})">delete</a> <br>
-
-            </li>
-      {% else %}
-          <li><em>No item exist.</em></li>
-      {% endfor %}
+  {% for item in lists %}
+      <br>
+        <li>
+          {% if item.dc > 0 %}
+              <h3>Name : {{ item.name }}</h3>
+              <span><del>Original Price : {{ item.price }}$</del></span>
+              <br><span>DC Rate : {{ item.dc }}%</span>
+              <br><span>Price : {{ item.price * ((100.0 - item.dc) / 100.0) }}$</span>
+          {% else %}
+              <span>Price : {{item.price}}$</span>
+          {% endif %}
+          <br><a class="button button" onclick="delete_item({{ item.id }})">delete</a> <br>
+        </li>
+  {% else %}
+      <li><em>No item exist.</em></li>
+  {% endfor %}
   </ul>
-  <form action = {{ url_for('payment.cart') }} method = post>
-    <ul class=totalprice><br><h2>Total Price : {{ totalprice }} </h2><br></ul>
-    <br><input type = submit value = Purchase>
-  </form>
+  <ul class=lists>
+      <br><h2>Total Price : {{ totalprice }}$ </h2>
+      <a class="button button" onclick="send_info({{ totalprice }})">Purchase</a>
+  </ul>
 {% endblock %}
-
-{#item과 가격 넘겨받고#}

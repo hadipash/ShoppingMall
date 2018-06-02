@@ -13,17 +13,17 @@ def cart_list():
     db = get_db()
 
     cur = db.execute(
-        'SELECT price FROM product WHERE product_id IN '
+        'SELECT price, dc_rate FROM product WHERE product_id IN '
         '(SELECT product_id FROM cart_list WHERE user_id = ?)', (username,)
     )
     totalprice = 0
     for row in cur.fetchall():
-        totalprice += row[0]
+        totalprice += row[0]*((100.0 - row[1])/100.0)
     cur = db.execute(
-        'SELECT name, price, product_id FROM product WHERE product_id IN '
+        'SELECT name, price, product_id, dc_rate FROM product WHERE product_id IN '
         '(SELECT product_id FROM cart_list WHERE user_id = ?)', (username,)
     )
-    lists = [dict(name=row[0], price=row[1], id=row[2]) for row in cur.fetchall()]
+    lists = [dict(name=row[0], price=row[1], id=row[2], dc=row[3]) for row in cur.fetchall()]
     return render_template('cart/cart_list.html', lists=lists, totalprice=totalprice)
 
 
@@ -37,6 +37,3 @@ def delete_item():
     return jsonify(
         result = "success"
     )
-
-# def purchase_item():
-# return render_template('purchase/purchase.html', productInfo=productInfo)

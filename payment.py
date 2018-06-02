@@ -26,9 +26,10 @@ def product():
 
 @bp.route('/cart', methods=['POST'])
 def cart():
-
+    price_sum = request.data
     username = session.get('user_id')
     db = get_db()
+    # cartlist 들고와서 product돌면서 가격더해서 가격에 넣고 price*quantity의합
 
     # form으로 넘겨받으면 2를쓰고 db로 바로쓰면1
     cartlist1 = db.execute('SELECT a.price, a.dc_rate,a.product_id, b.quantity,a.stock FROM product a, cart_list b '
