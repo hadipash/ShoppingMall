@@ -24,7 +24,7 @@ def product():
 
 @bp.route('/cart', methods=('GET', 'POST'))
 def cart():
-    price_sum = request.form['totalprice']
+    price_sum = request.form['price']
     username = session.get('user_id')
     db = get_db()
     # cartlist 들고와서 product돌면서 가격더해서 가격에 넣고 price*quantity의합

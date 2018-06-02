@@ -18,7 +18,7 @@ def cart_list():
     )
     totalprice = 0
     for row in cur.fetchall():
-        totalprice += (row[0]*((100.0 - row[1])/100.0))*row[2]
+        totalprice += round(row[0]*((100.0 - row[1])/100.0), 2)*row[2]
     cur = db.execute(
         'SELECT A.name, A.price, A.product_id, A.dc_rate, B.quantity FROM product A '
         'LEFT JOIN cart_list B ON A.product_id = B.product_id WHERE B.user_id = ?', (username,)

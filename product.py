@@ -20,10 +20,19 @@ def product_detail():
 @bp.route('/add_item', methods=['POST'])
 def add_item():
     username = session['user_id']
-    id = request.data
+    Data = request.json
+
+    msg = ""
     db = get_db()
-    db.execute('INSERT INTO cart_list (user_id, product_id, quantity) VALUES(?,?,1)',(username, id))
-    db.commit()
+    item = db.execute('SELECT product_id, quantity FROM cart_list WHERE user_id=? and product_id=?', (username, Data['ID'])).fetchone()
+    if item is None :
+        db.execute('INSERT INTO cart_list (user_id, product_id, quantity) VALUES(?,?,?)',(username, Data['ID'], Data['AMT']))
+        db.commit()
+        msg = "장바구니에 추가되었습니다"
+    else :
+        print(item[1])
+        msg = "장바구니에 이미 "+ str(item[1]) +"개 존재하는 제품입니다"
     return jsonify(
-        result = "success"
+        result="success",
+        msg=msg
     )

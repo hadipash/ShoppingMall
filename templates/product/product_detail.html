@@ -7,19 +7,27 @@
 {% block content %}
     <script>
         function add_cart(id) {
+            var amount = $("#amount").val();
+            var obj = new Object();
+            obj.ID= id;
+            obj.AMT = amount;
             $.ajax({
                 url: '/product/add_item',
-                data: id,
+                data: JSON.stringify(obj, null, '\t'),
                 type: 'POST',
-                contentType: false,
+                contentType: 'application/json;charset=UTF-8',
                 processData: false,
                 success: function(data) {
                     if(data.result) {
                         location.reload();
-                        alert('장바구니에 추가되었습니다.')
+                        alert(data.msg);
                     }
                 }
             });
+        }
+        function change_amount(amt, price) {
+            var pr = price.toFixed(2);
+            $("#price").val(amt*pr);
         }
     </script>
   <ul class=item>
@@ -28,15 +36,17 @@
           {% if item.dc_rate > 0 %}
               <span><del>Original Price : {{ item.price }}$</del></span>
               <br><span>DC Rate : {{ item.dc_rate }}%</span>
-              <br><span>Price : {{ item.price * ((100.0 - item.dc_rate) / 100.0) }}$</span>
+              <br><span>Price : {{ "%.2f" | format(item.price * ((100.0 - item.dc_rate) / 100.0)) }}$</span>
           {% else %}
               <span>Price : {{item.price}}$</span>
           {% endif %}
+
           <br><a class="button button" onclick="add_cart({{ item.product_id }})">Add Cart</a>
+
           <form action={{ url_for('payment.cart') }} method=post class="form">
             <br><br><label for="name">Amount:</label>
-            <input type="text" name=amount class="input" maxlength="128" value="1" style="width:25%"/>
-            <input type="hidden" name=price value={{price}}>
+            <input type="number" id="amount" name="amount" class="input" maxlength="128" value=1 onchange="change_amount(this.value, {{ item.price * ((100.0 - item.dc_rate) / 100.0) }})" style="width:25%"/>
+            <input type="hidden" name=price id="price" value={{ "%.2f" | format(item.price * ((100.0 - item.dc_rate) / 100.0)) }}>
             <p><input type=submit value=Purchase class="button button" style="width:25%"></p>
           </form>
   </ul>
