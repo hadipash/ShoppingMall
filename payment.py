@@ -21,9 +21,9 @@ def product():
     pass
 
 
-@bp.route('/cart')
+@bp.route('/cart', methods=('GET', 'POST'))
 def cart():
-
+    price_sum = request.data
     username = session.get('user_id')
     db = get_db()
     # cartlist 들고와서 product돌면서 가격더해서 가격에 넣고 price*quantity의합
@@ -33,10 +33,6 @@ def cart():
     cartlist1 = db.execute('SELECT a.price, b.quantity FROM product a, cart_list b '
                           'WHERE a.product_id = b.product_id AND user_id = ?', (username,)).fetchall()
     # cartlist2 = request.form['cartlist']
-    price_sum1 = 0
-    # price_sum2 = request.form['totalprice']
-    for curlist in cartlist1:
-        price_sum1 += curlist[0]*curlist[1]
 
     clientinfos = db.execute('SELECT name,phone,address,mileage FROM client WHERE id = ?', (username,)).fetchall()
 
@@ -47,4 +43,4 @@ def cart():
     coupon_info = None;
 
     # lists = [dict(name=row[0], phone=row[1], addresss=row[2], mileage=row[3]) for row in client_info]
-    return render_template('payment/payment.html', client_infos=clientinfos, price_sum=price_sum1)
+    return render_template('payment/payment.html', client_infos=clientinfos, price_sum=price_sum)
