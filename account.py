@@ -1,9 +1,37 @@
-from flask import Blueprint, render_template, g
-from DAOs.ClientDAO import ClientDAO
+from flask import (
+    Blueprint, flash, g, redirect, render_template, request, url_for
+)
+from controls.ManageAccount import ManageAccount
 
 bp = Blueprint('account', __name__)
 
 
 @bp.route('/account', methods=('GET', 'POST'))
 def display_info():
-    return render_template('account/account.html', user=ClientDAO().getPersonalInfo(g.user['id']))
+    if request.method == 'POST':
+        if request.form['submit'] == 'Save':
+            error = None
+
+            if not request.form['name']:
+                error = 'Name is required'
+            elif not request.form['email']:
+                error = 'Email address is required'
+            elif not request.form['phone']:
+                error = 'Phone number is required'
+            elif not request.form['address']:
+                error = 'Address is required'
+
+            if error is not None:
+                flash(error)
+            else:
+                controller = ManageAccount()
+                controller.editPersonalInfo(g.user['id'], request.form)
+                flash('Saved')
+
+        elif request.form['submit'] == 'Delete Account':
+            controller = ManageAccount()
+            controller.deleteAccount(g.user['id'])
+            flash('Your Account Was Deleted')
+            return redirect(url_for('auth.logout'))
+
+    return render_template('account/account.html', user=ManageAccount().requestPersonalInfo(g.user['id']))

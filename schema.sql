@@ -20,8 +20,8 @@ CREATE TABLE client (
   name                VARCHAR(50) NOT NULL,
   password            VARCHAR(100) NOT NULL,
   phone               UNSIGNED INTEGER UNIQUE NOT NULL,
-  address             VARCHAR(100),
-  mileage             UNSIGNED INTEGER
+  address             VARCHAR(100) NOT NULL,
+  mileage             UNSIGNED INTEGER DEFAULT 0
 );
 
 CREATE TABLE delivery (
