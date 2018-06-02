@@ -7,7 +7,7 @@ bp = Blueprint('account', __name__)
 
 
 @bp.route('/account', methods=('GET', 'POST'))
-def display_info():
+def displayAndEditInfo():
     if request.method == 'POST':
         if request.form['submit'] == 'Save':
             error = None

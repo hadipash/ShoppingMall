@@ -52,7 +52,7 @@
             <a href="{{ url_for('search.searchDC')}}" class="nav-link">Discount</a>
 
             {% if g.user %}
-                <a href="{{ url_for('account.display_info') }}" class="nav-link">My Account</a>
+                <a href="{{ url_for('account.displayAndEditInfo') }}" class="nav-link">My Account</a>
                 <a href="{{ url_for('mylist.my_list') }}" class="nav-link">My List</a>
                 <a href="{{ url_for('cart.cart_list') }}" class="nav-link">My Cart</a>
                 <a href="{{ url_for('orders.display_orders') }}" class="nav-link">My Orders</a>

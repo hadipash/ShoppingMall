@@ -38,7 +38,7 @@ class ClientDAO:
         self.db.commit()
 
     def getCartList(self, client_id):
-        return self.db.execute('SELECT * FROM cart_list WHERE user_id=?', (client_id,))
+        return self.db.execute('SELECT * FROM cart_list WHERE user_id=?', (client_id,)).fetchall()
 
     def addCartItem(self, client_id, product_id, quantity):
         self.db.execute('INSERT INTO cart_list (user_id, product_id, quantity) VALUES (?, ?, ?)',
@@ -50,7 +50,7 @@ class ClientDAO:
         self.db.commit()
 
     def getCouponList(self, client_id):
-        return self.db.execute('SELECT * FROM coupon_list WHERE user_id=?', (client_id,))
+        return self.db.execute('SELECT * FROM coupon_list WHERE user_id=?', (client_id,)).fetchall()
 
     def addCoupon(self, client_id, coupon_id):
         self.db.execute('INSERT INTO coupon_list (user_id, coupon_id) VALUES (?, ?)', (client_id, coupon_id))
@@ -61,7 +61,7 @@ class ClientDAO:
         self.db.commit()
 
     def getMyList(self, client_id):
-        return self.db.execute('SELECT * FROM my_list WHERE user_id=?', (client_id,))
+        return self.db.execute('SELECT * FROM my_list WHERE user_id=?', (client_id,)).fetchall()
 
     def addMyListItem(self, client_id, product_id):
         self.db.execute('INSERT INTO my_list (user_id, product_id) VALUES (?, ?)', (client_id, product_id))
