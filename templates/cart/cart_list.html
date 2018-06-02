@@ -18,18 +18,22 @@
         }
     </script>
   <ul class=lists>
-  {% for item in lists %}
-      <br>
-        <li>
-          <h3>product : {{ item.name}}  <br> price : {{ item.price|safe }}</h3>
-          <a class="button button" onclick="delete_item({{ item.id }})">delete</a> <br>
-        </li>
-  {% else %}
-      <li><em>No item exist.</em></li>
-  {% endfor %}
+
+      {% for item in lists %}
+          <br>
+            <li>
+              <h3>product : {{ item.name}}  <br> price : {{ item.price|safe }}</h3>
+              <a class="button button" onclick="delete_item({{ item.id }})">delete</a> <br>
+
+            </li>
+      {% else %}
+          <li><em>No item exist.</em></li>
+      {% endfor %}
   </ul>
+  <form action = {{ url_for('payment.cart') }} method = post>
     <ul class=totalprice><br><h2>Total Price : {{ totalprice }} </h2><br></ul>
     <br><input type = submit value = Purchase>
+  </form>
 {% endblock %}
 
 {#item과 가격 넘겨받고#}

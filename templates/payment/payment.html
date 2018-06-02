@@ -5,50 +5,35 @@
 {% endblock %}
 
 {% block content %}
+    {% for product in cart_list %}
+
+    {% endfor %}
+    {% for coupon in coupon_list %}
+    {% endfor %}
+
     <div class="payment-block">
-{#        {% if product_infos %}#}
-{#        <div class="product_infos">#}
-{#            {%  for product_item in product_infos %}#}
-{#                <li>상품명 : </li>#}
-{#            {% endfor %}#}
-{#        </div>#}
-{#        {% endif %}#}
         <div class="client_infos">
-            {% for client_item in client_infos %}
-               <form action= {{ url_for('payment.result' )}} method = post>
-                  <label>가격: {{ price_sum }} $</label>
-                  <input type =hidden name="price" value = {{ price_sum }}>
-                  <label>이름:</label>
-                  <input type=text name="name" value = {{ client_item.name}}>
-                  <label>전화번호:</label>
-                  <input type=text name="phone" value = {{ client_item.phone }}>
-                  <label>배송지:</label>
-                  <input type=text name="address" value = {{ client_item.address }}>
-                  <label>사용가능 마일리지: {{ client_item.mileage }} </label>
-                  <input type=text name="mileage" value="0">
-    {#               {% if coupon_infos == None %}#}
-    {#                    <div class="coupon-block">#}
-    {#                        <ul class=lists>#}
-    {#                          {% for coupon_item in coupon %}#}
-    {#                              <li>#}
-    {#                                <h4>{{item.name}}</h4><br><h4>할인율 : {{ item.discount }}</h4>#}
-    {#                                  <form action={{ url_for(coupon.add) }} method=post class=add-coupon>#}
-    {#                                        <input type="hidden" name=coupon_id value={{item.coupon_id   }}>#}
-    {#                                        <p><input type=submit value=추가></p>#}
-    {##}
-    {#                                  </form>#}
-    {##}
-    {#                              </li>#}
-    {#                          {% endfor %}#}
-    {#                      </ul>#}
-    {#                  </div>#}
-    {#              {% else %}#}
-    {#                <li><em>No item exist.</em></li>#}
-    {##}
-    {#               {% endif %}#}
-    {#              <label>할인된가격: {{ dc_price }} </label>#}
-    {#              <input type="hidden" name="dc_price" value = {{ dc_price }}>#}
-                  <input type="submit" value="구매">
+            {% for client_infos in client_infos %}
+                <form action = '{{  url_for('payment.result') }}' method=post>
+                    <label>가격: {{ price_sum }} $</label>
+                    <input type =hidden name="price" value = {{ price_sum }}>
+                    <label>이름:</label>
+                    <input type=text name="name" value = {{ client_infos.name}} required>
+                    <label>전화번호:</label>
+                    <input type=tel name="phone" value = {{ client_infos.phone }} required>
+                    <label>배송지:</label>
+                    <input type=text name="address" value = {{ client_infos.address }} required>
+                    <label>사용가능 마일리지: {{ client_infos.mileage }} </label>
+                    <input type=text name="mileage" value="0">
+                    <label>쿠폰목록:</label>
+                    <select name="couponlist">
+                       {% for coupon in coupon_list %}
+                           <option value = {{ coupon.coupon_id }}>
+                               {{ coupon.name }}쿠폰 {{ coupon.discount }}%할인
+                           </option>
+                       {% endfor %}
+                    </select>
+                    <input type="submit" value="구매">
                 </form>
             {% endfor %}
         </div>

@@ -27,14 +27,13 @@ def cart_list():
     return render_template('cart/cart_list.html', lists=lists, totalprice=totalprice)
 
 
-@bp.route('/delete_item', methods=('GET', 'POST'))
+@bp.route('/delete_item', methods=['POST'])
 def delete_item():
     username = session['user_id']
     id = request.data
     db = get_db()
     db.execute('DELETE FROM cart_list WHERE product_id = ? and user_id = ?', (id, username,))
     db.commit()
-
     return jsonify(
         result = "success"
     )
