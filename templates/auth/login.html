@@ -5,11 +5,13 @@
 {% endblock %}
 
 {% block content %}
-  <form method="post">
+<div class="form-block">
+  <form method="post" class="form">
     <label for="username">Username</label>
     <input name="username" id="username" required>
     <label for="password">Password</label>
     <input type="password" name="password" id="password" required>
-    <input type="submit" value="Log In">
+    <input type="submit" value="Log In" class="button">
   </form>
+</div>
 {% endblock %}
