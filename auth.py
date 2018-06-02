@@ -64,4 +64,6 @@ def login():
 def logout():
     """Clear the current session, including the stored user id."""
     session.clear()
+    if request.args:
+        flash(request.args['message'])
     return redirect(url_for('index'))

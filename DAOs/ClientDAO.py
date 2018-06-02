@@ -28,7 +28,7 @@ class ClientDAO:
         print("Client ID:")
         print(client_id)
         for key in new_info:
-            if new_info[key] != "":
+            if key != "submit" and new_info[key] != "":
                 test = new_info[key]
                 self.db.execute('UPDATE client SET ' + key + '=? WHERE id=?', (new_info[key], client_id))
         self.db.commit()

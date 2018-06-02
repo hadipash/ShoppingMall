@@ -31,7 +31,6 @@ def display_info():
         elif request.form['submit'] == 'Delete Account':
             controller = ManageAccount()
             controller.deleteAccount(g.user['id'])
-            flash('Your Account Was Deleted')
-            return redirect(url_for('auth.logout'))
+            return redirect(url_for('auth.logout', message='Your Account Was Deleted'))
 
     return render_template('account/account.html', user=ManageAccount().requestPersonalInfo(g.user['id']))
