@@ -13,17 +13,17 @@ def cart_list():
     db = get_db()
 
     cur = db.execute(
-        'SELECT price, dc_rate FROM product WHERE product_id IN '
-        '(SELECT product_id FROM cart_list WHERE user_id = ?)', (username,)
+        'SELECT A.price, A.dc_rate, B.quantity FROM product A '
+        'LEFT JOIN cart_list B ON A.product_id = B.product_id WHERE B.user_id = ?', (username,)
     )
     totalprice = 0
     for row in cur.fetchall():
-        totalprice += row[0]*((100.0 - row[1])/100.0)
+        totalprice += (row[0]*((100.0 - row[1])/100.0))*row[2]
     cur = db.execute(
-        'SELECT name, price, product_id, dc_rate FROM product WHERE product_id IN '
-        '(SELECT product_id FROM cart_list WHERE user_id = ?)', (username,)
+        'SELECT A.name, A.price, A.product_id, A.dc_rate, B.quantity FROM product A '
+        'LEFT JOIN cart_list B ON A.product_id = B.product_id WHERE B.user_id = ?', (username,)
     )
-    lists = [dict(name=row[0], price=row[1], id=row[2], dc=row[3]) for row in cur.fetchall()]
+    lists = [dict(name=row[0], price=row[1], id=row[2], dc=row[3], quantity=row[4]) for row in cur.fetchall()]
     return render_template('cart/cart_list.html', lists=lists, totalprice=totalprice)
 
 

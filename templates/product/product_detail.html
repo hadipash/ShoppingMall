@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Product Detail{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <script>
+        function add_cart(id) {
+            $.ajax({
+                url: '/product/add_item',
+                data: id,
+                type: 'POST',
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    if(data.result) {
+                        location.reload();
+                        alert('장바구니에 추가되었습니다.')
+                    }
+                }
+            });
+        }
+    </script>
+  <ul class=item>
+      <br>
+        <h3>Name : {{ item.name }}</h3>
+          {% if item.dc_rate > 0 %}
+              <span><del>Original Price : {{ item.price }}$</del></span>
+              <br><span>DC Rate : {{ item.dc_rate }}%</span>
+              <br><span>Price : {{ item.price * ((100.0 - item.dc_rate) / 100.0) }}$</span>
+          {% else %}
+              <span>Price : {{item.price}}$</span>
+          {% endif %}
+          <br><a class="button button" onclick="add_cart({{ item.product_id }})">Add Cart</a>
+          <form action={{ url_for('payment.cart') }} method=post class="form">
+            <br><br><label for="name">Amount:</label>
+            <input type="text" name=amount class="input" maxlength="128" value="1" style="width:25%"/>
+            <input type="hidden" name=price value={{price}}>
+            <p><input type=submit value=Purchase class="button button" style="width:25%"></p>
+          </form>
+  </ul>
+{% endblock %}

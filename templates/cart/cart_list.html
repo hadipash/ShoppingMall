@@ -20,28 +20,21 @@
                 }
             });
         }
-        function send_info(totalprice){
-            $.ajax({
-                url: '/payment/cart',
-                data: totalprice,
-                type: 'POST',
-                contentType: false,
-                processData: false,
-            });
-        }
     </script>
   <ul class=lists>
   {% for item in lists %}
       <br>
         <li>
+          <h3>Name : {{ item.name }}</h3>
           {% if item.dc > 0 %}
-              <h3>Name : {{ item.name }}</h3>
-              <span><del>Original Price : {{ item.price }}$</del></span>
+              <span>Amount : {{ item.dc }}%</span>
+              <br><span><del>Original Price : {{ item.price }}$</del></span>
               <br><span>DC Rate : {{ item.dc }}%</span>
               <br><span>Price : {{ item.price * ((100.0 - item.dc) / 100.0) }}$</span>
           {% else %}
               <span>Price : {{item.price}}$</span>
           {% endif %}
+        <br><span>Amount : {{ item.quantity }}</span>
           <br><a class="button button" onclick="delete_item({{ item.id }})">delete</a> <br>
         </li>
   {% else %}

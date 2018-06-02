@@ -21,7 +21,10 @@
   {% for item in lists %}
       <br>
       <li>
-          <h2><a href="{{ url_for('mylist.my_list') }}">product : {{ item.name }}</a></h2>
+          <form action={{ url_for('product.product_detail') }} method=post class="form">
+            <input type="hidden" name=product_id value={{item.id}}>
+            <p><input type="submit" value={{ item.name }}></p>
+          </form>
           <a class="button button" onclick="delete_item({{ item.id }})">delete</a> <br>
       </li>
   {% else %}
