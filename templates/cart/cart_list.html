@@ -50,6 +50,9 @@
   </ul>
   <ul class=lists>
       <br><h2>Total Price : {{ totalprice }}$ </h2>
-      <a class="button button" onclick="send_info({{ totalprice }})">Purchase</a>
+      <form action={{ url_for('payment.cart') }} method=post class="confirm-button">
+          <input type="hidden" name=totalprice value={{totalprice}}>
+          <p><input type=submit value=Purchase></p>
+      </form>
   </ul>
 {% endblock %}

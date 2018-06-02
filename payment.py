@@ -11,23 +11,20 @@ bp = Blueprint('payment', __name__, url_prefix='/payment')
 @bp.route('/result', methods=['post'])
 def result():
     db = get_db()
-    print(request.form['couponlist'])
-    db.execute('INSERT INTO payment (price, shippingFee, name, phone, address, discount) VALUES(?,?,?,?,?,?)',
-               (request.form['price'], 0, request.form['name'], request.form['phone'], request.form['address'], 0))
-    db.commit()
-    # request.form['price.ace']
 
+    db.execute('INSERT INTO payment (price, shippingFee, name, phone, address, discount) VALUES(?,?,?,?,?,?)',
+               (request.form['price'],0, request.form['name'], request.form['phone'], request.form['address'],0))
     return render_template('payment/payment_result.html')
 
-@bp.route('/product', methods=['POST'])
+
+@bp.route('/product')
 def product():
     pass
 
 
-@bp.route('/cart', methods=['POST'])
+@bp.route('/cart', methods=('GET', 'POST'))
 def cart():
-    price_sum = request.data
-    print(request.data)
+    price_sum = request.form['totalprice']
     username = session.get('user_id')
     db = get_db()
     # cartlist 들고와서 product돌면서 가격더해서 가격에 넣고 price*quantity의합
