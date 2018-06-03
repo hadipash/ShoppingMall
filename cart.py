@@ -32,7 +32,9 @@ def delete_item():
     username = session['user_id']
     id = request.data
     db = get_db()
-    db.execute('DELETE FROM cart_list WHERE product_id = ? and user_id = ?', (id, username,))
+    print(id,username)
+    cur = db.execute('DELETE FROM cart_list WHERE product_id = ? and user_id = ?', (id, username,))
+    print(cur)
     db.commit()
     return jsonify(
         result = "success"

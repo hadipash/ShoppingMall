@@ -49,7 +49,7 @@ CREATE TABLE product (
 CREATE TABLE coupon (
   coupon_id           INTEGER PRIMARY KEY AUTOINCREMENT,
   name                VARCHAR(50) NOT NULL,
-  discount            DOUBLE NOT NULL
+  discount            INTEGER NOT NULL
 );
 
 CREATE TABLE payment (
@@ -86,6 +86,7 @@ CREATE TABLE cart_list(
 CREATE TABLE coupon_list(
   user_id             INTEGER REFERENCES client(id),
   coupon_id           INTEGER REFERENCES coupon(coupon_id),
+  used                INTEGER DEFAULT '0' NOT NULL,
   PRIMARY KEY(user_id, coupon_id)
 );
 
@@ -114,9 +115,9 @@ INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (3,  
 INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (4,  "HANJIN",   "Seoul", 0);
 INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (5,  "HANJIN",   "Busan", 1);
 
-INSERT INTO coupon (coupon_id, name, discount) VALUES (1,   "고객감사",   "10.0");
-INSERT INTO coupon (coupon_id, name, discount) VALUES (2,   "오픈기념",   "20.0");
-INSERT INTO coupon (coupon_id, name, discount) VALUES (3,    "이벤트",    "5.0");
+INSERT INTO coupon (coupon_id, name, discount) VALUES (1,   "THANKS",  10);
+INSERT INTO coupon (coupon_id, name, discount) VALUES (2,   "OPEN",    20);
+INSERT INTO coupon (coupon_id, name, discount) VALUES (3,  "JUNEEVENT", 6);
 
 INSERT INTO product (name, category, price, stock, dc_rate, sales_num, num_of_ratings, product_rating)
 VALUES ("flower dress", "clothes", 44.95, 15, 15, 8, 1, 4.5);

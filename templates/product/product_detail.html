@@ -45,8 +45,9 @@
 
           <form action={{ url_for('payment.cart') }} method=post class="form">
             <br><br><label for="name">Amount:</label>
-            <input type="number" id="amount" name="amount" class="input" maxlength="128" value=1 onchange="change_amount(this.value, {{ item.price * ((100.0 - item.dc_rate) / 100.0) }})" style="width:25%"/>
+            <input type="number" id="amount" name="amount" min=1 class="input" maxlength="128" value=1 onchange="change_amount(this.value, {{ item.price * ((100.0 - item.dc_rate) / 100.0) }})" style="width:25%"/>
             <input type="hidden" name=price id="price" value={{ "%.2f" | format(item.price * ((100.0 - item.dc_rate) / 100.0)) }}>
+            <input type="hidden" name="product_id" value={{ item.product_id }}>
             <p><input type=submit value=Purchase class="button button" style="width:25%"></p>
           </form>
   </ul>

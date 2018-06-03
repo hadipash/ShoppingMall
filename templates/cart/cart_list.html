@@ -45,7 +45,9 @@
       <br><h2>Total Price : {{ "%.2f" | format(totalprice) }}$ </h2>
       <form action={{ url_for('payment.cart') }} method=post class="confirm-button">
           <input type="hidden" name=price value={{"%.2f" | format(totalprice)}}>
-          <p><input type=submit value=Purchase></p>
+          <input type="hidden" name=amount value=0>
+          <input type="hidden" name=product_id value=0>
+          <p><input type=submit value=Purchase class="button"></p>
       </form>
   </ul>
 {% endblock %}

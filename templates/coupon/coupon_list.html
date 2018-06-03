@@ -1,24 +1,22 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Coupon_list{% endblock %}</h1>
+  {% block title %}Coupon_list{% endblock %}
 {% endblock %}
 {% block content %}
-    <div class="coupon-block">
-
-        <ul class=lists>
           {% for item in lists %}
-              <li>
-                <h4>{{item.name}}</h4><br><h4>할인율 : {{ item.discount }}</h4>
-                  <form action={{ url_for('coupon.add_coupon') }} method=post class=add-coupon>
-                        <input type="hidden" name=coupon_id value={{item.coupon_id   }}>
-                        <p><input type=submit value=add></p>
+              <div class="div-block-order">
+                <h5>{{item.name}}<br></h5>
+                <div>discount : {{ item.discount }}%</div>
+                  <form action={{ url_for('coupon.add_coupon') }} method=post class="tack-button">
+                        <input type="hidden" name=coupon_id value={{item.coupon_id}}>
+                        <input type=submit value=add class="tack-button button">
                   </form>
+                <div class="div-separator"></div>
+              </div>
 
-              </li>
           {% else %}
             <li><em>No item exist.</em>
           {% endfor %}
-        </ul>
-    </div>
+
 {% endblock %}

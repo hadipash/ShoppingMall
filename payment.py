@@ -11,10 +11,44 @@ bp = Blueprint('payment', __name__, url_prefix='/payment')
 @bp.route('/result', methods=['post'])
 def result():
     db = get_db()
+    username = session.get('user_id')
+    amount = int(request.form['amount'])
+    product_id = request.form['product_id']
+    # 카트거치고옴
+    if amount == 0:
+        cart_list = db.execute('SELECT a.price, a.dc_rate,a.product_id, b.quantity,a.stock FROM product a, cart_list b '
+                               'WHERE a.product_id = b.product_id AND user_id = ?', (username,)).fetchall()
 
-    db.execute('INSERT INTO payment (price, shippingFee, name, phone, address, discount) VALUES(?,?,?,?,?,?)',
-               (request.form['price'],0, request.form['name'], request.form['phone'], request.form['address'],0))
-    return render_template('payment/payment_result.html')
+        for products in cart_list:
+            if products[4]-products[3] < 0:
+                return render_template('payment/payment_result.html', payment_success=False)
+
+        for products in cart_list:
+            db.execute('UPDATE product SET stock = ? WHERE product_id = ?',
+                       (products[4] - products[3], products[2]))
+    # 카트안거침
+    else:
+        stock = db.execute('SELECT stock FROM product WHERE product_id = ?', (product_id,)).fetchone()[0]
+        print(stock)
+        if stock < amount:
+            return render_template('payment/payment_result.html', payment_success=False)
+        db.execute('UPDATE product SET stock = ? WHERE product_id = ?', (stock-amount, product_id))
+
+    mileage_used = int(request.form['mileage_used'])
+    mileage_add = int(float(request.form['dc_price']))*10
+    mileage = int(request.form['mileage']) - mileage_used + mileage_add
+    db.execute('UPDATE client SET mileage = ? WHERE id = ?', (mileage, username))
+    coupon_id = int(request.form['coupon_id'])
+    if coupon_id is not 0:
+        db.execute('UPDATE coupon_list SET used = ? WHERE user_id = ? AND coupon_id = ? ', (1, username, coupon_id))
+
+    db.execute('INSERT INTO payment (price, shippingFee, name, phone, address, discount) VALUES(?, ?, ?, ?, ?, ?)',
+               (request.form['price'], 3, request.form['name'], request.form['phone'],
+                request.form['address'], request.form['dc_price']))
+
+    db.commit()
+
+    return render_template('payment/payment_result.html', payment_success=True, **locals())
 
 
 @bp.route('/product')
@@ -22,35 +56,30 @@ def product():
     pass
 
 
-@bp.route('/cart', methods=('GET', 'POST'))
+@bp.route('/cart', methods=['POST'])
 def cart():
-    price_sum = request.form['price']
+    price_sum = float(request.form['price'])
+    amount = request.form['amount']
+    product_id = request.form['product_id']
     username = session.get('user_id')
     db = get_db()
-    # cartlist 들고와서 product돌면서 가격더해서 가격에 넣고 price*quantity의합
 
-    # form으로 넘겨받으면 2를쓰고 db로 바로쓰면1
-    cartlist1 = db.execute('SELECT a.price, a.dc_rate,a.product_id, b.quantity,a.stock FROM product a, cart_list b '
-                          'WHERE a.product_id = b.product_id AND user_id = ?', (username,)).fetchall()
-    # cartlist2 = request.form['cartlist']
-    price_sum1 = 0
-    # price_sum2 = request.form['totalprice']
+    client_info = db.execute('SELECT name,phone,address,mileage FROM client WHERE id = ?', (username,)).fetchall()[0]
 
-    for curlist in cartlist1:
-        price_sum1 += curlist[0] * (100 - curlist[1]) / 100 *curlist[3]
+    coupon_list = db.execute('SELECT a.name, a.coupon_id, a.discount FROM coupon a, coupon_list b '
+                             'WHERE a.coupon_id=b.coupon_id AND user_id = ? AND b.used=0', (username,)).fetchall()
+    dc_sum = 0.0
+    select_coupon = 0
+    discount = request.form.get('discount')
 
-    # if request.method == 'POST':
-    #     #     print(request.form['price'])
+    mileage = 0
+    coupon_discount = 0
+    if discount is not None:
+        mileage = int(request.form['mileage'])
+        select_coupon = int(request.form['coupon_list'])
+        if select_coupon != 0:
+            coupon_discount = db.execute('SELECT discount FROM coupon '
+                                         'WHERE coupon_id = ?', [select_coupon]).fetchone()[0]
+        dc_sum = price_sum - (price_sum-mileage*0.001) * (100-coupon_discount)/100
 
-    clientinfos = db.execute('SELECT name,phone,address,mileage FROM client WHERE id = ?', (username,)).fetchall()
-
-
-    couponlist = db.execute('SELECT a.name, a.coupon_id, a.discount FROM coupon a, coupon_list b '
-                            'WHERE a.coupon_id=b.coupon_id AND user_id = ?',(username,)).fetchall()
-    # 쿠폰리스트에서 쿠폰들고오고 적용
-
-    #할인된가격 = (가격 -마일리지)* (1-0.쿠폰할인율)
-    coupon_info = None;
-
-    # lists = [dict(name=row[0], phone=row[1], addresss=row[2], mileage=row[3]) for row in client_info]
-    return render_template('payment/payment.html', coupon_list = couponlist, cart_list = cartlist1,client_infos=clientinfos, price_sum=price_sum)
+    return render_template('payment/payment.html', **locals())

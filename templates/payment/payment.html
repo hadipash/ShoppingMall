@@ -5,38 +5,80 @@
 {% endblock %}
 
 {% block content %}
-    {% for product in cart_list %}
 
-    {% endfor %}
-    {% for coupon in coupon_list %}
-    {% endfor %}
 
-    <div class="payment-block">
-        <div class="client_infos">
-            {% for client_infos in client_infos %}
-                <form action = '{{  url_for('payment.result') }}' method=post>
-                    <label>가격: {{ price_sum }} $</label>
-                    <input type =hidden name="price" value = {{ price_sum }}>
-                    <label>이름:</label>
-                    <input type=text name="name" value = {{ client_infos.name}} required>
-                    <label>전화번호:</label>
-                    <input type=tel name="phone" value = {{ client_infos.phone }} required>
-                    <label>배송지:</label>
-                    <input type=text name="address" value = {{ client_infos.address }} required>
-                    <label>사용가능 마일리지: {{ client_infos.mileage }} </label>
-                    <input type=text name="mileage" value="0">
-                    <label>쿠폰목록:</label>
-                    <select name="couponlist">
+
+        <div class="product_info">
+{#            hmm...#}
+        </div>
+
+        <div class="form-block">
+            <form method="post" class="form">
+
+                <label>Coupon List:</label>
+                <select name="coupon_list">
+
+                    {% if dc_sum == 0 %}
+
+                        <option value = 0></option>
                        {% for coupon in coupon_list %}
-                           <option value = {{ coupon.coupon_id }}>
-                               {{ coupon.name }}쿠폰 {{ coupon.discount }}%할인
+                           <option name = select_coupon value = {{ coupon.coupon_id }}>
+                               {{ coupon.name }} coupon {{ coupon.discount }}%discount
                            </option>
                        {% endfor %}
-                    </select>
-                    <input type="submit" value="구매">
-                </form>
-            {% endfor %}
+
+                    {% else %}
+                        <option value=0></option>
+                        {% for coupon in coupon_list %}
+                            {% if coupon.coupon_id != select_coupon %}
+                               <option name = select_coupon value = {{ coupon.coupon_id }}>
+                                   {{ coupon.name }} coupon {{ coupon.discount }}%discount
+                               </option>
+                            {% else %}
+                                <option name = select_coupon value = {{ coupon.coupon_id }} selected='selected'>
+                                   {{ coupon.name }} coupon {{ coupon.discount }}%discount
+                               </option>
+                           {% endif %}
+                       {% endfor %}
+
+                    {% endif %}
+
+                </select>
+
+                <input type =hidden name="price" value={{ price_sum }}>
+                <label>Available Mileage: {{ client_info.mileage }}[0.001$] </label>
+                <input type=number name="mileage" value={{ mileage }} min="0" max ={{ client_info.mileage }} class="input">
+                <input type="hidden" name="amount" value={{ amount }}>
+                <input type="hidden" name="product_id" value={{ product_id }}>
+                <input type = 'submit' name="discount" value="discount apply" class="button">
+
+            </form>
         </div>
-    </div>
+        <div class="form-block">
+            <form action = '{{  url_for('payment.result') }}' method=post class="form">
+                {% if select_coupon > 0 or mileage > 0 %}
+                <label><del>{{ "%.2f" | format(price_sum) }}$ </del></label>
+                <label>{{ "%.2f" | format(price_sum-dc_sum) }}$</label>
+                {% else %}
+                <label>{{ "%.2f" | format(price_sum) }}$ </label>
+                {% endif %}
+
+                <input type =hidden name="price" value = {{ price_sum }}>
+                <input type =hidden name="dc_price" value = {{ price_sum - dc_sum }}>
+
+                <label>Name:</label>
+                <input type=text name="name" value = {{ client_info.name}} required class="input">
+                <label>Phone Number:</label>
+                <input type=tel name="phone" value = {{ client_info.phone }} required class="input">
+                <label>Address:</label>
+                <input type=text name="address" value = {{ client_info.address }} required class="input">
+                <input type="hidden" name="mileage" value = {{client_info.mileage}}>
+                <input type="hidden" name="mileage_used" value ={{ mileage }}>
+                <input type="hidden" name="coupon_id" value={{ select_coupon }}>
+                <input type="hidden" name="amount" value={{ amount }}>
+                <input type="hidden" name="product_id" value={{ product_id }}>
+                <input type="submit" value="purchase" class="button">
+            </form>
+        </div>
 {% endblock %}
 
