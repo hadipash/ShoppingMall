@@ -12,10 +12,10 @@ bp = Blueprint('coupon', __name__, url_prefix='/coupon')
 def add_coupon():
     username = session.get('user_id')
     db = get_db()
-    selectcoupon = request.form['coupon_id']
-    mycoupon_list = db.execute('SELECT coupon_id,used FROM coupon_list WHERE user_id=?', [username]).fetchall()
-    coupon_name = db.execute('SELECT name FROM coupon WHERE coupon_id=?', [selectcoupon]).fetchone()
-    for coupon in mycoupon_list:
+    select_coupon = request.form['coupon_id']
+    my_coupon_list = db.execute('SELECT coupon_id,used FROM coupon_list WHERE user_id=?', [username]).fetchall()
+    coupon_name = db.execute('SELECT name FROM coupon WHERE coupon_id=?', [select_coupon]).fetchone()
+    for coupon in my_coupon_list:
         if int(coupon[0]) is int(request.form['coupon_id']):
             if coupon[1] is 1:
                 flash(coupon_name[0] + ' coupon already used.')
@@ -23,7 +23,7 @@ def add_coupon():
                 flash('already have ' + coupon_name[0] + ' coupon.')
             return redirect('coupon/coupon_list')
 
-    db.execute('INSERT into coupon_list(user_id,coupon_id) values(?,?)',(username, selectcoupon))
+    db.execute('INSERT into coupon_list(user_id,coupon_id) values(?,?)',(username, select_coupon))
     db.commit()
 
     flash(coupon_name[0] + '  coupon added.')
@@ -33,6 +33,6 @@ def add_coupon():
 @bp.route('/coupon_list')
 def coupon_list():
     db = get_db()
-    couponlist = db.execute('SELECT * FROM coupon').fetchall()
+    coupon_lists = db.execute('SELECT * FROM coupon').fetchall()
 
-    return render_template('coupon/coupon_list.html', lists=couponlist)
+    return render_template('coupon/coupon_list.html', lists=coupon_lists)

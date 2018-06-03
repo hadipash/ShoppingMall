@@ -20,7 +20,7 @@
 
                     {% if dc_sum == 0 %}
 
-                        <option value = 0></option>
+                        <option value = 0>select</option>
                        {% for coupon in coupon_list %}
                            <option name = select_coupon value = {{ coupon.coupon_id }}>
                                {{ coupon.name }} coupon {{ coupon.discount }}%discount
