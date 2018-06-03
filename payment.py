@@ -26,6 +26,7 @@ def result():
         for products in cart_list:
             db.execute('UPDATE product SET stock = ? WHERE product_id = ?',
                        (products[4] - products[3], products[2]))
+        db.execute('DELETE FROM cart_list WHERE user_id = ?', (username,))
     # 카트안거침
     else:
         stock = db.execute('SELECT stock FROM product WHERE product_id = ?', (product_id,)).fetchone()[0]
