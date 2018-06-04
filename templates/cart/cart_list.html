@@ -27,8 +27,7 @@
         <li>
           <h3>Name : {{ item.name }}</h3>
           {% if item.dc > 0 %}
-              <span>Amount : {{ item.dc }}%</span>
-              <br><span><del>Original Price : {{ item.price }}$</del></span>
+              <span><del>Original Price : {{ item.price }}$</del></span>
               <br><span>DC Rate : {{ item.dc }}%</span>
               <br><span>Price : {{ "%.2f" | format(item.price * ((100.0 - item.dc) / 100.0)) }}$</span>
           {% else %}
