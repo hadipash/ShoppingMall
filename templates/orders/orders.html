@@ -5,18 +5,13 @@
 {% endblock %}
 
 {% block content %}
-    <div class="div-block-order">
-        <h5 class="heading-3">Order #1<br></h5>
-        <div class="delivery-text">Name of the product<br>Delivery Status</div>
-        <a class="confirm-button button">Confirm Delivery</a>
-        <a href="#" class="tack-button button">Track Delivery</a>
-        <div class="div-separator"></div>
-    </div>
-    <div class="div-block-order">
-        <h5 class="heading-3">Order #2<br></h5>
-        <div class="delivery-text">Name of the product<br>Delivery Status</div>
-        <a class="confirm-button button">Confirm Delivery</a>
-        <a href="#" class="tack-button button">Track Delivery</a>
-        <div class="div-separator"></div>
-    </div>
+    {% for order in orders %}
+        <div class="div-block-order">
+            <h5 class="heading-3">Order {{ order['order_id'] }}<br></h5>
+            <div class="delivery-text">Name of the product<br>Delivery Status: {{ order['status'] }}</div>
+            <a class="confirm-button button">Confirm Delivery</a>
+            <a href="#" class="tack-button button">Track Delivery</a>
+            <div class="div-separator"></div>
+        </div>
+    {% endfor %}
 {% endblock %}

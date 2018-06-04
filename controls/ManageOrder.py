@@ -1,4 +1,5 @@
 from DAOs.DeliveryDAO import DeliveryDAO
+from DAOs.DeiveryStatus import DeliveryStatus
 
 
 class ManageOrder:
@@ -8,10 +9,16 @@ class ManageOrder:
         self.__order = DeliveryDAO()
 
     def confrimDelivery(self, order_id):
-        pass
+        self.__order.setStatus(order_id, DeliveryStatus.DELIVERED)
 
-    def getDeliveryInfo(self, client_id):
-        pass
+    def getDeliveryInfo(self, order_id):
+        self.__order.getDelivery(order_id)
+
+    def getDeliveries(self, client_id):
+        self.__order.getDeliveries(client_id)
+
+    def addDelivery(self, delivery):
+        self.__order.addDelivery(delivery)
 
     def timeOut(self, order_id):
-        pass
+        self.confrimDelivery(order_id)
