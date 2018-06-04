@@ -92,6 +92,8 @@ CREATE TABLE coupon_list(
 CREATE TABLE product_order (
   user_id             INTEGER REFERENCES client(id),
   order_id            INTEGER REFERENCES delivery(order_id),
+  product_id          INTEGER REFERENCES product(product_id),
+  quantity            INTEGER,
   PRIMARY KEY(user_id, order_id)
 );
 
@@ -157,8 +159,8 @@ INSERT INTO my_list (user_id, product_id) VALUES (1, 7);
 INSERT INTO my_list (user_id, product_id) VALUES (1, 8);
 INSERT INTO my_list (user_id, product_id) VALUES (1, 9);
 
-INSERT INTO product_order (user_id, order_id) VALUES (1, 1);
-INSERT INTO product_order (user_id, order_id) VALUES (1, 2);
-INSERT INTO product_order (user_id, order_id) VALUES (1, 3);
-INSERT INTO product_order (user_id, order_id) VALUES (1, 4);
-INSERT INTO product_order (user_id, order_id) VALUES (1, 5);
+INSERT INTO product_order (user_id, order_id, product_id, quantity) VALUES (1, 1, 1, 2);
+INSERT INTO product_order (user_id, order_id, product_id, quantity) VALUES (1, 2, 2, 1);
+INSERT INTO product_order (user_id, order_id, product_id, quantity) VALUES (1, 3, 3, 4);
+INSERT INTO product_order (user_id, order_id, product_id, quantity) VALUES (1, 4, 4, 3);
+INSERT INTO product_order (user_id, order_id, product_id, quantity) VALUES (1, 5, 5, 2);
