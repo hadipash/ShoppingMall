@@ -8,7 +8,6 @@ DROP TABLE IF EXISTS coupon;
 DROP TABLE IF EXISTS my_list;
 DROP TABLE IF EXISTS cart_list;
 DROP TABLE IF EXISTS coupon_list;
-DROP TABLE IF EXISTS coupon_applied_product_list;
 DROP TABLE IF EXISTS refund;
 DROP TABLE IF EXISTS payment;
 DROP TABLE IF EXISTS product_order;
@@ -92,8 +91,8 @@ CREATE TABLE coupon_list(
 
 CREATE TABLE product_order (
   user_id             INTEGER REFERENCES client(id),
-  track_number        INTEGER REFERENCES delivery(track_number),
-  PRIMARY KEY(user_id, track_number)
+  order_id            INTEGER REFERENCES delivery(order_id),
+  PRIMARY KEY(user_id, order_id)
 );
 
 
@@ -157,3 +156,9 @@ INSERT INTO my_list (user_id, product_id) VALUES (1, 6);
 INSERT INTO my_list (user_id, product_id) VALUES (1, 7);
 INSERT INTO my_list (user_id, product_id) VALUES (1, 8);
 INSERT INTO my_list (user_id, product_id) VALUES (1, 9);
+
+INSERT INTO product_order (user_id, order_id) VALUES (1, 1);
+INSERT INTO product_order (user_id, order_id) VALUES (1, 2);
+INSERT INTO product_order (user_id, order_id) VALUES (1, 3);
+INSERT INTO product_order (user_id, order_id) VALUES (1, 4);
+INSERT INTO product_order (user_id, order_id) VALUES (1, 5);

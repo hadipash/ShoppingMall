@@ -5,9 +5,6 @@ class ProductDAO:
     def __init__(self):
         self.db = db.get_db()
 
-    def __enter__(self):
-        return self
-
     def getDc_rate(self):
         return self.db.execute('SELECT * FROM product ORDER BY dc_rate DESC LIMIT 3', (self.product_id,)).fetchmany(3)
 

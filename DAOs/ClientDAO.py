@@ -5,9 +5,6 @@ class ClientDAO:
     def __init__(self):
         self.db = db.get_db()
 
-    def __enter__(self):
-        return self
-
     def getEmail(self, client_id):
         return self.db.execute('SELECT email FROM client WHERE id=?', (client_id,)).fetchone()
 

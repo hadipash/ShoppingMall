@@ -5,12 +5,6 @@ class PaymentDAO:
     def __init__(self):
         self.db = db.get_db()
 
-    def __enter__(self):
-        return self
-
-    def __exit__(self):
-        pass
-
     def getPaymentInfo(self, paymentNum):
         return self.db.execute('SELECT * FROM payment  WHERE id=?', (paymentNum,)).fetchone()
 
