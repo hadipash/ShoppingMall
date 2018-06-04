@@ -33,7 +33,8 @@ def result():
         print(stock)
         if stock < amount:
             return render_template('payment/payment_result.html', payment_success=False)
-        db.execute('UPDATE product SET stock = ? WHERE product_id = ?', (stock-amount, product_id))
+        db.execute('UPDATE product SET stock = stock - ?, sales_num = sales_num + ? '
+                   'WHERE product_id = ?', (amount, amount, product_id))
 
     mileage_used = int(request.form['mileage_used'])
     mileage_add = int(float(request.form['dc_price']))*10

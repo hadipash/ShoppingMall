@@ -32,7 +32,10 @@ def add_coupon():
 
 @bp.route('/coupon_list')
 def coupon_list():
+    username = session.get('user_id')
     db = get_db()
     coupon_lists = db.execute('SELECT * FROM coupon').fetchall()
+    my_coupon_list = db.execute('SELECT coupon_id FROM coupon_list '
+                                'WHERE used = ? AND user_id = ? ', (1, username,)).fetchall()
 
-    return render_template('coupon/coupon_list.html', lists=coupon_lists)
+    return render_template('coupon/coupon_list.html', lists=coupon_lists, my_coupon_list=my_coupon_list)

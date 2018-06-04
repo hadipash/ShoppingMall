@@ -9,8 +9,8 @@
                 <h5>{{item.name}}<br></h5>
                 <div>discount : {{ item.discount }}%</div>
                   <form action={{ url_for('coupon.add_coupon') }} method=post class="tack-button">
-                        <input type="hidden" name=coupon_id value={{item.coupon_id}}>
-                        <input type=submit value=add class="tack-button button">
+                    <input type="hidden" name=coupon_id value={{item.coupon_id}}>
+                    <input type=submit value=add class="tack-button button">
                   </form>
                 <div class="div-separator"></div>
               </div>
