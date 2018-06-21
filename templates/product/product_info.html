@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="div-block-product-info">
+        <h1>{{ product['name'] }}</h1>
+        <div class="div-block-product-info-sub1">
+            <span>Rating &nbsp; {{ product['product_rating'] }}</span>&nbsp;&nbsp; | &nbsp;&nbsp;<span>Sales &nbsp;&nbsp;{{ product['sales_num'] }}</span><br>
+        </div>
+        <div class="div-block-product-info-sub2">
+            {% if product['dc_rate'] > 0 %}
+                <span class="span-dc-rate" style="font-size: 30px">{{ product['dc_rate'] }}%</span>&nbsp;&nbsp;&nbsp;
+                <span class="span-dc-price" style="font-size: 30px">{{ "%.2f" | format(product['price'] * (100.0 - product['dc_rate']) / 100.0) }}$</span>&nbsp;&nbsp;&nbsp;
+                <span class="span-original-price" style="font-size: 15px"><del>{{ product['price'] }}$</del>&darr;</span>
+            {% else %}
+                <span style="font-size: 30px">{{ product['price'] }}$</span>
+            {% endif %}
+        </div>
+        <hr class="hr-in-product-info">
+        <div class="description-in-product-info">
+            <p>blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~! </p>
+            <p>blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~! </p>
+            <p>blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~! </p>
+            <p>blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~! </p>
+            <p>blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~! </p>
+        </div>
+        <hr class="hr-in-product-info">
+        <form class=form-in-product-info" action="#" style=>
+            <input name="product_id" type="hidden" value="{{ product['product_id'] }}">
+            <input name="user_id" type="hidden" value="museop">
+            <label for="amount">Amount</label>
+            <input type="number" value="1" id="amount" min="0" max="{{ product['stock'] }}">
+            <input type="submit" name="action" value="+ My List" class="button"/>
+            <input type="submit" name="action" value="+ Cart   " class="button"/>
+            <input type="submit" name="action" value="Buy" class="button"/>
+        </form>
+    </div>
+{% endblock %}

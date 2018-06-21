@@ -1,4 +1,4 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
 )
@@ -47,6 +47,7 @@ def searchHOTDEAL(category=None):
         'SELECT * FROM product WHERE sales_num >10 ORDER BY sales_num DESC  '
     ).fetchall()
     return render_template('search/searchHOTDEAL.html', category=category, products=products)
+
 
 @bp.route('/searchDC/')
 @bp.route('/searchDC/<category>')

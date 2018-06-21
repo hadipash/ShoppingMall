@@ -17,6 +17,14 @@ def product_detail():
     return render_template('product/product_detail.html', item=item)
 
 
+@bp.route('/product_info/')
+@bp.route('/product_info/<int:product_id>')
+def product_info(product_id):
+    db = get_db()
+    product = db.execute('SELECT * FROM product WHERE product_id = ?', (product_id,)).fetchone()
+    return render_template('product/product_info.html', product=product)
+
+
 @bp.route('/add_item', methods=['POST'])
 def add_item():
     username = session['user_id']

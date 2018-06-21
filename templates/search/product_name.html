@@ -10,16 +10,16 @@
         <div class="div-separator"></div>
         {% for product in products %}
         <div class="div-block-simple-product-info">
-            <h5 class="heading-3"><a href="#" style="text-decoration:none; color:black;">{{ product['name'] }}</a><br></h5>
+            <h5 class="heading-3"><a href="{{ url_for('product.product_info') }}{{ product['product_id'] }}" style="text-decoration:none; color:black;">{{ product['name'] }}</a><br></h5>
             <div class="simple-product-description1">
                 <span>description</span><br>
                 <span>[{{ product['category'] }}]</span>
             </div>
             <div class="simple-product-description2">
                 {% if product['dc_rate'] > 0 %}
-                    <span>{{ "%.2f" | format(product['price'] * (100.0 - product['dc_rate']) / 100.0) }}$</span><br>
-                    <span><del>{{ product['price'] }}$</del></span><br>
-                    <span>DC: {{ product['dc_rate'] }}%</span>
+                    <span class="span-dc-price">{{ "%.2f" | format(product['price'] * (100.0 - product['dc_rate']) / 100.0) }}$</span><br>
+                    <span class="span-original-price"><del>{{ product['price'] }}$</del></span><br>
+                    <span class="span-dc-rate">DC: {{ product['dc_rate'] }}%</span>
                 {% else %}
                     <span>{{ product['price'] }}$</span>
                 {% endif %}

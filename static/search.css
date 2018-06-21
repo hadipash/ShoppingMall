@@ -82,5 +82,41 @@
 }
 
 .div-block-product-info {
-    margin: 0 400px;
+    margin-left: 35%;
+    margin-right: 35%;
+    text-align: center;
+}
+
+.div-block-product-info-sub1 {
+    padding: 10px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.div-block-product-info-sub2 {
+    padding: 10px;
+}
+
+.span-dc-rate {
+    color: red;
+}
+
+.span-dc-price {
+    color: black;
+}
+
+.span-original-price {
+    color: grey;
+}
+
+.hr-in-product-info {
+    border: 0;height: 1px;background: #ccc;
+}
+
+.description-in-product-info {
+    padding: 10px;
+}
+
+.form-in-product-info {
+    padding-top: 10px;
 }
