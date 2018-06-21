@@ -11,8 +11,43 @@ class ProductDAO:
     def getSales_num(self):
         return self.db.execute('SELECT * FROM product ORDER BY sales_num DESC LIMIT 3', (self.product_id,)).fetchmany(3)
 
-    def getCategory(self):
-        return self.db.execute('SELECT * FROM product WHERE category = ?', (self.product_id,)).fetchall()
+    def getCategory(self, category, sortBy, asc):
+        if sortBy == 0:
+            order = 'sales_num'
+        elif sortBy == 1:
+            order = 'price'
+        elif sortBy == 2:
+            order = 'registration_date'
+        elif sortBy == 3:
+            order = 'product_rating'
+        else:
+            return None
 
-    def getName(self):
-        return self.db.execute('SELECT * FROM product WHERE name = ?', (self.product_id,)).fetchone()
+        if asc:
+            order = order + ' ASC'
+        else:
+            order = order + ' DESC'
+
+        products = self.db.execute('SELECT * FROM product WHERE category = ? ORDER BY ' + order, (category,)).fetchall()
+        return products
+
+    def getProductByName(self, productName, sortBy, asc):
+        if sortBy == 0:
+            order = 'sales_num'
+        elif sortBy == 1:
+            order = 'price'
+        elif sortBy == 2:
+            order = 'registration_date'
+        elif sortBy == 3:
+            order = 'product_rating'
+        else:
+            return None
+
+        if asc:
+            order = order + ' ASC'
+        else:
+            order = order + ' DESC'
+
+        products = self.db.execute('SELECT * FROM product WHERE name LIKE ? ORDER BY ' + order, ('%' + productName + '%',)).fetchall()
+
+        return products
