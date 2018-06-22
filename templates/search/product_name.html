@@ -18,7 +18,7 @@
             <div class="simple-product-description2">
                 {% if product['dc_rate'] > 0 %}
                     <span class="span-dc-price">{{ "%.2f" | format(product['price'] * (100.0 - product['dc_rate']) / 100.0) }}$</span><br>
-                    <span class="span-original-price"><del>{{ product['price'] }}$</del></span><br>
+                    <span class="span-original-price"><del>{{ product['price'] }}$</del>&darr;</span><br>
                     <span class="span-dc-rate">DC: {{ product['dc_rate'] }}%</span>
                 {% else %}
                     <span>{{ product['price'] }}$</span>
