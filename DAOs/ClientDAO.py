@@ -5,6 +5,9 @@ class ClientDAO:
     def __init__(self):
         self.db = db.get_db()
 
+    def __getPassword(self, client_id):
+        return self.db.execute('SELECT password FROM client WHERE id=?', (client_id,)).fetchone()['password']
+
     def getEmail(self, client_id):
         return self.db.execute('SELECT email FROM client WHERE id=?', (client_id,)).fetchone()
 
@@ -22,12 +25,16 @@ class ClientDAO:
         return self.db.execute('SELECT * FROM client WHERE id=?', (client_id,)).fetchone()
 
     def updatePersonalInfo(self, client_id, new_info):
-        print("Client ID:")
-        print(client_id)
-        for key in new_info:
-            if key != "submit" and new_info[key] != "":
-                test = new_info[key]
-                self.db.execute('UPDATE client SET ' + key + '=? WHERE id=?', (new_info[key], client_id))
+        if new_info['password'] == self.__getPassword(client_id):
+            for key in new_info:
+                if key != "submit" and new_info[key] != "" and key != "password" and key != "new_password":
+                    self.db.execute('UPDATE client SET ' + key + '=? WHERE id=?', (new_info[key], client_id))
+
+            if new_info['new_password'] != "":
+                self.db.execute('UPDATE client SET password=? WHERE id=?', (new_info['new_password'], client_id))
+        else:
+            raise ValueError('Invalid password.')
+
         self.db.commit()
 
     def removeClient(self, client_id):

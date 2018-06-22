@@ -13,9 +13,12 @@
             <label for="email">Email Address:</label>
             <input type="email" class="input" maxlength="256" name="email" data-name="Email"
                    value="{{ user['email'] }}" id="email" required=""/>
-            <label for="password">New Password (only for setting a new password)</label>
+            <label for="password">Current Password</label>
             <input type="password" class="input" maxlength="256" name="password" data-name="password"
-                   placeholder="Enter your new password" id="password"/>
+                   placeholder="Enter your password" id="password"/>
+            <label for="new_password">New Password (only for setting a new password)</label>
+            <input type="password" class="input" maxlength="256" name="new_password" data-name="new_password"
+                   placeholder="Enter your new password" id="new_password"/>
             <label for="phone">Phone Number</label>
             <input type="text" class="input" maxlength="256" name="phone" data-name="phone"
                    value="{{ user['phone'] }}" id="phone" required=""/>

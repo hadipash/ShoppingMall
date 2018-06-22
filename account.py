@@ -1,6 +1,7 @@
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for
 )
+
 from controls.ManageAccount import ManageAccount
 
 bp = Blueprint('account', __name__)
@@ -20,13 +21,21 @@ def displayAndEditInfo():
                 error = 'Phone number is required'
             elif not request.form['address']:
                 error = 'Address is required'
+            elif request.form['new_password']:
+                if (len(request.form['new_password']) < 8 or
+                        not any(i.isdigit() for i in request.form['new_password']) or
+                        not any(i.isalpha() for i in request.form['new_password'])):
+                    error = 'Password must be at least 8 characters long and contain at least one letter and one digit'
 
             if error is not None:
                 flash(error)
             else:
                 controller = ManageAccount()
-                controller.editPersonalInfo(g.user['id'], request.form)
-                flash('Saved')
+                try:
+                    controller.editPersonalInfo(g.user['id'], request.form)
+                    flash('Saved')
+                except ValueError:
+                    flash('Invalid password')
 
         elif request.form['submit'] == 'Delete Account':
             controller = ManageAccount()
