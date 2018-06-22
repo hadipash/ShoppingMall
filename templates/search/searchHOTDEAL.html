@@ -17,7 +17,7 @@
             <div class="div-separator"></div>
             {% for product in products %}
             <div class="div-block-simple-product-info">
-                <h5 class="heading-3"><a href="#" style="text-decoration:none; color:black;">{{ product['name'] }}</a><br></h5>
+                <h5 class="heading-3"><a href="{{ url_for('product.product_info') }}{{ product['product_id'] }}" style="text-decoration:none; color:black;">{{ product['name'] }}</a><br></h5>
                 <div class="simple-product-description1">
                     <span>description</span><br>
                     <span>[{{ product['category'] }}]</span>
