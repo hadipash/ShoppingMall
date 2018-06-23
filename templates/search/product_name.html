@@ -1,32 +1,49 @@
 {% extends 'base.html' %}
 
 {% block header %}
-    {% block title %}Search Result for '{{ product_name }}'{% endblock %}
+{% block title %}<em>Search Result for '{{ product_name }}'</em>{% endblock %}
 {% endblock %}
 
 {% block content %}
     {% if products %}
+    <div class="sort-form">
+        <form action="{{ url_for('search.sort_by_name') }}" method="post">
+            <span class="sort_type"> Type&nbsp;
+                <select name="sort_type" class="sort_type">
+                    <option value="sales" {% if sort_type=='sales' %} selected {% endif %}>Sales</option>
+                    <option value="price" {% if sort_type=='price' %} selected {% endif %}>Price</option>
+                    <option value="date" {% if sort_type=='date' %} selected {% endif %}>Date</option>
+                    <option value="rating" {% if sort_type=='rating' %} selected {% endif %}>Rating</option>
+                </select>
+            </span>
+            <input type="radio" name="asc_or_desc" value="ascending" {% if asc %} checked {% endif %}>Ascending
+            <input type="radio" name="asc_or_desc" value="descending" {% if not asc %} checked {% endif %}>Descending
+            <input type="hidden" name="product_name" value="{{ product_name }}"/>
+            <input type="submit" value="Sort">
+        </form>
+    </div>
     <div class="div-block">
         <div class="div-separator"></div>
         {% for product in products %}
         <div class="div-block-simple-product-info">
-            <h5 class="heading-3"><a href="{{ url_for('product.product_info') }}{{ product['product_id'] }}" style="text-decoration:none; color:black;">{{ product['name'] }}</a><br></h5>
+            <h5 class="heading-3"><a href="{{ url_for('product.product_info') }}{{ product['product_id'] }}" style="text-decoration:none; color:black;">{{ product.name }}</a><br></h5>
             <div class="simple-product-description1">
-                <span>description</span><br>
-                <span>[{{ product['category'] }}]</span>
+                <span class="span-product-description">{{ product.description }}</span><br>
+                <span class="span-product-registration-date">Registration date: {{ product.registration_date }}</span><br>
+                <span class="span-product-category">Category: {{ product.category }}</span>
             </div>
             <div class="simple-product-description2">
                 {% if product['dc_rate'] > 0 %}
-                    <span class="span-dc-price">{{ "%.2f" | format(product['price'] * (100.0 - product['dc_rate']) / 100.0) }}$</span><br>
-                    <span class="span-original-price"><del>{{ product['price'] }}$</del>&darr;</span><br>
-                    <span class="span-dc-rate">DC: {{ product['dc_rate'] }}%</span>
+                    <span class="span-dc-price">{{ "%.2f" | format(product.price * (100.0 - product.dc_rate) / 100.0) }}$</span><br>
+                    <span class="span-original-price"><del>{{ product.price }}$</del>&darr;</span><br>
+                    <span class="span-dc-rate">DC: {{ product.dc_rate }}%</span>
                 {% else %}
-                    <span>{{ product['price'] }}$</span>
+                    <span>{{ product.price }}$</span>
                 {% endif %}
             </div>
             <div class="simple-product-description3">
-                <span>Sales &nbsp;&nbsp; {{ product['sales_num'] }}</span><br>
-                <span>Rating &nbsp; {{ product['product_rating'] }}</span>
+                <span class="span-sales">Sales &nbsp;&nbsp; {{ product.sales_num }}</span><br>
+                <span class="span-rating">Rating &nbsp; {{ product.product_rating }}</span>
             </div>
         </div>
         <div class="div-separator"></div>

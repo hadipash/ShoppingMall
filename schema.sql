@@ -42,7 +42,8 @@ CREATE TABLE product (
   sales_num           INTEGER DEFAULT '0' NOT NULL,
   num_of_ratings      INTEGER DEFAULT '0' NOT NULL,
   product_rating      FLOAT NOT NULL,
-  registration_date   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  registration_date   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  description         TEXT
 );
 
 CREATE TABLE coupon (
@@ -130,12 +131,12 @@ INSERT INTO product (name, category, price, stock, dc_rate, sales_num, num_of_ra
 VALUES ("brown coat", "clothes", 5.66, 17, 5, 5, 1, 4.5);
 INSERT INTO product (name, category, price, stock, dc_rate, sales_num, num_of_ratings, product_rating)
 VALUES ("avocado", "food", 10.1, 15, 30, 24, 5, 3.0);
-INSERT INTO product (name, category, price, stock, dc_rate, sales_num, num_of_ratings, product_rating)
-VALUES ("apple", "food", 4.95, 13, 13, 33, 5, 5.0);
-INSERT INTO product (name, category, price, stock, dc_rate, sales_num, num_of_ratings, product_rating)
-VALUES ("apple juice", "food", 4.75, 2, 5, 100, 5, 5.0);
-INSERT INTO product (name, category, price, stock, dc_rate, sales_num, num_of_ratings, product_rating)
-VALUES ("apple pie", "food", 6.7, 10, 10, 10, 10, 3.9);
+INSERT INTO product (name, category, price, stock, dc_rate, sales_num, num_of_ratings, product_rating, description)
+VALUES ("apple", "food", 4.95, 13, 13, 33, 5, 5.0, "Cheap and delicious apples from Dae-gu !!!");
+INSERT INTO product (name, category, price, stock, dc_rate, sales_num, num_of_ratings, product_rating, description)
+VALUES ("apple juice", "food", 4.75, 2, 5, 100, 5, 5.0, "Beverage to take care of your refreshing morning! Try apple juice.");
+INSERT INTO product (name, category, price, stock, dc_rate, sales_num, num_of_ratings, product_rating, description)
+VALUES ("apple pie", "food", 6.7, 10, 10, 10, 10, 3.9, "This apple pie is very delicious. If you taste this once, you will not forget this taste. Please enjoy our masterpieces made of fresh ingredients.");
 INSERT INTO product (name, category, price, stock, dc_rate, sales_num, num_of_ratings, product_rating)
 VALUES ("crap", "food", 11.1, 24, 0, 11, 12, 3.8);
 INSERT INTO product (name, category, price, stock, dc_rate, sales_num, num_of_ratings, product_rating)

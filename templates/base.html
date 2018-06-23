@@ -32,7 +32,7 @@
 
 <body>
 <div>
-    <h1 class="heading">Awesome Shopping Mall</h1>
+    <h1 class="heading"><a href="{{ url_for('index') }}" style="color: black; text-decoration:none;">Awesome Shopping Mall</a></h1>
 </div>
 
 <div class="search-bar">
@@ -46,7 +46,6 @@
 <div class="nav">
     <div class="container">
         <nav role="navigation" class="nav-menu">
-            <a href="{{ url_for('index') }}" class="nav-link">Home</a>
             <a href="{{ url_for('search.category') }}" class="nav-link">Categories</a>
             <a href="{{ url_for('search.searchHOTDEAL')}}" class="nav-link">Hotdeal</a>
             <a href="{{ url_for('search.searchDC')}}" class="nav-link">Discount</a>

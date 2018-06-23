@@ -64,3 +64,57 @@ def searchDC(category=None):
         'SELECT * FROM product WHERE dc_rate >10 ORDER BY dc_rate DESC  '
     ).fetchall()
     return render_template('search/searchDC.html', category=category, products=products)
+
+
+@bp.route('/sort_by_name', methods=('GET', 'POST'))
+def sort_by_name():
+    if request.method == 'POST':
+        product_name = request.form['product_name']
+        sort_type = request.form['sort_type']
+        asc_or_desc = request.form['asc_or_desc']
+
+        if sort_type == 'sales':
+            sortBy = 0
+        elif sort_type == 'price':
+            sortBy = 1
+        elif sort_type == 'date':
+            sortBy = 2
+        elif sort_type == 'rating':
+            sortBy = 3
+
+        if asc_or_desc == 'ascending':
+            asc = True
+        else:
+            asc = False
+
+        search_manager = SearchManager()
+        products = search_manager.searchName(product_name, sortBy, asc)
+        return render_template('search/product_name.html', product_name=product_name, products=products, sort_type=sort_type, asc=asc)
+    return render_template('search/product_name.html')
+
+
+@bp.route('/sort_by_category', methods=('GET', 'POST'))
+def sort_by_category():
+    if request.method == 'POST':
+        category = request.form['category']
+        sort_type = request.form['sort_type']
+        asc_or_desc = request.form['asc_or_desc']
+
+        if sort_type == 'sales':
+            sortBy = 0
+        elif sort_type == 'price':
+            sortBy = 1
+        elif sort_type == 'date':
+            sortBy = 2
+        elif sort_type == 'rating':
+            sortBy = 3
+
+        if asc_or_desc == 'ascending':
+            asc = True
+        else:
+            asc = False
+
+        search_manager = SearchManager()
+        products = search_manager.searchCategory(category, sortBy, asc)
+        return render_template('search/category.html', category=category, products=products, sort_type=sort_type, asc=asc)
+    return render_template('search/category.html')

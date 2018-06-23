@@ -103,6 +103,8 @@
 
 .span-dc-price {
     color: black;
+    font-weight: bold;
+    font-size: 120%;
 }
 
 .span-original-price {
@@ -119,4 +121,44 @@
 
 .form-in-product-info {
     padding-top: 10px;
+}
+
+.sort-form {
+    text-align: center;
+}
+
+.sort-form form input {
+    width: auto;
+    display: inline;
+    margin: 20px;
+    background-color: #3898EC;
+    color: white;
+}
+
+.span-product-description {
+    display: block;
+    font-style: italic;
+    max-width: 500px;
+    max-height: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: grey;
+}
+
+.span-product-registration-date {
+    font-style: italic;
+    color: grey;
+}
+
+.span-product-category {
+    font-style: italic;
+    color: green;
+}
+
+.span-sales {
+    color: #0080ff;
+}
+
+.span-rating {
+    color: #ff7f00;
 }
