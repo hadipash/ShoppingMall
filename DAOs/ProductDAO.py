@@ -15,7 +15,7 @@ class ProductDAO:
         if sortBy == 0:
             order = 'sales_num'
         elif sortBy == 1:
-            order = 'price'
+            order = 'price*(100.0-dc_rate)/100.0'
         elif sortBy == 2:
             order = 'registration_date'
         elif sortBy == 3:
@@ -35,7 +35,7 @@ class ProductDAO:
         if sortBy == 0:
             order = 'sales_num'
         elif sortBy == 1:
-            order = 'price'
+            order = 'price*(100.0-dc_rate)/100.0'
         elif sortBy == 2:
             order = 'registration_date'
         elif sortBy == 3:
