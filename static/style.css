@@ -219,3 +219,55 @@ input {
     padding: 0.5em;
     border: 1px solid #AACBE2;
 }
+
+/*-----------------------ORDER_TABLE----------------------*/
+table {
+    width: 100%;
+    margin-top: 55px;
+    border: 2px solid #f2f2f2;
+}
+
+th {
+    font-size: 14px;
+    line-height: 1.4;
+    border-bottom: 2px solid #f2f2f2;
+}
+
+td {
+    color: #606060;
+    line-height: 1.4;
+}
+
+.table-name {
+    font-size: 15px;
+    padding-left: 10px;
+}
+
+.table-value {
+    text-align: center;
+    font-size: 14px;
+}
+
+.column1 {
+    width: 55%;
+}
+
+.column2 {
+    width: 15%;
+}
+
+.column3 {
+    width: 15%;
+}
+
+.column4 {
+    width: 15%;
+}
+
+.total {
+    margin-top: 5px;
+    margin-right: 10px;
+    text-align: right;
+}
+
+/*-----------------------------------------------------------*/

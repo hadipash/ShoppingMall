@@ -51,3 +51,6 @@ class ProductDAO:
         products = self.db.execute('SELECT * FROM product WHERE name LIKE ? ORDER BY ' + order, ('%' + productName + '%',)).fetchall()
 
         return products
+
+    def getProductByID(self, product_id):
+        return self.db.execute('SELECT * FROM product WHERE product_id=?', (product_id,)).fetchone()

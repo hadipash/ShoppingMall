@@ -7,8 +7,34 @@
 {% block content %}
     {% for order in orders %}
         <div class="div-block-order">
-            <h5 class="heading-3">Order {{ order['order_id'] }}<br></h5>
-            <div class="delivery-text">Name of the product<br>Delivery Status: {{ order['status'] }}</div>
+            <h5 class="heading-3">Order Number: {{ '{0:08d}'.format(order['order_id']) }}<br></h5>
+            <div class="delivery-text">Order date: {{ order['order_date'] }}
+                </br>Delivery Status: {{ order['last_status'] }}
+            </div>
+            <div>
+                <table>
+                    <thead>
+                    <tr>
+                        <th class="column1">Product Name</th>
+                        <th class="column2">Price</th>
+                        <th class="column3">Quantity</th>
+                        <th class="column4">Total Price</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for product in order['products'] %}
+                    <tr>
+                        <td class="column1 table-name">{{ product['name'] }}</td>
+                        <td class="column2 table-value">{{ product['price'] }} $</td>
+                        <td class="column3 table-value">{{ product['quantity'] }}</td>
+                        <td class="column4 table-value">{{ product['price'] * product['quantity'] }} $</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="total">Total: 400 $</div>
             <a class="confirm-button button">Confirm Delivery</a>
             <a href="#" class="tack-button button">Track Delivery</a>
             <div class="div-separator"></div>

@@ -2,8 +2,6 @@ from DAOs.ClientDAO import ClientDAO
 
 
 class ManageAccount:
-    __client = None
-
     def __init__(self):
         self.__client = ClientDAO()
 

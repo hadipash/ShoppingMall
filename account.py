@@ -9,6 +9,8 @@ bp = Blueprint('account', __name__)
 
 @bp.route('/account', methods=('GET', 'POST'))
 def displayAndEditInfo():
+    controller = ManageAccount()
+
     if request.method == 'POST':
         if request.form['submit'] == 'Save':
             error = None
@@ -30,7 +32,6 @@ def displayAndEditInfo():
             if error is not None:
                 flash(error)
             else:
-                controller = ManageAccount()
                 try:
                     controller.editPersonalInfo(g.user['id'], request.form)
                     flash('Saved')
@@ -38,8 +39,7 @@ def displayAndEditInfo():
                     flash('Invalid password')
 
         elif request.form['submit'] == 'Delete Account':
-            controller = ManageAccount()
             controller.deleteAccount(g.user['id'])
             return redirect(url_for('auth.logout', message='Your Account Was Deleted'))
 
-    return render_template('account/account.html', user=ManageAccount().requestPersonalInfo(g.user['id']))
+    return render_template('account/account.html', user=controller.requestPersonalInfo(g.user['id']))

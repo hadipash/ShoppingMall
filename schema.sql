@@ -2,7 +2,7 @@
 -- Drop any existing data and create empty tables.
 
 DROP TABLE IF EXISTS client;
-DROP TABLE IF EXISTS delivery;
+DROP TABLE IF EXISTS placed_order;
 DROP TABLE IF EXISTS product;
 DROP TABLE IF EXISTS coupon;
 DROP TABLE IF EXISTS my_list;
@@ -11,6 +11,8 @@ DROP TABLE IF EXISTS coupon_list;
 DROP TABLE IF EXISTS refund;
 DROP TABLE IF EXISTS payment;
 DROP TABLE IF EXISTS product_order;
+DROP TABLE IF EXISTS delivery_history;
+DROP TABLE IF EXISTS client_order;
 
 
 CREATE TABLE client (
@@ -23,13 +25,12 @@ CREATE TABLE client (
   mileage             UNSIGNED INTEGER DEFAULT 0
 );
 
-CREATE TABLE delivery (
-  track_number        INTEGER PRIMARY KEY AUTOINCREMENT,
-  order_id            UNSIGNED INTEGER UNIQUE NOT NULL,
+CREATE TABLE placed_order (
+  order_id            INTEGER PRIMARY KEY AUTOINCREMENT,
+  track_number        UNSIGNED INTEGER UNIQUE NOT NULL,
   delivery_company    VARCHAR(50) NOT NULL,
-  location            VARCHAR(100) NOT NULL,
-  status              INTEGER NOT NULL,
-  date_arrived        TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  last_status         INTEGER NOT NULL,
+  order_date          TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE product (
@@ -90,12 +91,24 @@ CREATE TABLE coupon_list(
   PRIMARY KEY(user_id, coupon_id)
 );
 
+CREATE TABLE client_order (
+  client_id           INTEGER REFERENCES client(id),
+  order_id            INTEGER REFERENCES placed_order(order_id),
+  PRIMARY KEY(client_id, order_id)
+);
+
 CREATE TABLE product_order (
-  user_id             INTEGER REFERENCES client(id),
-  order_id            INTEGER REFERENCES delivery(order_id),
+  order_id            INTEGER REFERENCES placed_order(order_id),
   product_id          INTEGER REFERENCES product(product_id),
   quantity            INTEGER,
-  PRIMARY KEY(user_id, order_id)
+  PRIMARY KEY(order_id, product_id)
+);
+
+CREATE TABLE delivery_history (
+  track_number        INTEGER REFERENCES placed_order(track_number),
+  location            VARCHAR(20) NOT NULL,
+  date                TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY(track_number, location)
 );
 
 
@@ -111,15 +124,15 @@ INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Sax
 INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Flossie.Jeannine@gmail.com", "Flossie Jeannine", "77777", 01000000000, "Seoul",    0);
 INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Austin.Dustin@gmail.com",    "Austin Dustin",    "99999", 01099999999, "Busan",    734);
 
-INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (1,   "LOGEN",   "Busan", 1);
-INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (2, "HYUNDAI",   "Seoul", 0);
-INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (3,   "LOGEN", "Gwangju", 1);
-INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (4,  "HANJIN",   "Seoul", 0);
-INSERT INTO delivery (order_id, delivery_company, location, status) VALUES (5,  "HANJIN",   "Busan", 1);
+INSERT INTO placed_order (track_number, delivery_company, last_status) VALUES (1,   "LOGEN", 1);
+INSERT INTO placed_order (track_number, delivery_company, last_status) VALUES (2, "HYUNDAI", 1);
+INSERT INTO placed_order (track_number, delivery_company, last_status) VALUES (3,   "LOGEN", 2);
+INSERT INTO placed_order (track_number, delivery_company, last_status) VALUES (4,  "HANJIN", 3);
+INSERT INTO placed_order (track_number, delivery_company, last_status) VALUES (5,  "HANJIN", 1);
 
-INSERT INTO coupon (coupon_id, name, discount) VALUES (1,   "THANKS",  10);
-INSERT INTO coupon (coupon_id, name, discount) VALUES (2,   "OPEN",    20);
-INSERT INTO coupon (coupon_id, name, discount) VALUES (3,  "JUNEEVENT", 6);
+INSERT INTO coupon (coupon_id, name, discount) VALUES (1, "THANKS",  10);
+INSERT INTO coupon (coupon_id, name, discount) VALUES (2, "OPEN",    20);
+INSERT INTO coupon (coupon_id, name, discount) VALUES (3, "JUNEEVENT", 6);
 
 INSERT INTO product (name, category, price, stock, dc_rate, sales_num, num_of_ratings, product_rating)
 VALUES ("flower dress", "clothes", 44.95, 15, 15, 8, 1, 4.5);
@@ -160,8 +173,10 @@ INSERT INTO my_list (user_id, product_id) VALUES (1, 7);
 INSERT INTO my_list (user_id, product_id) VALUES (1, 8);
 INSERT INTO my_list (user_id, product_id) VALUES (1, 9);
 
-INSERT INTO product_order (user_id, order_id, product_id, quantity) VALUES (1, 1, 1, 2);
-INSERT INTO product_order (user_id, order_id, product_id, quantity) VALUES (1, 2, 2, 1);
-INSERT INTO product_order (user_id, order_id, product_id, quantity) VALUES (1, 3, 3, 4);
-INSERT INTO product_order (user_id, order_id, product_id, quantity) VALUES (1, 4, 4, 3);
-INSERT INTO product_order (user_id, order_id, product_id, quantity) VALUES (1, 5, 5, 2);
+INSERT INTO product_order (order_id, product_id, quantity) VALUES (1, 1, 2);
+INSERT INTO product_order (order_id, product_id, quantity) VALUES (1, 2, 1);
+INSERT INTO product_order (order_id, product_id, quantity) VALUES (1, 3, 4);
+INSERT INTO product_order (order_id, product_id, quantity) VALUES (1, 4, 3);
+INSERT INTO product_order (order_id, product_id, quantity) VALUES (1, 5, 2);
+
+INSERT INTO client_order (client_id, order_id) VALUES (1, 1);

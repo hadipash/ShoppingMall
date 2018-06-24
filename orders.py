@@ -1,8 +1,14 @@
-from flask import Blueprint, render_template
+from flask import (
+    Blueprint, g, render_template
+)
+
+from controls.ManageOrder import ManageOrder
 
 bp = Blueprint('orders', __name__)
 
 
-@bp.route('/orders')
+@bp.route('/orders', methods=('GET', 'POST'))
 def display_orders():
-    return render_template('orders/orders.html', orders=None)
+    controller = ManageOrder()
+
+    return render_template('orders/orders.html', orders=controller.getDeliveries(g.user['id']))
