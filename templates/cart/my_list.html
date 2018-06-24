@@ -17,18 +17,17 @@
             });
         }
     </script>
-  <ul class=lists>
-  {% for item in lists %}
-      <br>
-      <li>
-          <form action={{ url_for('product.product_detail') }} method=post class="form">
-            <input type="hidden" name=product_id value={{item.id}}>
-            <p><input type="submit" value={{ item.name }}></p>
-          </form>
-          <a class="button button" onclick="delete_item({{ item.id }})">delete</a> <br>
-      </li>
-  {% else %}
-      <li><em>No item exist.</em></li>
-  {% endfor %}
-  </ul>
+    <ul class=lists>
+
+    {% for item in lists %}
+        <div class="div-block-simple-product-info">
+            <h5 class="heading-3"><a href="{{ url_for('product.product_info') }}{{ item.id }}" style="text-decoration:none; color:black;">{{ item.name }}</a></h5>
+            <a onclick="delete_item({{ item.id }})" class="tack-button">delete</a> <br>
+        </div>
+        <div class="div-separator"></div>
+
+    {% endfor %}
+    {#    {% else %}#}
+    {#    <li><em>No item exist.</em></li>#}
+    </ul>
 {% endblock %}

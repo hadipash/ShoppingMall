@@ -1,6 +1,47 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <script>
+        function add_cart(id) {
+            var amount = $("#amount").val();
+            var obj = new Object();
+            obj.ID= id;
+            obj.AMT = amount;
+            $.ajax({
+                url: '/cart/add_item',
+                data: JSON.stringify(obj, null, '\t'),
+                type: 'POST',
+                contentType: 'application/json;charset=UTF-8',
+                processData: false,
+                success: function(data) {
+                    if(data.result) {
+                        location.reload();
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+        function add_mylist(id) {
+            $.ajax({
+                url: '/mylist/add_item',
+                data: id,
+                type: 'POST',
+                contentType: 'application/json;charset=UTF-8',
+                processData: false,
+                success: function(data) {
+                    if(data.result) {
+                        location.reload();
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+        function change_amount(amt, price) {
+            var pr = price.toFixed(2);
+            $("#price").val(amt*pr);
+        }
+    </script>
+
     <div class="div-block-product-info">
         <h1>{{ product['name'] }}</h1>
         <div class="div-block-product-info-sub1">
@@ -24,14 +65,18 @@
             <p>blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~ blabla~! </p>
         </div>
         <hr class="hr-in-product-info">
-        <form class=form-in-product-info" action="#" style=>
+        <form class=form-in-product-info" action={{ url_for('payment.cart') }} method=post style=>
             <input name="product_id" type="hidden" value="{{ product['product_id'] }}">
             <input name="user_id" type="hidden" value="museop">
             <label for="amount">Amount</label>
-            <input type="number" value="1" id="amount" min="0" max="{{ product['stock'] }}">
-            <input type="submit" name="action" value="+ My List" class="button"/>
-            <input type="submit" name="action" value="+ Cart   " class="button"/>
+            <input type="number" id="amount" name="amount" min=1 value=1 onchange="change_amount(this.value, {{ product['price'] * ((100.0 - product['dc_rate']) / 100.0) }})" />
+
+            <input type="submit" name="action" value="+ Cart   " class="button" onclick="add_cart({{ product['product_id'] }})"/>
+            <input type="hidden" name="price" id="price" value={{ "%.2f" | format(product['price'] * ((100.0 - product['dc_rate']) / 100.0)) }}>
+            <input type="hidden" name="product_id" value={{ product['product_id'] }}>
             <input type="submit" name="action" value="Buy" class="button"/>
         </form>
+    <input type="submit" name="action" value="+ My List" class="button" onclick="add_mylist({{ product['product_id'] }})"/>
+
     </div>
 {% endblock %}

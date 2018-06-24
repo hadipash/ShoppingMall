@@ -1,8 +1,8 @@
 #-*- coding: utf-8 -*-
 from flask import (
-    Blueprint, g, redirect, render_template, request, session, url_for, flash, request, jsonify
+    Blueprint, render_template, session, request, jsonify
 )
-from DAOs.db import init_db, get_db
+from DAOs.db import get_db
 
 bp = Blueprint('cart', __name__, url_prefix='/cart')
 
@@ -36,4 +36,23 @@ def delete_item():
     db.commit()
     return jsonify(
         result = "success"
+    )
+
+
+@bp.route('/add_item', methods=['POST'])
+def add_item():
+    username = session['user_id']
+    Data = request.json
+
+    db = get_db()
+    item = db.execute('SELECT product_id, quantity FROM cart_list WHERE user_id=? and product_id=?', (username, Data['ID'])).fetchone()
+    if item is None :
+        db.execute('INSERT INTO cart_list (user_id, product_id, quantity) VALUES(?,?,?)',(username, Data['ID'], Data['AMT']))
+        db.commit()
+        msg = "장바구니에 추가되었습니다"
+    else :
+        msg = "장바구니에 이미 존재하는 제품입니다"
+    return jsonify(
+        result="success",
+        msg=msg
     )

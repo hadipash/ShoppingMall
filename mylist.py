@@ -33,5 +33,21 @@ def delete_item():
         result="success"
     )
 
-#def access_item():
-    #return render_template('purchase/purchase.html')
+
+@bp.route('/add_item', methods=['POST'])
+def add_item():
+    username = session['user_id']
+    Data = request.json
+
+    db = get_db()
+    item = db.execute('SELECT product_id FROM my_list WHERE user_id=? and product_id=?', (username, Data['ID'])).fetchone()
+    if item is None :
+        db.execute('INSERT INTO my_list (user_id, product_id) VALUES(?,?)', (username, Data['ID']),)
+        db.commit()
+        msg = "찜한 목록에 추가되었습니다"
+    else :
+        msg = "찜한 목록에 이미 존재하는 제품입니다"
+    return jsonify(
+        result="success",
+        msg=msg
+    )
