@@ -7,9 +7,9 @@
 {% block content %}
     {% for order in orders %}
         <div class="div-block-order">
-            <h5 class="heading-3">Order Number: {{ '{0:08d}'.format(order['order_id']) }}<br></h5>
-            <div class="delivery-text">Order date: {{ order['order_date'] }}
-                </br>Delivery Status: {{ order['last_status'] }}
+            <h5 class="heading-3">Order Number: {{ '{0:08d}'.format(order['order_id']) }}</h5><br>
+            <div class="delivery-text">Order Date: {{ order['order_date'] }}
+                <br>Delivery Status: {{ order['last_status'] }}
             </div>
             <div>
                 <table>
@@ -36,7 +36,9 @@
             </div>
             <div class="total">Total: 400 $</div>
             <a class="confirm-button button">Confirm Delivery</a>
-            <a href="#" class="tack-button button">Track Delivery</a>
+            <a onclick="window.open('{{ url_for(';track_delivery.display_history;', order_id=order[';order_id;']) }}',
+                        '', 'width=600, height=600';)"
+               class="tack-button button" id="{{ order['order_id'] }}" target="_blank">Track Delivery</a>
             <div class="div-separator"></div>
         </div>
     {% endfor %}

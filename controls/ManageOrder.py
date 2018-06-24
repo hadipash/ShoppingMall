@@ -12,7 +12,7 @@ class ManageOrder:
         self.__order.setStatus(order_id, DeliveryStatus.DELIVERED)
 
     def getDeliveryInfo(self, order_id):
-        self.__order.getDelivery(order_id)
+        return self.__order.getDelivery(order_id)
 
     def getDeliveries(self, client_id):
         orders = []
@@ -31,6 +31,12 @@ class ManageOrder:
             orders.append(order)
 
         return orders
+
+    def getTrackHistory(self, order_id):
+        delivery = dict(self.getDeliveryInfo(order_id))
+        delivery['history'] = [dict(self.__order.getTrackHistory(delivery['track_number']))]
+
+        return delivery
 
     def addDelivery(self, delivery):
         self.__order.addDelivery(delivery)

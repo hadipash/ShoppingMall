@@ -180,3 +180,7 @@ INSERT INTO product_order (order_id, product_id, quantity) VALUES (1, 4, 3);
 INSERT INTO product_order (order_id, product_id, quantity) VALUES (1, 5, 2);
 
 INSERT INTO client_order (client_id, order_id) VALUES (1, 1);
+
+INSERT INTO delivery_history (track_number, location) VALUES (1, "Seoul");
+INSERT INTO delivery_history (track_number, location) VALUES (1, "Daegu");
+INSERT INTO delivery_history (track_number, location) VALUES (1, "Busan");

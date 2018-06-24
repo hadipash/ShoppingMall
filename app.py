@@ -1,6 +1,7 @@
 import os
 
 from flask import Flask
+
 from DAOs import db
 
 
@@ -27,19 +28,11 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'
-
-    @app.route('/coupon')
-    def coupon():
-        return 'coupon'
-
     # register the database commands
     db.init_app(app)
 
     # apply the blueprints to the app
-    import auth, account, blog, search, cart, coupon, mylist, orders, payment, product
+    import auth, account, blog, search, cart, coupon, mylist, orders, payment, product, track_delivery
     app.register_blueprint(auth.bp)
     app.register_blueprint(account.bp)
     app.register_blueprint(blog.bp)
@@ -50,6 +43,7 @@ def create_app(test_config=None):
     app.register_blueprint(orders.bp)
     app.register_blueprint(payment.bp)
     app.register_blueprint(product.bp)
+    app.register_blueprint(track_delivery.bp)
 
     # make url_for('index') == url_for('blog.index')
     # in another app, you might define a separate main index here with

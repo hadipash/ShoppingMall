@@ -15,6 +15,10 @@ class DeliveryDAO:
         return self.db.execute('SELECT product_id, quantity FROM product_order WHERE order_id=?', (order_id,)) \
             .fetchall()
 
+    def getTrackHistory(self, track_number):
+        return self.db.execute('SELECT location, date FROM delivery_history WHERE track_number=?', (track_number,)) \
+            .fetchall()
+
     def removeDelivery(self, order_id):
         pass
 

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Track Delivery - Awesome Shopping Mall</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        WebFont.load({
+            google: {
+                families: ["Montserrat:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic," +
+                "600,600italic,700,700italic,800,800italic,900,900italic", "Inconsolata:400,700"]
+            }
+        });
+    </script>
+</head>
+
+<body>
+<div>
+    <h2 class="heading-2">Track Delivery</h2>
+</div>
+
+<div class="div-block">
+    <div class="div-block-delivery">
+        <h5 class="heading-3">Order Number: {{ '{0:08d}'.format(delivery['order_id']) }}</h5><br>
+        <div style="margin-bottom: 10px" class="delivery-text">
+            Track Number: {{ delivery['track_number'] }}
+            <br>Delivery Company: {{ delivery['delivery_company'] }}
+            <br>Order Date: {{ delivery['order_date'] }}
+            <br>Delivery Status: {{ delivery['last_status'] }}
+        </div>
+        <div>
+            <table>
+                <thead>
+                <tr>
+                    <th>Location</th>
+                    <th>Arrival Date</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for history in delivery['history'] %}
+                <tr>
+                    <td class="table-name">{{ history['location'] }}</td>
+                    <td class="table-value">{{ history['date'] }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
