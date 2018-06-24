@@ -36,8 +36,8 @@
             </div>
             <div class="total">Total: 400 $</div>
             <a class="confirm-button button">Confirm Delivery</a>
-            <a onclick="window.open('{{ url_for(';track_delivery.display_history;', order_id=order[';order_id;']) }}',
-                        '', 'width=600, height=600';)"
+            <a onclick="window.open('{{ url_for('track_delivery.display_history', order_id=order['order_id']) }}',
+                        '', 'width=600, height=600');"
                class="tack-button button" id="{{ order['order_id'] }}" target="_blank">Track Delivery</a>
             <div class="div-separator"></div>
         </div>
