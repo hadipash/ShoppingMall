@@ -49,5 +49,7 @@
         <div class="div-separator"></div>
         {% endfor %}
     </div>
+    {% else %}
+        <h2 style="text-align: center;">검색하신 '{{ product_name }}'에 대한 검색 결과가 없습니다.</h2>
     {% endif %}
 {% endblock %}
