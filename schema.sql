@@ -55,20 +55,12 @@ CREATE TABLE coupon (
 
 CREATE TABLE payment (
   paymentNum        INTEGER PRIMARY KEY AUTOINCREMENT,
-  price             INTEGER NOT NULL,
-  shippingFee       INTEGER,
+  price             FLOAT NOT NULL,
   name              STRING NOT NULL,
   phone             INTEGER NOT NULL,
-  address           STRING NOT NULL,
-  discount          INTEGER
+  address            STRING NOT NULL,
+  discount          FLOAT NOT NULL
 );
-
-CREATE TABLE refund (
-  refundNum         INTEGER PRIMARY KEY AUTOINCREMENT,
-  paymentNum        INTEGER REFERENCES payment(paymentNum),
-  refundAdr         STRING NOT NULL
-);
-
 
 -- Relational tables
 CREATE TABLE my_list(
@@ -109,6 +101,15 @@ CREATE TABLE delivery_history (
   location            VARCHAR(20) NOT NULL,
   hub_date            TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY(track_number, location)
+);
+
+CREATE TABLE payment_detail (
+  payment_id         INTEGER REFERENCES payment(paymentNum),
+  product_id         INTEGER REFERENCES product(product_Id),
+  quantity           INTEGER,
+  price               FLOAT NOT NULL,
+  PRIMARY KEY(payment_id, product_id)
+
 );
 
 

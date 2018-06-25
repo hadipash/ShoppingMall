@@ -14,6 +14,11 @@ def result():
     username = session.get('user_id')
     amount = int(request.form['amount'])
     product_id = request.form['product_id']
+    cur_payment_num=db.execute('SELECT exists(select * from payment where paymentNum = 1)').fetchall()[0][0]
+    if cur_payment_num == 1:
+        cur_payment_num = int(db.execute('SELECT paymentNum FROM payment ORDER BY paymentNum DESC LIMIT 1').fetchone()[0])+1
+    else :
+        cur_payment_num = 1
     # 카트거치고옴
     if amount == 0:
         cart_list = db.execute('SELECT a.price, a.dc_rate,a.product_id, b.quantity,a.stock FROM product a, cart_list b '
@@ -21,18 +26,32 @@ def result():
 
         for products in cart_list:
             if products[4]-products[3] < 0:
-                return render_template('payment/payment_result.html', payment_success=False)
 
+                return render_template('payment/payment_result.html', payment_success=False)
+        db.execute('INSERT INTO payment (price, name, phone, address, discount) VALUES(?, ?, ?, ?, ?)',
+                   (request.form['price'], request.form['name'], request.form['phone'],
+                    request.form['address'], request.form['dc_price']))
+        db.commit()
         for products in cart_list:
+            db.execute('INSERT INTO payment_detail (payment_id,product_id,quantity,price) VALUES(?,?,?,?)',(cur_payment_num,products[2],products[3],products[0] * ((100.0-products[2])/100.0)))
             db.execute('UPDATE product SET stock = ? WHERE product_id = ?',
                        (products[4] - products[3], products[2]))
         db.execute('DELETE FROM cart_list WHERE user_id = ?', (username,))
     # 카트안거침
     else:
-        stock = db.execute('SELECT stock FROM product WHERE product_id = ?', (product_id,)).fetchone()[0]
-        print(stock)
+        product_info= db.execute('SELECT stock,price,dc_rate FROM product WHERE product_id = ?', (product_id,)).fetchone()
+        stock = product_info[0]
+
+        price = product_info[1] * ((100.0-product_info[2])/100.0)
+
         if stock < amount:
             return render_template('payment/payment_result.html', payment_success=False)
+        db.execute('INSERT INTO payment (price, name, phone, address, discount) VALUES(?, ?, ?, ?, ?)',
+                   (request.form['price'], request.form['name'], request.form['phone'],
+                    request.form['address'], request.form['dc_price']))
+        db.commit()
+        db.execute('INSERT INTO payment_detail (payment_id,product_id,quantity,price) VALUES(?,?,?,?)',(cur_payment_num,product_id,amount,price))
+        db.execute('DELETE FROM my_list WHERE user_id = ? AND product_id = ? ',(username,product_id))
         db.execute('UPDATE product SET stock = stock - ?, sales_num = sales_num + ? '
                    'WHERE product_id = ?', (amount, amount, product_id))
 
@@ -44,9 +63,7 @@ def result():
     if coupon_id is not 0:
         db.execute('UPDATE coupon_list SET used = ? WHERE user_id = ? AND coupon_id = ? ', (1, username, coupon_id))
 
-    db.execute('INSERT INTO payment (price, shippingFee, name, phone, address, discount) VALUES(?, ?, ?, ?, ?, ?)',
-               (request.form['price'], 3, request.form['name'], request.form['phone'],
-                request.form['address'], request.form['dc_price']))
+
 
     db.commit()
 
