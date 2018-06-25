@@ -23,9 +23,9 @@
 
 <div class="div-block">
     <div class="div-block-delivery">
-        <h5 class="heading-3">Order Number: {{ '{0:08d}'.format(delivery['order_id']) }}</h5><br>
+        <h5>Order Number: {{ '{0:08d}'.format(delivery['order_id']) }}</h5>
         <div style="margin-bottom: 10px" class="delivery-text">
-            Track Number: {{ delivery['track_number'] }}
+            Track Number: {{ '{0:08d}'.format(delivery['track_number']) }}
             <br>Delivery Company: {{ delivery['delivery_company'] }}
             <br>Order Date: {{ delivery['order_date'] }}
             <br>Delivery Status: {{ delivery['last_status'] }}
@@ -40,10 +40,10 @@
                 </thead>
 
                 <tbody>
-                {% for history in delivery['history'] %}
+                {% for city, date in delivery['history'].items() %}
                 <tr>
-                    <td class="table-name">{{ history['location'] }}</td>
-                    <td class="table-value">{{ history['date'] }}</td>
+                    <td class="table-name">{{ city }}</td>
+                    <td class="table-value">{{ date }}</td>
                 </tr>
                 {% endfor %}
                 </tbody>

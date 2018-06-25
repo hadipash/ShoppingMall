@@ -19,7 +19,7 @@ class ManageOrder:
         order_list = self.__order.getDeliveries(client_id)
 
         for ordr in order_list:
-            order = dict(self.__order.getDelivery(ordr['order_id']))  # placed_order table
+            order = dict(self.getDeliveryInfo(ordr['order_id']))  # placed_order table
             order['last_status'] = DeliveryStatus.getStringValue(order['last_status'])
             order['products'] = []
 
@@ -34,7 +34,8 @@ class ManageOrder:
 
     def getTrackHistory(self, order_id):
         delivery = dict(self.getDeliveryInfo(order_id))
-        delivery['history'] = [dict(self.__order.getTrackHistory(delivery['track_number']))]
+        delivery['last_status'] = DeliveryStatus.getStringValue(delivery['last_status'])
+        delivery['history'] = dict(self.__order.getTrackHistory(delivery['track_number']))
 
         return delivery
 

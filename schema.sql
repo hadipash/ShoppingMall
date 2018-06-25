@@ -107,7 +107,7 @@ CREATE TABLE product_order (
 CREATE TABLE delivery_history (
   track_number        INTEGER REFERENCES placed_order(track_number),
   location            VARCHAR(20) NOT NULL,
-  date                TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  hub_date            TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY(track_number, location)
 );
 
@@ -125,10 +125,8 @@ INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Flo
 INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Austin.Dustin@gmail.com",    "Austin Dustin",    "99999", 01099999999, "Busan",    734);
 
 INSERT INTO placed_order (track_number, delivery_company, last_status) VALUES (1,   "LOGEN", 1);
-INSERT INTO placed_order (track_number, delivery_company, last_status) VALUES (2, "HYUNDAI", 1);
-INSERT INTO placed_order (track_number, delivery_company, last_status) VALUES (3,   "LOGEN", 2);
-INSERT INTO placed_order (track_number, delivery_company, last_status) VALUES (4,  "HANJIN", 3);
-INSERT INTO placed_order (track_number, delivery_company, last_status) VALUES (5,  "HANJIN", 1);
+INSERT INTO placed_order (track_number, delivery_company, last_status) VALUES (2, "HYUNDAI", 3);
+INSERT INTO placed_order (track_number, delivery_company, last_status) VALUES (3,      "CJ", 2);
 
 INSERT INTO coupon (coupon_id, name, discount) VALUES (1, "THANKS",  10);
 INSERT INTO coupon (coupon_id, name, discount) VALUES (2, "OPEN",    20);
@@ -179,8 +177,27 @@ INSERT INTO product_order (order_id, product_id, quantity) VALUES (1, 3, 4);
 INSERT INTO product_order (order_id, product_id, quantity) VALUES (1, 4, 3);
 INSERT INTO product_order (order_id, product_id, quantity) VALUES (1, 5, 2);
 
-INSERT INTO client_order (client_id, order_id) VALUES (1, 1);
+INSERT INTO product_order (order_id, product_id, quantity) VALUES (2, 6, 3);
+INSERT INTO product_order (order_id, product_id, quantity) VALUES (2, 7, 4);
+INSERT INTO product_order (order_id, product_id, quantity) VALUES (2, 8, 2);
+INSERT INTO product_order (order_id, product_id, quantity) VALUES (2, 9, 1);
+INSERT INTO product_order (order_id, product_id, quantity) VALUES (2, 10, 3);
 
-INSERT INTO delivery_history (track_number, location) VALUES (1, "Seoul");
-INSERT INTO delivery_history (track_number, location) VALUES (1, "Daegu");
-INSERT INTO delivery_history (track_number, location) VALUES (1, "Busan");
+INSERT INTO product_order (order_id, product_id, quantity) VALUES (3, 11, 2);
+INSERT INTO product_order (order_id, product_id, quantity) VALUES (3, 12, 2);
+
+INSERT INTO client_order (client_id, order_id) VALUES (1, 1);
+INSERT INTO client_order (client_id, order_id) VALUES (1, 2);
+INSERT INTO client_order (client_id, order_id) VALUES (1, 3);
+
+INSERT INTO delivery_history (track_number, location, hub_date) VALUES (1, "Seoul", datetime('now','-2 day','localtime'));
+INSERT INTO delivery_history (track_number, location, hub_date) VALUES (1, "Daegu", datetime('now','-1 day','localtime'));
+INSERT INTO delivery_history (track_number, location, hub_date) VALUES (1, "Busan", datetime('now','localtime'));
+
+INSERT INTO delivery_history (track_number, location, hub_date) VALUES (2, "Seoul", datetime('now','-5 day','localtime'));
+INSERT INTO delivery_history (track_number, location, hub_date) VALUES (2, "Daegu", datetime('now','-4 day','localtime'));
+INSERT INTO delivery_history (track_number, location, hub_date) VALUES (2, "Busan", datetime('now','-3 day','localtime'));
+
+INSERT INTO delivery_history (track_number, location, hub_date) VALUES (3, "Seoul", datetime('now','-3 day','localtime'));
+INSERT INTO delivery_history (track_number, location, hub_date) VALUES (3, "Daegu", datetime('now','-2 day','localtime'));
+INSERT INTO delivery_history (track_number, location, hub_date) VALUES (3, "Busan", datetime('now','-1 day','localtime'));
