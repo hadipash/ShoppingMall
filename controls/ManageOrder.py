@@ -9,7 +9,7 @@ class ManageOrder:
         self.__product = ProductDAO()
 
     def confrimDelivery(self, order_id):
-        self.__order.setStatus(order_id, DeliveryStatus.DELIVERED)
+        self.__order.setStatus(order_id, DeliveryStatus.CONFIRMED.value)
 
     def getDeliveryInfo(self, order_id):
         return self.__order.getDelivery(order_id)

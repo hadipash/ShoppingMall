@@ -7,44 +7,46 @@
 {% block content %}
     {% for order in orders %}
         <div class="div-block-order">
-            <h5>Order Number: {{ '{0:08d}'.format(order['order_id']) }}</h5>
-            <div class="delivery-text">Order Date: {{ order['order_date'] }}
-                <br>Delivery Status: {{ order['last_status'] }}
-            </div>
-            <div>
-                <table>
-                    <thead>
-                    <tr>
-                        <th class="column1">Product Name</th>
-                        <th class="column2">Price</th>
-                        <th class="column3">Quantity</th>
-                        <th class="column4">Total Price</th>
-                    </tr>
-                    </thead>
+            <form method="post">
+                <h5>Order Number: {{ '{0:08d}'.format(order['order_id']) }}</h5>
+                <div class="delivery-text">Order Date: {{ order['order_date'] }}
+                    <br>Delivery Status: {{ order['last_status'] }}
+                </div>
+                <div>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th class="column1">Product Name</th>
+                            <th class="column2">Price</th>
+                            <th class="column3">Quantity</th>
+                            <th class="column4">Total Price</th>
+                        </tr>
+                        </thead>
 
-                    <tbody>
-                    {% for product in order['products'] %}
-                    <tr>
-                        <td class="column1 table-name">{{ product['name'] }}</td>
-                        <td class="column2 table-value">{{ '{0:.2f}'.format(product['price']) }} $</td>
-                        <td class="column3 table-value">{{ product['quantity'] }}</td>
-                        <td class="column4 table-value">{{ '{0:.2f}'.format(product['price'] * product['quantity']) }}
-                            $
-                        </td>
-                    </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-            <div class="total">Total: 400 $</div>
+                        <tbody>
+                        {% for product in order['products'] %}
+                        <tr>
+                            <td class="column1 table-name">{{ product['name'] }}</td>
+                            <td class="column2 table-value">{{ '{0:.2f}'.format(product['price']) }} $</td>
+                            <td class="column3 table-value">{{ product['quantity'] }}</td>
+                            <td class="column4 table-value">{{ '{0:.2f}'.format(product['price'] * product['quantity']) }}
+                                $
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="total">Total: 400 $</div>
 
-            {% if order['last_status'] == "Shipped" or order['last_status'] == "Delivered" %}
-            <a class="confirm-button button">Confirm Delivery</a>
-            <a onclick="window.open('{{ url_for('track_delivery.display_history', order_id=order['order_id']) }}',
+                {% if order['last_status'] == "Shipped" or order['last_status'] == "Delivered" %}
+                <input name="order_id" value="{{ order['order_id'] }}" style="display: none;">
+                <input type="submit" name="submit" value="Confirm Delivery" class="confirm-button button"/>
+                <a onclick="window.open('{{ url_for('track_delivery.display_history', order_id=order['order_id']) }}',
                             '', 'width=600, height=600');"
-               class="tack-button button" id="{{ order['order_id'] }}" target="_blank">Track Delivery</a>
-            {% endif %}
-
+                   class="tack-button button" id="{{ order['order_id'] }}" target="_blank">Track Delivery</a>
+                {% endif %}
+            </form>
             <div class="div-separator"></div>
         </div>
     {% endfor %}

@@ -26,4 +26,5 @@ class DeliveryDAO:
         pass
 
     def setStatus(self, order_id, status):
-        pass
+        self.db.execute('UPDATE placed_order SET last_status=? WHERE order_id=?', (status, order_id))
+        self.db.commit()
