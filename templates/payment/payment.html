@@ -57,15 +57,16 @@
         <div class="form-block">
             <form action = '{{  url_for('payment.result') }}' method=post class="form">
                 {% if select_coupon > 0 or mileage > 0 %}
-                <label><del>{{ "%.2f" | format(price_sum) }}$ </del></label>
-                <label>{{ "%.2f" | format(price_sum-dc_sum) }}$</label>
+                <h2><label><del>{{ "%.2f" | format(price_sum) }}$ </del></label></h2>
+                <h2><label>{{ "%.2f" | format(price_sum-dc_sum) }}$</label></h2>
                 {% else %}
-                <label>{{ "%.2f" | format(price_sum) }}$ </label>
+                <h2><label>{{ "%.2f" | format(price_sum) }}$ </label></h2>
                 {% endif %}
 
                 <input type =hidden name="price" value = {{ price_sum }}>
                 <input type =hidden name="dc_price" value = {{ price_sum - dc_sum }}>
 
+                <br>
                 <label>Name:</label>
                 <input type=text name="name" value = {{ client_info.name}} required class="input">
                 <label>Phone Number:</label>
