@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Cart{% endblock %}</h1>
+  {% block title %}Cart{% endblock %}
 {% endblock %}
 
 {% block content %}
@@ -21,10 +21,11 @@
             });
         }
     </script>
+  <div class="div-block-simple-product-info">
   <ul class=lists>
+  {%  if lists %}
   {% for item in lists %}
-      <br>
-        <li>
+        <br>
           <h3>Name : {{ item.name }}</h3>
           {% if item.dc > 0 %}
               <span><del>Original Price : {{ item.price }}$</del></span>
@@ -34,13 +35,17 @@
               <span>Price : {{item.price}}$</span>
           {% endif %}
         <br><span>Amount : {{ item.quantity }}</span>
+      <div class="simple-product-description2">
           <br><a class="button button" onclick="delete_item({{ item.id }})">delete</a> <br>
-        </li>
-  {% else %}
-      <li><em>No item exist.</em></li>
+      </div>
+      <div class="div-separator"></div>
   {% endfor %}
+  {% else %}
+      <h2><li><em>No item exist.</em></li></h2>
+  {% endif %}
   </ul>
   <ul class=lists>
+    {%  if totalprice != 0 %}
       <br><h2>Total Price : {{ "%.2f" | format(totalprice) }}$ </h2>
       <form action={{ url_for('payment.cart') }} method=post class="confirm-button">
           <input type="hidden" name=price value={{"%.2f" | format(totalprice)}}>
@@ -48,5 +53,8 @@
           <input type="hidden" name=product_id value=0>
           <p><input type=submit value=Purchase class="button"></p>
       </form>
+    {%  endif %}
   </ul>
+  </div>
+
 {% endblock %}

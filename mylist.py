@@ -25,7 +25,7 @@ def my_list():
 @bp.route('/delete_item', methods=('GET', 'POST'))
 def delete_item():
     username= session['user_id']
-    id = request.data
+    id = int(request.data)
     db = get_db()
     db.execute('DELETE FROM my_list WHERE product_id = ? and user_id = ?', (id, username,))
     db.commit()

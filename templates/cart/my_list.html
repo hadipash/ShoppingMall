@@ -1,14 +1,18 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}MyList{% endblock %}</h1>
+  {% block title %}MyList{% endblock %}
 {% endblock %}
 
 {% block content %}
     <script>
         function delete_item(id) {
             $.ajax({
-                url: '/mylist/delete_item', data: id, type: 'POST', contentType: false,processData: false,
+                url: '/mylist/delete_item',
+                data: id,
+                type: 'POST',
+                contentType: 'application/json;charset=UTF-8',
+                processData: false,
                 success: function(data) {
                     if(data.result) {
                         location.reload();
@@ -18,16 +22,21 @@
         }
     </script>
     <ul class=lists>
+    {% if lists %}
+        {% for item in lists %}
+            <div class="div-block-simple-product-info">
+                <div class="simple-product-description1">
+                    <h3  class="heading-3"><a href="{{ url_for('product.product_info') }}{{ item.id }}" style="text-decoration:none; color:black;">{{ item.name }}</a></h3>
+                </div>
+                <div class="simple-product-description2">
+                    <a onclick="delete_item({{ item.id }})" class="button">delete</a> <br>
+                </div>
+            </div>
+            <div class="div-separator"></div>
+        {% endfor %}
+    {% else %}
+      <h2><li><em>No item exist.</em></li></h2>
+    {% endif %}
 
-    {% for item in lists %}
-        <div class="div-block-simple-product-info">
-            <h5 class="heading-3"><a href="{{ url_for('product.product_info') }}{{ item.id }}" style="text-decoration:none; color:black;">{{ item.name }}</a></h5>
-            <a onclick="delete_item({{ item.id }})" class="tack-button">delete</a> <br>
-        </div>
-        <div class="div-separator"></div>
-
-    {% endfor %}
-    {#    {% else %}#}
-    {#    <li><em>No item exist.</em></li>#}
     </ul>
 {% endblock %}
