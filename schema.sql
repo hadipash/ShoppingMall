@@ -86,6 +86,7 @@ CREATE TABLE coupon_list(
 CREATE TABLE client_order (
   client_id           INTEGER REFERENCES client(id),
   order_id            INTEGER REFERENCES placed_order(order_id),
+  dc_price            FLOAT REFERENCES payment(discount),
   PRIMARY KEY(client_id, order_id)
 );
 
@@ -125,7 +126,7 @@ INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Sax
 INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Flossie.Jeannine@gmail.com", "Flossie Jeannine", "77777", 01000000000, "Seoul",    0);
 INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Austin.Dustin@gmail.com",    "Austin Dustin",    "99999", 01099999999, "Busan",    734);
 
-INSERT INTO placed_order (track_number, delivery_company, last_status) VALUES (1,   "LOGEN", 1);
+INSERT INTO placed_order (track_number, delivery_company, last_status) VALUES (1,   "LOGEN", 0);
 INSERT INTO placed_order (track_number, delivery_company, last_status) VALUES (2, "HYUNDAI", 3);
 INSERT INTO placed_order (track_number, delivery_company, last_status) VALUES (3,      "CJ", 2);
 
@@ -172,7 +173,7 @@ INSERT INTO my_list (user_id, product_id) VALUES (1, 7);
 INSERT INTO my_list (user_id, product_id) VALUES (1, 8);
 INSERT INTO my_list (user_id, product_id) VALUES (1, 9);
 
-INSERT INTO product_order (order_id, product_id, quantity) VALUES (1, 1, 2);
+INSERT INTO product_order (order_id, product_id, quantity) VALUES (1, 1, 12);
 INSERT INTO product_order (order_id, product_id, quantity) VALUES (1, 2, 1);
 INSERT INTO product_order (order_id, product_id, quantity) VALUES (1, 3, 4);
 INSERT INTO product_order (order_id, product_id, quantity) VALUES (1, 4, 3);
@@ -187,9 +188,9 @@ INSERT INTO product_order (order_id, product_id, quantity) VALUES (2, 10, 3);
 INSERT INTO product_order (order_id, product_id, quantity) VALUES (3, 11, 2);
 INSERT INTO product_order (order_id, product_id, quantity) VALUES (3, 12, 2);
 
-INSERT INTO client_order (client_id, order_id) VALUES (1, 1);
-INSERT INTO client_order (client_id, order_id) VALUES (1, 2);
-INSERT INTO client_order (client_id, order_id) VALUES (1, 3);
+INSERT INTO client_order (client_id, order_id, dc_price) VALUES (1, 1, 1.1);
+INSERT INTO client_order (client_id, order_id, dc_price) VALUES (1, 2, 2.2);
+INSERT INTO client_order (client_id, order_id, dc_price) VALUES (1, 3, 3.3);
 
 INSERT INTO delivery_history (track_number, location, hub_date) VALUES (1, "Seoul", datetime('now','-2 day','localtime'));
 INSERT INTO delivery_history (track_number, location, hub_date) VALUES (1, "Daegu", datetime('now','-1 day','localtime'));

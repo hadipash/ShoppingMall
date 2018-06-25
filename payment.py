@@ -14,21 +14,25 @@ def result():
     username = session.get('user_id')
     amount = int(request.form['amount'])
     product_id = request.form['product_id']
+
     cur_payment_num=db.execute('SELECT exists(select * from payment where paymentNum = 1)').fetchall()[0][0]
-    cur_order_id = db.execute('SELECT exists(select * from placed_order where order_id = 1)').fetchall()[0][0]
     if cur_payment_num == 1:
         cur_payment_num = int(db.execute('SELECT paymentNum FROM payment ORDER BY paymentNum DESC LIMIT 1').fetchone()[0])+1
-        cur_order_id = int(db.execute('SELECT order_id FROM placed_order ORDER BY order_id DESC LIMIT 1').fetchone()[0])+1
     else :
         cur_payment_num = 1
+
+    cur_order_id = db.execute('SELECT exists(select * from placed_order where order_id = 1)').fetchall()[0][0]
+    if cur_order_id == 1:
+        cur_order_id = int(db.execute('SELECT order_id FROM placed_order ORDER BY order_id DESC LIMIT 1').fetchone()[0])+1
+    else :
         cur_order_id = 1
 
     cur_track_number = db.execute('SELECT exists(select * from placed_order where track_number = 1)').fetchall()[0][0]
-
     if cur_track_number == 1:
         cur_track_number = int(db.execute('SELECT track_number FROM placed_order ORDER BY track_number DESC LIMIT 1').fetchone()[0])+1
     else:
         cur_track_number = 1
+
     # 카트거치고옴
     if amount == 0:
         cart_list = db.execute('SELECT a.price, a.dc_rate,a.product_id, b.quantity,a.stock FROM product a, cart_list b '
@@ -77,7 +81,7 @@ def result():
     coupon_id = int(request.form['coupon_id'])
     if coupon_id is not 0:
         db.execute('UPDATE coupon_list SET used = ? WHERE user_id = ? AND coupon_id = ? ', (1, username, coupon_id))
-
+    db.execute('INSERT INTO client_order(client_id,order_id,dc_price) VALUES(?,?,?)',(username,cur_order_id,request.form['dc_price']))
 
 
     db.commit()

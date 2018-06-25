@@ -22,7 +22,7 @@ class ManageOrder:
             order = dict(self.getDeliveryInfo(ordr['order_id']))  # placed_order table
             order['last_status'] = DeliveryStatus.getStringValue(order['last_status'])
             order['products'] = []
-
+            order['dc_price']=ordr['dc_price']
             product_list = self.__order.getProductList(ordr['order_id'])  # product_order table
             for product in product_list:
                 order['products'].append(dict(self.__product.getProductByID(product['product_id'])))

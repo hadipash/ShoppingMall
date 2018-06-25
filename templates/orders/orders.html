@@ -27,9 +27,9 @@
                         {% for product in order['products'] %}
                         <tr>
                             <td class="column1 table-name">{{ product['name'] }}</td>
-                            <td class="column2 table-value">{{ '{0:.2f}'.format(product['price']) }} $</td>
+                            <td class="column2 table-value">{{ '{0:.2f}'.format(product['price'] * ( (100.0 - product['dc_rate']) / 100.0 )) }} $</td>
                             <td class="column3 table-value">{{ product['quantity'] }}</td>
-                            <td class="column4 table-value">{{ '{0:.2f}'.format(product['price'] * product['quantity']) }}
+                            <td class="column4 table-value">{{ '{0:.2f}'.format(product['price'] * ((100.0 - product['dc_rate'])/100.0) * product['quantity']) }}
                                 $
                             </td>
                         </tr>
@@ -37,7 +37,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="total">Total: 400 $</div>
+                <div class="total">Total: {{ '{0:.2f}'.format(order['dc_price']) }}</div>
 
                 {% if order['last_status'] == "Shipped" or order['last_status'] == "Delivered" %}
                 <input name="order_id" value="{{ order['order_id'] }}" style="display: none;">

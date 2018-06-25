@@ -9,6 +9,6 @@ class PaymentDAO:
         return self.db.execute('SELECT * FROM payment  WHERE id=?', (paymentNum,)).fetchone()
 
     def addPaymentIfo(self, price, shippingFee, name, phone, address, discount):
-        return self.db.execute('INSERT INTO payment (price, shippingFee, name, phone, address, discount) VALUES (?, ?, ?, ?, ?, ?)',
-                               (price, shippingFee, name, phone, address, discount))
+        return self.db.execute('INSERT INTO payment (price, name, phone, address, discount) VALUES (?, ?, ?, ?, ?)',
+                               (price, name, phone, address, discount))
 
