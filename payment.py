@@ -49,7 +49,7 @@ def result():
         db.commit()
         for products in cart_list:
             db.execute('INSERT INTO payment_detail (payment_id,product_id,quantity,price,total_sum) VALUES(?,?,?,?,?)'
-                       ,(cur_payment_num,products[2],products[3],products[0] * ((100.0-products[2])/100.0),products[0] * ((100.0-products[2])/100.0)*products[3]))
+                       ,(cur_payment_id,products[2],products[3],products[0] * ((100.0-products[2])/100.0),products[0] * ((100.0-products[2])/100.0)*products[3]))
             # db.execute('INSERT INTO product_order (order_id,product_id,quantity) VALUES(?,?,?)',(cur_order_id,products[2],products[3]))
             db.execute('UPDATE product SET stock = ? WHERE product_id = ?',
                        (products[4] - products[3], products[2]))
@@ -65,13 +65,13 @@ def result():
             return render_template('payment/payment_result.html', payment_success=False)
 
         # db.execute('INSERT INTO placed_order(track_number, delivery_company, last_status) VALUES(?, ?, ?)',(cur_track_number,"LOGEN",1) )
-        db.execute('INSERT INTO payment (price, name, phone, address, discount) VALUES(?, ?, ?, ?, ?)',
+        db.execute('INSERT INTO payment (price, name, phone, address, discount_price) VALUES(?, ?, ?, ?, ?)',
                    (request.form['price'], request.form['name'], request.form['phone'],
                     request.form['address'], request.form['dc_price']))
         db.commit()
 
         # db.execute('INSERT INTO product_order (order_id,product_id,quantity) VALUES(?,?,?)',(cur_order_id,product_id,amount))
-        db.execute('INSERT INTO payment_detail (payment_id,product_id,quantity,price,total_sum) VALUES(?,?,?,?,?)',(cur_payment_num,product_id,amount,price,amount*price))
+        db.execute('INSERT INTO payment_detail (payment_id,product_id,quantity,price,total_sum) VALUES(?,?,?,?,?)',(cur_payment_id,product_id,amount,price,amount*price))
         db.execute('DELETE FROM my_list WHERE user_id = ? AND product_id = ? ',(username,product_id))
         db.execute('UPDATE product SET stock = stock - ?, sales_num = sales_num + ? '
                    'WHERE product_id = ?', (amount, amount, product_id))

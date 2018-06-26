@@ -37,8 +37,8 @@
             {% if order['price'] == order['discount_price']%}
             <div class="total">Total: {{ '{0:.2f}'.format(order['discount_price']) }}</div>
             {% else %}
-            <div class="total">Total: <s>{{ '{0:.2f}'.format(order['discount_price']) }}</s>
-                {{ '{0:.2f}'.format(order['price']) }}
+            <div class="total">Total: <s>{{ '{0:.2f}'.format(order['price']) }}</s>
+                {{ '{0:.2f}'.format(order['discount_price']) }}
             </div>
             {% endif %}
 
