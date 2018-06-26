@@ -1,7 +1,8 @@
 from DAOs.ClientDAO import ClientDAO
+from interfaces.IPersonalInformationRequest import IPersonalInformationRequest
 
 
-class ManageAccount:
+class ManageAccount(IPersonalInformationRequest):
     def __init__(self):
         self.__client = ClientDAO()
 

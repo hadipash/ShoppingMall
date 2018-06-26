@@ -2,9 +2,10 @@ from DAOs.DeiveryStatus import DeliveryStatus
 from DAOs.DeliveryDAO import DeliveryDAO
 from DAOs.ProductDAO import ProductDAO
 from DAOs.PaymentDAO import PaymentDAO
+from interfaces import IOrderManage, IDeliveryStatusRequest
 
 
-class ManageOrder:
+class ManageOrder(IOrderManage.IOrderManage, IDeliveryStatusRequest.IDeliveryStatusRequest):
     def __init__(self):
         self.__order = DeliveryDAO()
         self.__product = ProductDAO()
