@@ -21,11 +21,11 @@ class DeliveryDAO:
                                'ORDER BY hub_date ASC', (track_number,)).fetchall()
 
     def addDelivery(self, client_id, payment_id):
-        order_id = self.db.execute('SELECT MAX(order_id) FROM placed_order').fetchone() + 1
+        order_id = self.db.execute('SELECT MAX(order_id) FROM placed_order').fetchone()[0] + 1
         delivery_companies = ["LOGEN", "HYUNDAI", "CJ"]
 
-        self.db.execute('INSERT INTO placed_order (track_number, delivery_company) VALUES (?, ?)',
-                        (order_id, random.choice(delivery_companies)))
+        self.db.execute('INSERT INTO placed_order (track_number, delivery_company, last_status) VALUES (?, ?,?)',
+                        (order_id, random.choice(delivery_companies), 0))
         self.db.execute('INSERT INTO client_order (client_id, order_id) VALUES (?, ?)', (client_id, order_id))
         self.db.execute('INSERT INTO payment_order (order_id, payment_id) VALUES (?, ?)', (order_id, payment_id))
         self.db.commit()

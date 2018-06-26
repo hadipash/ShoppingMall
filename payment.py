@@ -4,6 +4,7 @@ from flask import (
 )
 
 from DAOs.db import get_db
+from controls.ManageOrder import ManageOrder
 
 bp = Blueprint('payment', __name__, url_prefix='/payment')
 
@@ -15,23 +16,23 @@ def result():
     amount = int(request.form['amount'])
     product_id = request.form['product_id']
 
-    cur_payment_num=db.execute('SELECT exists(select * from payment where paymentNum = 1)').fetchall()[0][0]
-    if cur_payment_num == 1:
-        cur_payment_num = int(db.execute('SELECT paymentNum FROM payment ORDER BY paymentNum DESC LIMIT 1').fetchone()[0])+1
+    cur_payment_id=db.execute('SELECT exists(select * from payment where payment_id = 1)').fetchall()[0][0]
+    if cur_payment_id == 1:
+        cur_payment_id = int(db.execute('SELECT payment_id FROM payment ORDER BY payment_id DESC LIMIT 1').fetchone()[0])+1
     else :
-        cur_payment_num = 1
+        cur_payment_id = 1
 
-    cur_order_id = db.execute('SELECT exists(select * from placed_order where order_id = 1)').fetchall()[0][0]
-    if cur_order_id == 1:
-        cur_order_id = int(db.execute('SELECT order_id FROM placed_order ORDER BY order_id DESC LIMIT 1').fetchone()[0])+1
-    else :
-        cur_order_id = 1
-
-    cur_track_number = db.execute('SELECT exists(select * from placed_order where track_number = 1)').fetchall()[0][0]
-    if cur_track_number == 1:
-        cur_track_number = int(db.execute('SELECT track_number FROM placed_order ORDER BY track_number DESC LIMIT 1').fetchone()[0])+1
-    else:
-        cur_track_number = 1
+    # cur_order_id = db.execute('SELECT exists(select * from placed_order where order_id = 1)').fetchall()[0][0]
+    # if cur_order_id == 1:
+    #     cur_order_id = int(db.execute('SELECT order_id FROM placed_order ORDER BY order_id DESC LIMIT 1').fetchone()[0])+1
+    # else :
+    #     cur_order_id = 1
+    #
+    # cur_track_number = db.execute('SELECT exists(select * from placed_order where track_number = 1)').fetchall()[0][0]
+    # if cur_track_number == 1:
+    #     cur_track_number = int(db.execute('SELECT track_number FROM placed_order ORDER BY track_number DESC LIMIT 1').fetchone()[0])+1
+    # else:
+    #     cur_track_number = 1
 
     # 카트거치고옴
     if amount == 0:
@@ -41,14 +42,15 @@ def result():
         for products in cart_list:
             if products[4]-products[3] < 0:
                 return render_template('payment/payment_result.html', payment_success=False)
-        db.execute('INSERT INTO placed_order(track_number, delivery_company, last_status) VALUES(?, ?, ?)',(cur_track_number,"LOGEN",0) )
-        db.execute('INSERT INTO payment (price, name, phone, address, discount) VALUES(?, ?, ?, ?, ?)',
+        # db.execute('INSERT INTO placed_order(track_number, delivery_company, last_status) VALUES(?, ?, ?)',(cur_track_number,"LOGEN",0) )
+        db.execute('INSERT INTO payment (price, name, phone, address, discount_price) VALUES(?, ?, ?, ?, ?)',
                    (request.form['price'], request.form['name'], request.form['phone'],
                     request.form['address'], request.form['dc_price']))
         db.commit()
         for products in cart_list:
-            db.execute('INSERT INTO payment_detail (payment_id,product_id,quantity,price) VALUES(?,?,?,?)',(cur_payment_num,products[2],products[3],products[0] * ((100.0-products[2])/100.0)))
-            db.execute('INSERT INTO product_order (order_id,product_id,quantity) VALUES(?,?,?)',(cur_order_id,products[2],products[3]))
+            db.execute('INSERT INTO payment_detail (payment_id,product_id,quantity,price,total_sum) VALUES(?,?,?,?,?)'
+                       ,(cur_payment_num,products[2],products[3],products[0] * ((100.0-products[2])/100.0),products[0] * ((100.0-products[2])/100.0)*products[3]))
+            # db.execute('INSERT INTO product_order (order_id,product_id,quantity) VALUES(?,?,?)',(cur_order_id,products[2],products[3]))
             db.execute('UPDATE product SET stock = ? WHERE product_id = ?',
                        (products[4] - products[3], products[2]))
         db.execute('DELETE FROM cart_list WHERE user_id = ?', (username,))
@@ -62,14 +64,14 @@ def result():
         if stock < amount:
             return render_template('payment/payment_result.html', payment_success=False)
 
-        db.execute('INSERT INTO placed_order(track_number, delivery_company, last_status) VALUES(?, ?, ?)',(cur_track_number,"LOGEN",1) )
+        # db.execute('INSERT INTO placed_order(track_number, delivery_company, last_status) VALUES(?, ?, ?)',(cur_track_number,"LOGEN",1) )
         db.execute('INSERT INTO payment (price, name, phone, address, discount) VALUES(?, ?, ?, ?, ?)',
                    (request.form['price'], request.form['name'], request.form['phone'],
                     request.form['address'], request.form['dc_price']))
         db.commit()
 
-        db.execute('INSERT INTO product_order (order_id,product_id,quantity) VALUES(?,?,?)',(cur_order_id,product_id,amount))
-        db.execute('INSERT INTO payment_detail (payment_id,product_id,quantity,price) VALUES(?,?,?,?)',(cur_payment_num,product_id,amount,price))
+        # db.execute('INSERT INTO product_order (order_id,product_id,quantity) VALUES(?,?,?)',(cur_order_id,product_id,amount))
+        db.execute('INSERT INTO payment_detail (payment_id,product_id,quantity,price,total_sum) VALUES(?,?,?,?,?)',(cur_payment_num,product_id,amount,price,amount*price))
         db.execute('DELETE FROM my_list WHERE user_id = ? AND product_id = ? ',(username,product_id))
         db.execute('UPDATE product SET stock = stock - ?, sales_num = sales_num + ? '
                    'WHERE product_id = ?', (amount, amount, product_id))
@@ -81,9 +83,9 @@ def result():
     coupon_id = int(request.form['coupon_id'])
     if coupon_id is not 0:
         db.execute('UPDATE coupon_list SET used = ? WHERE user_id = ? AND coupon_id = ? ', (1, username, coupon_id))
-    db.execute('INSERT INTO client_order(client_id,order_id,dc_price) VALUES(?,?,?)',(username,cur_order_id,request.form['dc_price']))
-
-
+    # db.execute('INSERT INTO client_order(client_id,order_id,dc_price) VALUES(?,?,?)',(username,cur_order_id,request.form['dc_price']))
+    controller = ManageOrder()
+    controller.addDelivery(username,cur_payment_id)
     db.commit()
 
     return render_template('payment/payment_result.html', payment_success=True, **locals())
