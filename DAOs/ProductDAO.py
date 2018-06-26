@@ -6,10 +6,10 @@ class ProductDAO:
         self.db = db.get_db()
 
     def getDc_rate(self, category):
-        return self.db.execute('SELECT * FROM product WHERE category = ? ORDER BY dc_rate DESC ', (categoru,)).fetchmany(3)
+        return self.db.execute('SELECT * FROM product WHERE category = ? ORDER BY dc_rate DESC ', (category,)).fetchall()
 
     def getSales_num(self, category):
-        return self.db.execute('SELECT * FROM product WHERE  category= ? ORDER BY sales_num DESC', (category,)).fetchmany(3)
+        return self.db.execute('SELECT * FROM product WHERE  category= ? ORDER BY sales_num DESC', (category,)).fetchall()
 
     def getCategory(self, category, sortBy, asc):
         if sortBy == 0:

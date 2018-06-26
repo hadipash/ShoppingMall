@@ -37,7 +37,7 @@ def searchHOTDEAL(category=None):
 
     if category is not None:
         search_manager = SearchManager()
-        products = search_manager.searchSale(category)
+        products = search_manager.searchHotdeal(category)
         return render_template('search/searchHOTDEAL.html',  category=category, products=products)
 
     products = db.execute(
@@ -53,7 +53,7 @@ def searchDC(category=None):
     db = get_db()
     if category is not None:
         search_manager = SearchManager()
-        products = search_manager.searchHotdeal(category)
+        products = search_manager.searchSale(category)
         return render_template('search/searchDC.html',  category=category, products=products)
     products = db.execute(
         'SELECT * FROM product WHERE dc_rate >10 ORDER BY dc_rate DESC  '
