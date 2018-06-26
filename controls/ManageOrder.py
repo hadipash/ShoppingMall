@@ -1,12 +1,14 @@
 from DAOs.DeiveryStatus import DeliveryStatus
 from DAOs.DeliveryDAO import DeliveryDAO
 from DAOs.ProductDAO import ProductDAO
+from DAOs.PaymentDAO import PaymentDAO
 
 
 class ManageOrder:
     def __init__(self):
         self.__order = DeliveryDAO()
         self.__product = ProductDAO()
+        self.__payment = PaymentDAO()
 
     def confrimDelivery(self, order_id):
         self.__order.setStatus(order_id, DeliveryStatus.CONFIRMED.value)
@@ -21,12 +23,14 @@ class ManageOrder:
         for ordr in order_list:
             order = dict(self.getDeliveryInfo(ordr['order_id']))  # placed_order table
             order['last_status'] = DeliveryStatus.getStringValue(order['last_status'])
+
+            order.update(dict(self.__payment.getPaymentInfoByOrderID(order['order_id'])))
+            payment_details = self.__payment.getPaymentDetails(order['payment_id'])
             order['products'] = []
-            order['dc_price']=ordr['dc_price']
-            product_list = self.__order.getProductList(ordr['order_id'])  # product_order table
-            for product in product_list:
-                order['products'].append(dict(self.__product.getProductByID(product['product_id'])))
-                order['products'][-1].update({'quantity': product['quantity']})
+            for payment in payment_details:
+                product = dict(self.__product.getProductNameByID(payment['product_id']))
+                product.update(dict(payment))
+                order['products'].append(product)
 
             orders.append(order)
 

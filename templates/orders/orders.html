@@ -7,46 +7,50 @@
 {% block content %}
     {% for order in orders %}
         <div class="div-block-order">
-            <form method="post">
-                <h5>Order Number: {{ '{0:08d}'.format(order['order_id']) }}</h5>
-                <div class="delivery-text">Order Date: {{ order['order_date'] }}
-                    <br>Delivery Status: {{ order['last_status'] }}
-                </div>
-                <div>
-                    <table>
-                        <thead>
+            <h5>Order Number: {{ '{0:08d}'.format(order['order_id']) }}</h5>
+            <div class="delivery-text">Order Date: {{ order['order_date'] }}
+                <br>Delivery Status: {{ order['last_status'] }}
+            </div>
+            <div>
+                <table>
+                    <thead>
                         <tr>
                             <th class="column1">Product Name</th>
                             <th class="column2">Price</th>
                             <th class="column3">Quantity</th>
                             <th class="column4">Total Price</th>
                         </tr>
-                        </thead>
+                    </thead>
 
-                        <tbody>
+                    <tbody>
                         {% for product in order['products'] %}
                         <tr>
                             <td class="column1 table-name">{{ product['name'] }}</td>
-                            <td class="column2 table-value">{{ '{0:.2f}'.format(product['price'] * ( (100.0 - product['dc_rate']) / 100.0 )) }} $</td>
+                            <td class="column2 table-value">{{ '{0:.2f}'.format(product['price']) }} $</td>
                             <td class="column3 table-value">{{ product['quantity'] }}</td>
-                            <td class="column4 table-value">{{ '{0:.2f}'.format(product['price'] * ((100.0 - product['dc_rate'])/100.0) * product['quantity']) }}
-                                $
-                            </td>
+                            <td class="column4 table-value">{{ '{0:.2f}'.format(product['total_sum']) }} $</td>
                         </tr>
                         {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-                <div class="total">Total: {{ '{0:.2f}'.format(order['dc_price']) }}</div>
+                    </tbody>
+                </table>
+            </div>
+            {% if order['price'] == order['discount_price']%}
+            <div class="total">Total: {{ '{0:.2f}'.format(order['discount_price']) }}</div>
+            {% else %}
+            <div class="total">Total: <s>{{ '{0:.2f}'.format(order['discount_price']) }}</s>
+                {{ '{0:.2f}'.format(order['price']) }}
+            </div>
+            {% endif %}
 
-                {% if order['last_status'] == "Shipped" or order['last_status'] == "Delivered" %}
+            {% if order['last_status'] == "Shipped" or order['last_status'] == "Delivered" %}
+            <form method="post">
                 <input name="order_id" value="{{ order['order_id'] }}" style="display: none;">
                 <input type="submit" name="submit" value="Confirm Delivery" class="confirm-button button"/>
                 <a onclick="window.open('{{ url_for('track_delivery.display_history', order_id=order['order_id']) }}',
-                            '', 'width=600, height=600');"
+                                '', 'width=600, height=600');"
                    class="tack-button button" id="{{ order['order_id'] }}" target="_blank">Track Delivery</a>
-                {% endif %}
             </form>
+            {% endif %}
             <div class="div-separator"></div>
         </div>
     {% endfor %}

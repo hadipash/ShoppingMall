@@ -52,5 +52,5 @@ class ProductDAO:
 
         return products
 
-    def getProductByID(self, product_id):
-        return self.db.execute('SELECT * FROM product WHERE product_id=?', (product_id,)).fetchone()
+    def getProductNameByID(self, product_id):
+        return self.db.execute('SELECT name FROM product WHERE product_id=?', (product_id,)).fetchone()
