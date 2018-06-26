@@ -1,3 +1,4 @@
+import random
 from DAOs import db
 
 
@@ -19,11 +20,15 @@ class DeliveryDAO:
         return self.db.execute('SELECT location, hub_date FROM delivery_history WHERE track_number=? '
                                'ORDER BY hub_date ASC', (track_number,)).fetchall()
 
-    def removeDelivery(self, order_id):
-        pass
+    def addDelivery(self, client_id, payment_id):
+        order_id = self.db.execute('SELECT MAX(order_id) FROM placed_order').fetchone() + 1
+        delivery_companies = ["LOGEN", "HYUNDAI", "CJ"]
 
-    def addDelivery(self, delivery):
-        pass
+        self.db.execute('INSERT INTO placed_order (track_number, delivery_company) VALUES (?, ?)',
+                        (order_id, random.choice(delivery_companies)))
+        self.db.execute('INSERT INTO client_order (client_id, order_id) VALUES (?, ?)', (client_id, order_id))
+        self.db.execute('INSERT INTO payment_order (order_id, payment_id) VALUES (?, ?)', (order_id, payment_id))
+        self.db.commit()
 
     def setStatus(self, order_id, status):
         self.db.execute('UPDATE placed_order SET last_status=? WHERE order_id=?', (status, order_id))

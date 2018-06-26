@@ -30,7 +30,7 @@ CREATE TABLE placed_order (
   order_id            INTEGER PRIMARY KEY AUTOINCREMENT,
   track_number        UNSIGNED INTEGER UNIQUE NOT NULL,
   delivery_company    VARCHAR(50) NOT NULL,
-  last_status         INTEGER NOT NULL,
+  last_status         INTEGER NOT NULL DEFAULT 0,
   order_date          TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 

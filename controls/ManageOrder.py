@@ -43,8 +43,8 @@ class ManageOrder:
 
         return delivery
 
-    def addDelivery(self, delivery):
-        self.__order.addDelivery(delivery)
+    def addDelivery(self, client_id, payment_id):
+        self.__order.addDelivery(client_id, payment_id)
 
     def timeOut(self, order_id):
         self.confrimDelivery(order_id)
