@@ -36,16 +36,14 @@ def searchHOTDEAL(category=None):
     db = get_db()
 
     if category is not None:
-
-        products = db.execute(
-            'SELECT * FROM product WHERE category = ? ORDER BY sales_num DESC', (category,)
-        ).fetchmany(3)
-
+        search_manager = SearchManager()
+        products = search_manager.searchSale(category)
         return render_template('search/searchHOTDEAL.html',  category=category, products=products)
 
     products = db.execute(
         'SELECT * FROM product WHERE sales_num >10 ORDER BY sales_num DESC  '
     ).fetchall()
+
     return render_template('search/searchHOTDEAL.html', category=category, products=products)
 
 
@@ -54,11 +52,8 @@ def searchHOTDEAL(category=None):
 def searchDC(category=None):
     db = get_db()
     if category is not None:
-
-        products = db.execute(
-            'SELECT * FROM product WHERE category = ? ORDER BY dc_rate DESC', (category,)
-        ).fetchmany(3)
-
+        search_manager = SearchManager()
+        products = search_manager.searchHotdeal(category)
         return render_template('search/searchDC.html',  category=category, products=products)
     products = db.execute(
         'SELECT * FROM product WHERE dc_rate >10 ORDER BY dc_rate DESC  '

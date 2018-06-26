@@ -5,11 +5,11 @@ class ProductDAO:
     def __init__(self):
         self.db = db.get_db()
 
-    def getDc_rate(self):
-        return self.db.execute('SELECT * FROM product ORDER BY dc_rate DESC LIMIT 3', (self.product_id,)).fetchmany(3)
+    def getDc_rate(self, category):
+        return self.db.execute('SELECT * FROM product WHERE category = ? ORDER BY dc_rate DESC ', (categoru,)).fetchmany(3)
 
-    def getSales_num(self):
-        return self.db.execute('SELECT * FROM product ORDER BY sales_num DESC LIMIT 3', (self.product_id,)).fetchmany(3)
+    def getSales_num(self, category):
+        return self.db.execute('SELECT * FROM product WHERE  category= ? ORDER BY sales_num DESC', (category,)).fetchmany(3)
 
     def getCategory(self, category, sortBy, asc):
         if sortBy == 0:

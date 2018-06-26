@@ -15,9 +15,10 @@ class SearchManager(ISearchRequest):
         products = self.__product.getProductByName(productName, sortBy, asc)
         return products
 
-    def searchHotdeal(self, salesNum, category):
-        print("TODO")
+    def searchHotdeal(self, category):
+        products = self.__product.getSales_num(category)
+        return products
 
-    def searchSale(self, salesNum, category):
-        print("TODO")
-
+    def searchSale(self, category):
+        products = self.__product.getDc_rate(category)
+        return products
