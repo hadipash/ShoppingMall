@@ -1,32 +1,32 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  {% block title %}My account{% endblock %}
+  {% block title %}회원정보{% endblock %}
 {% endblock %}
 
 {% block content %}
     <div class="form-block">
         <form method="post" id="account-form" name="account-form" class="form">
-            <label for="name">Name:</label>
+            <label for="name">이름:</label>
             <input type="text" class="input" maxlength="256" name="name" data-name="Name" value="{{ user['name'] }}"
                    id="name" required=""/>
-            <label for="email">Email Address:</label>
+            <label for="email">이메일:</label>
             <input type="email" class="input" maxlength="256" name="email" data-name="Email"
                    value="{{ user['email'] }}" id="email" required=""/>
-            <label for="password">Current Password</label>
+            <label for="password">현재 비밀번호</label>
             <input type="password" class="input" maxlength="256" name="password" data-name="password"
                    placeholder="Enter your password" id="password"/>
-            <label for="new_password">New Password (only for setting a new password)</label>
+            <label for="new_password">새 비밀번호(only for setting a new password)</label>
             <input type="password" class="input" maxlength="256" name="new_password" data-name="new_password"
                    placeholder="Enter your new password" id="new_password"/>
-            <label for="phone">Phone Number</label>
+            <label for="phone">전화번호</label>
             <input type="text" class="input" maxlength="256" name="phone" data-name="phone"
                    value="{{ user['phone'] }}" id="phone" required=""/>
-            <label for="address">Address</label>
+            <label for="address">주소</label>
             <input type="text" class="input" maxlength="256" name="address" data-name="address"
                    value="{{ user['address'] }}" id="address" required=""/>
-            <input type="submit" name="submit" value="Save" class="button"/>
-            <input type="submit" name="submit" value="Delete Account" class="button"/>
+            <input type="submit" name="submit" value="저장" class="button"/>
+            <input type="submit" name="submit" value="계정 삭제" class="button"/>
         </form>
     </div>
 {% endblock %}

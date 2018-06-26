@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  {% block title %}Payment{% endblock %}
+  {% block title %}결재{% endblock %}
 {% endblock %}
 
 {% block content %}
@@ -15,7 +15,7 @@
         <div class="form-block">
             <form method="post" class="form">
 
-                <label>Coupon List:</label>
+                <label>쿠폰목록:</label>
                 <select name="coupon_list">
 
                     {% if dc_sum == 0 %}
@@ -46,11 +46,11 @@
                 </select>
 
                 <input type =hidden name="price" value={{ price_sum }}>
-                <label>Available Mileage: {{ client_info.mileage }}[0.001$] </label>
+                <label>마일리지: {{ client_info.mileage }}[0.001$] </label>
                 <input type=number name="mileage" value={{ mileage }} min="0" max ={{ client_info.mileage }} class="input">
                 <input type="hidden" name="amount" value={{ amount }}>
                 <input type="hidden" name="product_id" value={{ product_id }}>
-                <input type = 'submit' name="discount" value="discount apply" class="button">
+                <input type = 'submit' name="discount" value="할인 적용" class="button">
 
             </form>
         </div>
@@ -67,18 +67,18 @@
                 <input type =hidden name="dc_price" value = {{ price_sum - dc_sum }}>
 
                 <br>
-                <label>Name:</label>
+                <label>이름:</label>
                 <input type=text name="name" value = {{ client_info.name}} required class="input">
-                <label>Phone Number:</label>
+                <label>전화번호:</label>
                 <input type=tel name="phone" value = {{ client_info.phone }} required class="input">
-                <label>Address:</label>
+                <label>주소:</label>
                 <input type=text name="address" value = {{ client_info.address }} required class="input">
                 <input type="hidden" name="mileage" value = {{client_info.mileage}}>
                 <input type="hidden" name="mileage_used" value ={{ mileage }}>
                 <input type="hidden" name="coupon_id" value={{ select_coupon }}>
                 <input type="hidden" name="amount" value={{ amount }}>
                 <input type="hidden" name="product_id" value={{ product_id }}>
-                <input type="submit" value="purchase" class="button">
+                <input type="submit" value="구매하기" class="button">
             </form>
         </div>
 {% endblock %}

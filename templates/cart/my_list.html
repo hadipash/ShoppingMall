@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  {% block title %}MyList{% endblock %}
+  {% block title %}찜한 목록{% endblock %}
 {% endblock %}
 
 {% block content %}
@@ -29,7 +29,7 @@
                     <h3  class="heading-3"><a href="{{ url_for('product.product_info') }}{{ item.id }}" style="text-decoration:none; color:black;">{{ item.name }}</a></h3>
                 </div>
                 <div class="simple-product-description2">
-                    <a onclick="delete_item({{ item.id }})" class="button">delete</a> <br>
+                    <a onclick="delete_item({{ item.id }})" class="button">삭제</a> <br>
                 </div>
                 <div class="div-separator"></div>
             {% endfor %}

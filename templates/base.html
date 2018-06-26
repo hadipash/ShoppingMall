@@ -22,7 +22,7 @@
           var search_form = document.search_form;
           var product_name = search_form.product_name;
           if (!product_name.value) {
-            alert("Please enter the product name.");
+            alert("검색어를 입력해주세요.");
             return false;
           }
           search_form.submit();
@@ -46,19 +46,19 @@
 <div class="nav">
     <div class="container">
         <nav role="navigation" class="nav-menu">
-            <a href="{{ url_for('search.category') }}" class="nav-link">Categories</a>
-            <a href="{{ url_for('search.searchHOTDEAL')}}" class="nav-link">Hotdeal</a>
-            <a href="{{ url_for('search.searchDC')}}" class="nav-link">Discount</a>
+            <a href="{{ url_for('search.category') }}" class="nav-link">카테고리</a>
+            <a href="{{ url_for('search.searchHOTDEAL')}}" class="nav-link">핫딜</a>
+            <a href="{{ url_for('search.searchDC')}}" class="nav-link">세일</a>
 
             {% if g.user %}
-                <a href="{{ url_for('account.displayAndEditInfo') }}" class="nav-link">My Account</a>
-                <a href="{{ url_for('mylist.my_list') }}" class="nav-link">My List</a>
-                <a href="{{ url_for('cart.cart_list') }}" class="nav-link">My Cart</a>
-                <a href="{{ url_for('orders.display_orders') }}" class="nav-link">My Orders</a>
-                <a href="{{ url_for('coupon.coupon_list') }}" class="nav-link">Coupon</a>
-                <a href="{{ url_for('auth.logout') }}" class="nav-link">Log Out</a>
+                <a href="{{ url_for('account.displayAndEditInfo') }}" class="nav-link">회원정보</a>
+                <a href="{{ url_for('mylist.my_list') }}" class="nav-link">찜하기</a>
+                <a href="{{ url_for('cart.cart_list') }}" class="nav-link">장바구니</a>
+                <a href="{{ url_for('orders.display_orders') }}" class="nav-link">배송주문조회</a>
+                <a href="{{ url_for('coupon.coupon_list') }}" class="nav-link">쿠폰</a>
+                <a href="{{ url_for('auth.logout') }}" class="nav-link">로그아웃</a>
             {% else %}
-                <a href="{{ url_for('auth.login') }}" class="nav-link">Log In</a>
+                <a href="{{ url_for('auth.login') }}" class="nav-link">로그인</a>
             {% endif %}
         </nav>
     </div>

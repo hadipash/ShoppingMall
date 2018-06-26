@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  {% block title %}Search Hotdeal{% endblock %}
+  {% block title %}핫딜 상품{% endblock %}
 {% endblock %}
 
 {% block content %}
@@ -26,7 +26,7 @@
                     {% if product['dc_rate'] > 0 %}
                         <span>{{ "%.2f" | format(product['price'] * (100.0 - product['dc_rate']) / 100.0) }}$</span><br>
                         <span><del>{{ product['price'] }}$</del></span><br>
-                        <span>DC: {{ product['dc_rate'] }}%</span>
+                        <span>할인율: {{ product['dc_rate'] }}%</span>
                     {% else %}
                         <span>{{ product['price'] }}$</span><br>
                         <span></span><br>
@@ -34,8 +34,8 @@
                     {% endif %}
                 </div>
                 <div class="simple-product-description3">
-                    <span>Sales &nbsp;&nbsp; {{ product['sales_num'] }}</span><br>
-                    <span>Rating &nbsp; {{ product['product_rating'] }}</span>
+                    <span>판매량 &nbsp;&nbsp; {{ product['sales_num'] }}</span><br>
+                    <span>별점 &nbsp; {{ product['product_rating'] }}</span>
                 </div>
             </div>
             <div class="div-separator"></div>

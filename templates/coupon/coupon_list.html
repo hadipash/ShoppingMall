@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
 
 {% block header %}
-{% block title %}Coupon List{% endblock %}
+{% block title %}쿠폰 목록{% endblock %}
 {% endblock %}
 {% block content %}
           {% for item in lists %}
               <div class="div-block-order">
                 <h5>{{item.name}}<br></h5>
-                <div>discount : {{ item.discount }}%</div>
+                <div>할인율 : {{ item.discount }}%</div>
                   <form action={{ url_for('coupon.add_coupon') }} method=post class="tack-button">
                     <input type="hidden" name=coupon_id value={{item.coupon_id}}>
-                    <input type=submit value=add class="tack-button button">
+                    <input type=submit value=추가 class="tack-button button">
                   </form>
                 <div class="div-separator"></div>
               </div>

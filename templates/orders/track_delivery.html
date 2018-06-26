@@ -18,24 +18,24 @@
 
 <body>
 <div>
-    <h2 class="heading-2">Track Delivery</h2>
+    <h2 class="heading-2">배송 조회</h2>
 </div>
 
 <div class="div-block">
     <div class="div-block-delivery">
-        <h5>Order Number: {{ '{0:08d}'.format(delivery['order_id']) }}</h5>
+        <h5>주문 번호: {{ '{0:08d}'.format(delivery['order_id']) }}</h5>
         <div style="margin-bottom: 10px" class="delivery-text">
-            Track Number: {{ '{0:08d}'.format(delivery['track_number']) }}
-            <br>Delivery Company: {{ delivery['delivery_company'] }}
-            <br>Order Date: {{ delivery['order_date'] }}
-            <br>Delivery Status: {{ delivery['last_status'] }}
+            배송 번호: {{ '{0:08d}'.format(delivery['track_number']) }}
+            <br>배송 업체: {{ delivery['delivery_company'] }}
+            <br>주문 날짜: {{ delivery['order_date'] }}
+            <br>배송 상태: {{ delivery['last_status'] }}
         </div>
         <div>
             <table>
                 <thead>
                 <tr>
-                    <th>Location</th>
-                    <th>Arrival Date</th>
+                    <th>위치</th>
+                    <th>도착 예정일</th>
                 </tr>
                 </thead>
 

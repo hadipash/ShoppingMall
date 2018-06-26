@@ -48,7 +48,7 @@
     <div class="div-block-product-info">
         <h1>{{ product['name'] }}</h1>
         <div class="div-block-product-info-sub1">
-            <span>Rating &nbsp; {{ product['product_rating'] }}</span>&nbsp;&nbsp; | &nbsp;&nbsp;<span>Sales &nbsp;&nbsp;{{ product['sales_num'] }}</span><br>
+            <span>별점 &nbsp; {{ product['product_rating'] }}</span>&nbsp;&nbsp; | &nbsp;&nbsp;<span>판매량 &nbsp;&nbsp;{{ product['sales_num'] }}</span><br>
         </div>
         <div class="div-block-product-info-sub2">
             {% if product['dc_rate'] > 0 %}
@@ -71,13 +71,13 @@
         <form class=form-in-product-info" action={{ url_for('payment.cart') }} method=post style=>
             <input name="product_id" type="hidden" value="{{ product['product_id'] }}">
             <input name="user_id" type="hidden" value="museop">
-            <label for="amount">Amount</label>
+            <label for="amount">수량</label>
             <input type="number" id="amount" name="amount" min=1 value=1 onchange="change_amount(this.value, {{ product['price'] * ((100.0 - product['dc_rate']) / 100.0) }})" />
-            <input type="submit" name="action" value="+ My List" class="button" onclick="add_mylist({{ product['product_id'] }})"/>
-            <input type="submit" name="action" value="+ Cart   " class="button" onclick="add_cart({{ product['product_id'] }})"/>
+            <input type="submit" name="action" value="찜하기" class="button" onclick="add_mylist({{ product['product_id'] }})"/>
+            <input type="submit" name="action" value="장바구니 담기" class="button" onclick="add_cart({{ product['product_id'] }})"/>
             <input type="hidden" name="price" id="price" value={{ "%.2f" | format(product['price'] * ((100.0 - product['dc_rate']) / 100.0)) }}>
             <input type="hidden" name="product_id" value={{ product['product_id'] }}>
-            <input type="submit" name="action" value="Buy" class="button"/>
+            <input type="submit" name="action" value="구매하기" class="button"/>
         </form>
 
 

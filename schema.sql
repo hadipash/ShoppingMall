@@ -10,10 +10,9 @@ DROP TABLE IF EXISTS cart_list;
 DROP TABLE IF EXISTS coupon_list;
 DROP TABLE IF EXISTS refund;
 DROP TABLE IF EXISTS payment;
-DROP TABLE IF EXISTS payment_order;
+DROP TABLE IF EXISTS product_order;
 DROP TABLE IF EXISTS delivery_history;
 DROP TABLE IF EXISTS client_order;
-DROP TABLE IF EXISTS payment_detail;
 
 
 CREATE TABLE client (
@@ -30,7 +29,7 @@ CREATE TABLE placed_order (
   order_id            INTEGER PRIMARY KEY AUTOINCREMENT,
   track_number        UNSIGNED INTEGER UNIQUE NOT NULL,
   delivery_company    VARCHAR(50) NOT NULL,
-  last_status         INTEGER NOT NULL DEFAULT 0,
+  last_status         INTEGER NOT NULL,
   order_date          TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -55,13 +54,21 @@ CREATE TABLE coupon (
 );
 
 CREATE TABLE payment (
-  payment_id          INTEGER PRIMARY KEY AUTOINCREMENT,
-  price               FLOAT NOT NULL,
-  name                STRING NOT NULL,
-  phone               INTEGER NOT NULL,
-  address             STRING NOT NULL,
-  discount_price      FLOAT NOT NULL
+  paymentNum        INTEGER PRIMARY KEY AUTOINCREMENT,
+  price             INTEGER NOT NULL,
+  shippingFee       INTEGER,
+  name              STRING NOT NULL,
+  phone             INTEGER NOT NULL,
+  address           STRING NOT NULL,
+  discount          INTEGER
 );
+
+CREATE TABLE refund (
+  refundNum         INTEGER PRIMARY KEY AUTOINCREMENT,
+  paymentNum        INTEGER REFERENCES payment(paymentNum),
+  refundAdr         STRING NOT NULL
+);
+
 
 -- Relational tables
 CREATE TABLE my_list(
@@ -90,10 +97,11 @@ CREATE TABLE client_order (
   PRIMARY KEY(client_id, order_id)
 );
 
-CREATE TABLE payment_order (
+CREATE TABLE product_order (
   order_id            INTEGER REFERENCES placed_order(order_id),
-  payment_id          INTEGER REFERENCES payment(payment_id),
-  PRIMARY KEY(order_id, payment_id)
+  product_id          INTEGER REFERENCES product(product_id),
+  quantity            INTEGER,
+  PRIMARY KEY(order_id, product_id)
 );
 
 CREATE TABLE delivery_history (
@@ -103,19 +111,10 @@ CREATE TABLE delivery_history (
   PRIMARY KEY(track_number, location)
 );
 
-CREATE TABLE payment_detail (
-  payment_id          INTEGER REFERENCES payment(payment_id),
-  product_id          INTEGER REFERENCES product(product_Id),
-  price               FLOAT NOT NULL,
-  quantity            INTEGER NOT NULL,
-  total_sum           FLOAT NOT NULL,
-  PRIMARY KEY(payment_id, product_id)
-);
-
 
 -- Insert entities into the tables
-INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Maegan.Keith@gmail.com",     "Maegan Keith",     "12345", 01011111111, "Busan",  0);
-INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Reynold.Delroy@gmail.com",   "Reynold Delroy",   "54321", 01022222222, "Gwangju",    325);
+INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Maegan.Keith@gmail.com",     "Maegan Keith",     "asdf1234", 01011111111, "Gwangju",  0);
+INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Reynold.Delroy@gmail.com",   "Reynold Delroy",   "54321", 01022222222, "Busan",    325);
 INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Agnes.Maurice@gmail.com",    "Agnes Maurice",    "11111", 01033333333, "Seoul",    547);
 INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Josh.Asher@gmail.com",       "Josh Asher",       "22222", 01044444444, "Gwangju",  0);
 INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Kallie.Ainsley@gmail.com",   "Kallie Ainsley",   "33333", 01055555555, "Seoul",    324);
@@ -124,6 +123,10 @@ INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Che
 INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Saxon.Barret@gmail.com",     "Saxon Barret",     "66666", 01088888888, "Gwangju",  4574);
 INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Flossie.Jeannine@gmail.com", "Flossie Jeannine", "77777", 01000000000, "Seoul",    0);
 INSERT INTO client (email, name, password, phone, address, mileage) VALUES ("Austin.Dustin@gmail.com",    "Austin Dustin",    "99999", 01099999999, "Busan",    734);
+
+INSERT INTO placed_order (track_number, delivery_company, last_status) VALUES (1,   "LOGEN", 1);
+INSERT INTO placed_order (track_number, delivery_company, last_status) VALUES (2, "HYUNDAI", 3);
+INSERT INTO placed_order (track_number, delivery_company, last_status) VALUES (3,      "CJ", 2);
 
 INSERT INTO coupon (coupon_id, name, discount) VALUES (1, "THANKS",  10);
 INSERT INTO coupon (coupon_id, name, discount) VALUES (2, "OPEN",    20);
@@ -146,7 +149,7 @@ VALUES ("apple juice", "food", 4.75, 2, 5, 100, 5, 5.0, "Beverage to take care o
 INSERT INTO product (name, category, price, stock, dc_rate, sales_num, num_of_ratings, product_rating, description)
 VALUES ("apple pie", "food", 6.7, 10, 10, 10, 10, 3.9, "This apple pie is very delicious. If you taste this once, you will not forget this taste. Please enjoy our masterpieces made of fresh ingredients.");
 INSERT INTO product (name, category, price, stock, dc_rate, sales_num, num_of_ratings, product_rating)
-VALUES ("banana", "food", 11.1, 24, 0, 11, 12, 3.8);
+VALUES ("crap", "food", 11.1, 24, 0, 11, 12, 3.8);
 INSERT INTO product (name, category, price, stock, dc_rate, sales_num, num_of_ratings, product_rating)
 VALUES ("paradox lost", "book", 6.95, 5, 35, 26, 7, 4.0);
 INSERT INTO product (name, category, price, stock, dc_rate, sales_num, num_of_ratings, product_rating)
@@ -168,36 +171,24 @@ INSERT INTO my_list (user_id, product_id) VALUES (1, 7);
 INSERT INTO my_list (user_id, product_id) VALUES (1, 8);
 INSERT INTO my_list (user_id, product_id) VALUES (1, 9);
 
-INSERT INTO placed_order (track_number, delivery_company, last_status, order_date) VALUES (1,   "LOGEN", 1, datetime('now','-3 day','localtime'));
-INSERT INTO placed_order (track_number, delivery_company, last_status, order_date) VALUES (2, "HYUNDAI", 3, datetime('now','-6 day','localtime'));
-INSERT INTO placed_order (track_number, delivery_company, last_status, order_date) VALUES (3,      "CJ", 2, datetime('now','-4 day','localtime'));
+INSERT INTO product_order (order_id, product_id, quantity) VALUES (1, 1, 2);
+INSERT INTO product_order (order_id, product_id, quantity) VALUES (1, 2, 1);
+INSERT INTO product_order (order_id, product_id, quantity) VALUES (1, 3, 4);
+INSERT INTO product_order (order_id, product_id, quantity) VALUES (1, 4, 3);
+INSERT INTO product_order (order_id, product_id, quantity) VALUES (1, 5, 2);
 
-INSERT INTO payment (price, name, phone, address, discount_price) VALUES (181.38, "Maegan Keith", 01011111111, "Busan", 163.24);
-INSERT INTO payment (price, name, phone, address, discount_price) VALUES (79.2, "Maegan Keith", 01011111111, "Busan", 71.28);
-INSERT INTO payment (price, name, phone, address, discount_price) VALUES (179.8, "Maegan Keith", 01011111111, "Busan", 179.8);
+INSERT INTO product_order (order_id, product_id, quantity) VALUES (2, 6, 3);
+INSERT INTO product_order (order_id, product_id, quantity) VALUES (2, 7, 4);
+INSERT INTO product_order (order_id, product_id, quantity) VALUES (2, 8, 2);
+INSERT INTO product_order (order_id, product_id, quantity) VALUES (2, 9, 1);
+INSERT INTO product_order (order_id, product_id, quantity) VALUES (2, 10, 3);
+
+INSERT INTO product_order (order_id, product_id, quantity) VALUES (3, 11, 2);
+INSERT INTO product_order (order_id, product_id, quantity) VALUES (3, 12, 2);
 
 INSERT INTO client_order (client_id, order_id) VALUES (1, 1);
 INSERT INTO client_order (client_id, order_id) VALUES (1, 2);
 INSERT INTO client_order (client_id, order_id) VALUES (1, 3);
-
-INSERT INTO payment_order (order_id, payment_id) VALUES (1, 1);
-INSERT INTO payment_order (order_id, payment_id) VALUES (2, 2);
-INSERT INTO payment_order (order_id, payment_id) VALUES (3, 3);
-
-INSERT INTO payment_detail (payment_id, product_id, price, quantity, total_sum) VALUES (1, 1, 44.95, 2, 89.9);
-INSERT INTO payment_detail (payment_id, product_id, price, quantity, total_sum) VALUES (1, 2, 30.5, 1, 30.5);
-INSERT INTO payment_detail (payment_id, product_id, price, quantity, total_sum) VALUES (1, 3, 5.95, 4, 23.8);
-INSERT INTO payment_detail (payment_id, product_id, price, quantity, total_sum) VALUES (1, 4, 5.66, 3, 16.98);
-INSERT INTO payment_detail (payment_id, product_id, price, quantity, total_sum) VALUES (1, 5, 10.1, 2, 20.2);
-
-INSERT INTO payment_detail (payment_id, product_id, price, quantity, total_sum) VALUES (2, 6, 4.95, 3, 14.85);
-INSERT INTO payment_detail (payment_id, product_id, price, quantity, total_sum) VALUES (2, 7, 4.75, 4, 19.0);
-INSERT INTO payment_detail (payment_id, product_id, price, quantity, total_sum) VALUES (2, 8, 6.7, 2, 13.4);
-INSERT INTO payment_detail (payment_id, product_id, price, quantity, total_sum) VALUES (2, 9, 11.1, 1, 11.1);
-INSERT INTO payment_detail (payment_id, product_id, price, quantity, total_sum) VALUES (2, 10, 6.95, 3, 20.85);
-
-INSERT INTO payment_detail (payment_id, product_id, price, quantity, total_sum) VALUES (3, 11, 49.95, 2, 99.9);
-INSERT INTO payment_detail (payment_id, product_id, price, quantity, total_sum) VALUES (3, 12, 39.95, 2, 79.9);
 
 INSERT INTO delivery_history (track_number, location, hub_date) VALUES (1, "Seoul", datetime('now','-2 day','localtime'));
 INSERT INTO delivery_history (track_number, location, hub_date) VALUES (1, "Daegu", datetime('now','-1 day','localtime'));

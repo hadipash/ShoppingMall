@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  {% block title %}My orders{% endblock %}
+  {% block title %}배송주문조회{% endblock %}
 {% endblock %}
 
 {% block content %}
@@ -45,10 +45,10 @@
             {% if order['last_status'] == "Shipped" or order['last_status'] == "Delivered" %}
             <form method="post">
                 <input name="order_id" value="{{ order['order_id'] }}" style="display: none;">
-                <input type="submit" name="submit" value="Confirm Delivery" class="confirm-button button"/>
+                <input type="submit" name="submit" value="주문 배송 확인" class="confirm-button button"/>
                 <a onclick="window.open('{{ url_for('track_delivery.display_history', order_id=order['order_id']) }}',
                                 '', 'width=600, height=600');"
-                   class="tack-button button" id="{{ order['order_id'] }}" target="_blank">Track Delivery</a>
+                   class="tack-button button" id="{{ order['order_id'] }}" target="_blank">배송 조회</a>
             </form>
             {% endif %}
             <div class="div-separator"></div>
