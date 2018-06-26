@@ -7,18 +7,18 @@
 {% block content %}
     {% for order in orders %}
         <div class="div-block-order">
-            <h5>Order Number: {{ '{0:08d}'.format(order['order_id']) }}</h5>
-            <div class="delivery-text">Order Date: {{ order['order_date'] }}
-                <br>Delivery Status: {{ order['last_status'] }}
+            <h5>주문 번호: {{ '{0:08d}'.format(order['order_id']) }}</h5>
+            <div class="delivery-text">주문 날짜: {{ order['order_date'] }}
+                <br>배송 상태: {{ order['last_status'] }}
             </div>
             <div>
                 <table>
                     <thead>
                         <tr>
-                            <th class="column1">Product Name</th>
-                            <th class="column2">Price</th>
-                            <th class="column3">Quantity</th>
-                            <th class="column4">Total Price</th>
+                            <th class="column1">상품명</th>
+                            <th class="column2">가격</th>
+                            <th class="column3">수량</th>
+                            <th class="column4">합계</th>
                         </tr>
                     </thead>
 
@@ -35,9 +35,9 @@
                 </table>
             </div>
             {% if order['price'] == order['discount_price']%}
-            <div class="total">Total: {{ '{0:.2f}'.format(order['discount_price']) }}</div>
+            <div class="total">총액: {{ '{0:.2f}'.format(order['discount_price']) }}</div>
             {% else %}
-            <div class="total">Total: <s>{{ '{0:.2f}'.format(order['price']) }}</s>
+            <div class="total">총액: <s>{{ '{0:.2f}'.format(order['price']) }}</s>
                 {{ '{0:.2f}'.format(order['discount_price']) }}
             </div>
             {% endif %}
